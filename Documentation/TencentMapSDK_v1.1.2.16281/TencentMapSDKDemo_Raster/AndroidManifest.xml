@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tencent.mapsdkdemo"
+    android:versionCode="2"
+    android:versionName="1.1.2" >
+
+    <uses-sdk
+        android:minSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Black" >
+        <meta-data 
+            android:name="TencentMapSDK"	
+            android:value="CTXBZ-JQUWJ-PIBF5-FFYMW-F4VJH-SFFIN"/>
+        
+        <activity
+            android:name="com.tencent.mapsdkdemo.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name=".BasicMapActivity" 
+            android:label="@string/demo_label_basemap"/>
+        <activity 
+            android:name=".MapFragmentActivity" 
+            android:label="@string/demo_label_mapfragment"/>
+        <activity 
+            android:name=".CustMapFragmentActivity" 
+            android:label="@string/demo_label_cust_mapfragment"/>
+        <activity 
+            android:name=".MapControlActivity" 
+            android:label="@string/demo_label_control"/>
+        <activity 
+            android:name=".MapGeometryActivity" 
+            android:label="@string/demo_label_geometry"/>
+        <activity 
+            android:name=".ItemizedOverlayActivity" 
+            android:label="@string/demo_label_itemized_overlay"/>
+        <activity 
+            android:name=".MarkerAttributeActivity" 
+            android:label="@string/demo_label_marker_attr"/>
+        <activity 
+            android:name=".MarkerActivity" 
+            android:label="@string/demo_label_marker"/>
+        <activity 
+            android:name=".ProjectionActivity" 
+            android:label="@string/demo_label_projection"/>
+        <activity 
+            android:name=".ShowMyLocationActivity" 
+            android:label="@string/demo_label_show_my_location"/>
+    </application>    
+
+</manifest>

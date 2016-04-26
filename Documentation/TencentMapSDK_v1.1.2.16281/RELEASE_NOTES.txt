@@ -1,0 +1,9 @@
+2015-10-29
+修正：
+1.取消TencentMap.moveCamera接口动画效果；
+2.修正初始化地图位置闪现北京
+增加：
+1.增加了TencentMap.animateCamera(CameraUpdate update, ...)方法来实现动画的移动地图。
+2.Marker类增加了setTag/getTag方法，方便标记或存放额外的东西；
+3.画圆增加了虚线边框的功能；
+4.LatLngBounds.Builder增加了一个接口（public Builder include(Iterable<LatLng> points) )，方便使用；
