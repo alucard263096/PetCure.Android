@@ -13,9 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.helpfooter.steve.petcure.mgr.MapMgr;
+import com.tencent.tencentmap.mapsdk.map.MapView;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        onMyCreate(savedInstanceState);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_map) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -98,4 +103,41 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    protected void onDestroy() {
+        mapview.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        mapview.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        mapview.onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        mapview.onStop();
+        super.onStop();
+    }
+
+
+
+
+    MapView mapview=null;
+
+    void  onMyCreate(Bundle savedInstanceState){
+
+        mapview=(MapView)findViewById(R.id.mapview);
+        mapview.onCreate(savedInstanceState);
+        MapMgr mgr=new MapMgr(mapview);
+
+    }
+
 }

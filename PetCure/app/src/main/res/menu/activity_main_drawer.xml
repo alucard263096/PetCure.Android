@@ -3,33 +3,45 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_map"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="地图" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="日记" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="关注" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="我要发布" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="用户">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_menu_share"
+                android:title="登录" />
+            <item
+                android:id="@+id/nav_register"
+                android:icon="@drawable/ic_menu_send"
+                android:title="注册" />
+        </menu>
+    </item>
+    <item android:title="社交">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="分享" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="发送" />
         </menu>
     </item>
 
