@@ -131,12 +131,12 @@ public class MainActivity extends AppCompatActivity
 
 
     MapView mapview=null;
-
+    MapMgr mapMgr=null;
     void  onMyCreate(Bundle savedInstanceState){
 
         mapview=(MapView)findViewById(R.id.mapview);
         mapview.onCreate(savedInstanceState);
-        MapMgr mgr=new MapMgr(mapview);
+        mapMgr=new MapMgr(this,mapview);
 
     }
 

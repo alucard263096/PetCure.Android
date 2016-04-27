@@ -13,16 +13,16 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:src="@drawable/logo" />
 
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="这是一个专门帮助流浪宠物的APP,如果你在路上遇见他们，请帮它们寻找一个家，也许它的主人正在焦急的寻找它，他只是像个孩子一样，不小心，走丢了。" />
+        android:text="一个专门帮助流浪宠物的APP,如果你在路上遇见他们，请帮它们寻找一个家，也许它的主人正在焦急的寻找它，他只是像个孩子一样，不小心，走丢了。" />
 
 </LinearLayout>
