@@ -2,6 +2,7 @@ package com.helpfooter.steve.petcure.mgr;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -17,6 +18,12 @@ import com.tencent.tencentmap.mapsdk.map.TencentMap;
 public class MapMgr implements  TencentLocationListener {
     public MapView mapview=null;
     public Context ctx;
+
+    // 用于记录定位参数, 以显示到 UI
+    private String mRequestParams;
+    private TencentLocation mLocation;
+    private TencentLocationManager mLocationManager;
+
     public MapMgr(Context ctx,MapView mapview) {
         this.ctx=ctx;
         this.mapview = mapview;
@@ -32,10 +39,9 @@ public class MapMgr implements  TencentLocationListener {
         //设置缩放级别
         tencentMap.setZoom(15);
 
-        TencentLocationRequest locationRequest = TencentLocationRequest.create();
-        TencentLocationManager locationManager = TencentLocationManager.getInstance(ctx);
-        int error = locationManager.requestLocationUpdates(locationRequest, this);
-        Log.i("TencentLocationManager",String.valueOf(error));
+
+        mLocationManager = TencentLocationManager.getInstance(this.ctx);
+
     }
 
     @Override
@@ -49,7 +55,28 @@ public class MapMgr implements  TencentLocationListener {
     }
 
     @Override
-    public void onStatusUpdate(String s, int i, String s1) {
+    public void onStatusUpdate(String name, int status, String desc) {
+        String message = "{name=" + name + ", new status=" + status + ", desc="
+                + desc + "}";
+        if (status == STATUS_DENIED) {
+			/* 检测到定位权限被内置或第三方的权限管理或安全软件禁用, 导致当前应用**很可能无法定位**
+			 * 必要时可对这种情况进行特殊处理, 比如弹出提示或引导
+			 */
+            Toast.makeText(this.ctx, "定位权限被禁用!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this.ctx, message, Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    public void  startLocation(){
+        TencentLocationRequest request = TencentLocationRequest.create();
+        request.setInterval(5000);
+        mLocationManager.requestLocationUpdates(request, this);
+
+        mRequestParams = request.toString() ;
+    }
+
+    public void stopLocation() {
+        mLocationManager.removeUpdates(this);
     }
 }

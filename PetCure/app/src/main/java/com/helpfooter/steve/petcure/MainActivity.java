@@ -18,6 +18,12 @@ import com.tencent.tencentmap.mapsdk.map.MapView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    MapView mapview=null;
+    MapMgr mapMgr=null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,12 +119,18 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         mapview.onPause();
         super.onPause();
+        if(mapMgr!=null){
+            mapMgr.stopLocation();
+        }
     }
 
     @Override
     protected void onResume() {
         mapview.onResume();
         super.onResume();
+        if(mapMgr!=null){
+            mapMgr.startLocation();
+        }
     }
 
     @Override
@@ -130,8 +142,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    MapView mapview=null;
-    MapMgr mapMgr=null;
     void  onMyCreate(Bundle savedInstanceState){
 
         mapview=(MapView)findViewById(R.id.mapview);
