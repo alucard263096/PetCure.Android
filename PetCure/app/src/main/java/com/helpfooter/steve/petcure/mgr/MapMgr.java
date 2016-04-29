@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
+import com.helpfooter.steve.petcure.loader.PosterLoader;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -15,24 +18,30 @@ import com.tencent.mapsdk.raster.model.MarkerOptions;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 /**
  * Created by scai on 2016/4/27.
  */
-public class MapMgr implements  TencentLocationListener {
-    public MapView mapview=null;
+public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
+    public MapView mapview = null;
     public Context ctx;
-    TencentMap tencentMap=null;
-    Marker myLocation=null;
+    TencentMap tencentMap = null;
+    Marker myLocation = null;
+    public PosterLoader posterLoader=null;
 
     // 用于记录定位参数, 以显示到 UI
     private String mRequestParams;
     private TencentLocation mLocation;
     private TencentLocationManager mLocationManager;
 
-    private boolean setCenterFirstTime=true;
+    private boolean setCenterFirstTime = true;
+    private ArrayList<Marker> posterMarker=new ArrayList<Marker>();
 
-    public MapMgr(Context ctx,MapView mapview) {
-        this.ctx=ctx;
+    public MapMgr(Context ctx, MapView mapview) {
+        this.ctx = ctx;
         this.mapview = mapview;
 
         //获取TencentMap实例
@@ -42,7 +51,7 @@ public class MapMgr implements  TencentLocationListener {
         //设置实时路况开启
         //tencentMap.setTrafficEnabled(true);
         //设置地图中心点
-        tencentMap.setCenter(new LatLng(22.538403,114.051647));
+        tencentMap.setCenter(new LatLng(22.538403, 114.051647));
         //设置缩放级别
         tencentMap.setZoom(17);
 
@@ -50,18 +59,33 @@ public class MapMgr implements  TencentLocationListener {
         mLocationManager = TencentLocationManager.getInstance(this.ctx);
 
         myLocation = tencentMap.addMarker(new MarkerOptions()
-                .position(new LatLng(22.538403,114.051647))
+                .position(new LatLng(22.538403, 114.051647))
                 .title("我的位置")
                 .icon(BitmapDescriptorFactory
                         .defaultMarker())
                 .draggable(false));
         myLocation.setVisible(false);
 
+        posterLoader=new PosterLoader(this.ctx,"http://www.myhkdoc.com/petcure/ui/setposter.php");
+        //posterLoader.setIsCircle(true);
+        posterLoader.setCallBack(this);
+        //posterLoader.setCircleSecond(30);
+
+        for(int i=0;i<100;i++){
+            Marker mark = tencentMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(22.538403, 114.051647))
+                    .title("我的位置")
+                    .icon(BitmapDescriptorFactory
+                            .defaultMarker())
+                    .draggable(false));
+            mark.setVisible(false);
+            posterMarker.add(mark);
+        }
+
     }
 
     @Override
-    public void onLocationChanged(TencentLocation location, int error,String reason)
-    {
+    public void onLocationChanged(TencentLocation location, int error, String reason) {
         String msg = null;
         if (error == TencentLocation.ERROR_OK) {
             // 定位成功
@@ -72,12 +96,20 @@ public class MapMgr implements  TencentLocationListener {
 //                    .append(location.getProvider()).append(", 地址=")
 //                    .append(location.getAddress());
 //            msg = sb.toString();
-            if(setCenterFirstTime) {
+
+            HashMap<String,String> hmLocation=new HashMap<String, String>();
+            hmLocation.put("lat",String.valueOf(location.getLatitude()));
+            hmLocation.put("lng",String.valueOf(location.getLongitude()));
+            posterLoader.setUrlDynamicParam(hmLocation);
+
+            if (setCenterFirstTime) {
                 tencentMap.setCenter(new LatLng(location.getLatitude(), location.getLongitude()));
-                setCenterFirstTime=false;
+                posterLoader.start();
+                setCenterFirstTime = false;
             }
             myLocation.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
             myLocation.setVisible(true);
+
 
         } else {
             // 定位失败
@@ -98,21 +130,64 @@ public class MapMgr implements  TencentLocationListener {
 			 */
             Toast.makeText(this.ctx, "定位权限被禁用!", Toast.LENGTH_LONG).show();
             myLocation.setVisible(false);
-        }else {
+        } else {
             //Toast.makeText(this.ctx, message, Toast.LENGTH_LONG).show();
         }
     }
 
-    public void  startLocation(){
+    public void startLocation() {
         TencentLocationRequest request = TencentLocationRequest.create();
         request.setInterval(10000);
         mLocationManager.requestLocationUpdates(request, this);
 
-        mRequestParams = request.toString() ;
+        mRequestParams = request.toString();
         Toast.makeText(this.ctx, "正在努力定位中...", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onDestroy() {
+        mapview.onDestroy();
+        posterLoader.setIsCircle(false);
+        posterLoader.interrupt();
+    }
+
+    public void onPause() {
+        mapview.onPause();
+        stopLocation();
+        posterLoader.setStopCircle(true);
+    }
+
+    public void onResume() {
+        mapview.onResume();
+        startLocation();
+        posterLoader.setStopCircle(false);
+    }
+
+    public void onStop() {
+        mapview.onStop();
     }
 
     public void stopLocation() {
         mLocationManager.removeUpdates(this);
     }
+
+    @Override
+    public void CallBack(Object result) {
+
+        ArrayList<PosterDO> posterDOs=(ArrayList<PosterDO>)result;
+        Log.i("postercount",String.valueOf(posterDOs.size()));
+        for(int i=0;i<100;i++){
+            Marker marker=posterMarker.get(i);
+            if(i<posterDOs.size()){
+                //updateMarkerByPoster(marker,posterDOs.get(i));
+                marker.setVisible(true);
+            }else {
+                marker.setVisible(false);
+            }
+        }
+    }
+
+    private void updateMarkerByPoster(Marker mk,PosterDO markerPoster) {
+        mk.setPosition(new LatLng(markerPoster.getRescue_lat(),markerPoster.getRescue_lng()));
+    }
+
 }

@@ -111,31 +111,33 @@ public class MainActivity extends AppCompatActivity
     }
     @Override
     protected void onDestroy() {
-        mapview.onDestroy();
+        if(mapMgr!=null){
+            mapMgr.onDestroy();
+        }
         super.onDestroy();
     }
 
     @Override
     protected void onPause() {
-        mapview.onPause();
-        super.onPause();
         if(mapMgr!=null){
-            mapMgr.stopLocation();
+            mapMgr.onPause();
         }
+        super.onPause();
     }
 
     @Override
     protected void onResume() {
-        mapview.onResume();
-        super.onResume();
         if(mapMgr!=null){
-            mapMgr.startLocation();
+            mapMgr.onResume();
         }
+        super.onResume();
     }
 
     @Override
     protected void onStop() {
-        mapview.onStop();
+        if(mapMgr!=null){
+            mapMgr.onStop();
+        }
         super.onStop();
     }
 
