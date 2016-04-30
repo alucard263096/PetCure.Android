@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.helpfooter.steve.petcure.mgr.MapMgr;
+import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 
 public class MainActivity extends AppCompatActivity
@@ -122,6 +123,9 @@ public class MainActivity extends AppCompatActivity
         if(mapMgr!=null){
             mapMgr.onPause();
         }
+        if(versionUpdateMgr!=null){
+            versionUpdateMgr.stopCheckVersion();
+        }
         super.onPause();
     }
 
@@ -129,6 +133,9 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         if(mapMgr!=null){
             mapMgr.onResume();
+        }
+        if(versionUpdateMgr!=null){
+            versionUpdateMgr.startCheckVersion();
         }
         super.onResume();
     }
@@ -138,13 +145,20 @@ public class MainActivity extends AppCompatActivity
         if(mapMgr!=null){
             mapMgr.onStop();
         }
+        if(versionUpdateMgr!=null){
+            versionUpdateMgr.stopCheckVersion();
+        }
         super.onStop();
     }
 
 
-
+    VersionUpdateMgr versionUpdateMgr=null;
 
     void  onMyCreate(Bundle savedInstanceState){
+
+
+        versionUpdateMgr=new VersionUpdateMgr(this);
+        versionUpdateMgr.startCheckVersion();
 
         mapview=(MapView)findViewById(R.id.mapview);
         mapview.onCreate(savedInstanceState);

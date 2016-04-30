@@ -9,9 +9,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,7 +43,7 @@ public class WebXmlLoader extends WebLoader {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = factory.newDocumentBuilder();
-            Document doc = db.parse(is);
+            Document doc = db.parse(new InputSource(new StringReader(is)));
             Element elmtInfo = doc.getDocumentElement();
 
             NodeList StartNode = elmtInfo.getChildNodes();
@@ -66,6 +68,10 @@ public class WebXmlLoader extends WebLoader {
             e.printStackTrace();
         }
         catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
