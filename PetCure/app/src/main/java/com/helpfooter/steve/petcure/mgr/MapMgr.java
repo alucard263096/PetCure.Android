@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.handles.PosterMarkerHandle;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterLoader;
 import com.tencent.map.geolocation.TencentLocation;
@@ -39,6 +40,8 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
 
     private boolean setCenterFirstTime = true;
     private ArrayList<Marker> posterMarker=new ArrayList<Marker>();
+
+    PosterMarkerHandle posterMarkerHandle;
 
     public MapMgr(Context ctx, MapView mapview) {
         this.ctx = ctx;
@@ -81,7 +84,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
             mark.setVisible(false);
             posterMarker.add(mark);
         }
-
+        posterMarkerHandle=new PosterMarkerHandle(posterMarker);
     }
 
     @Override
@@ -175,19 +178,9 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
 
         ArrayList<PosterDO> posterDOs=(ArrayList<PosterDO>)result;
         Log.i("postercount",String.valueOf(posterDOs.size()));
-        for(int i=0;i<100;i++){
-            Marker marker=posterMarker.get(i);
-            if(i<posterDOs.size()){
-                //updateMarkerByPoster(marker,posterDOs.get(i));
-                marker.setVisible(true);
-            }else {
-                marker.setVisible(false);
-            }
-        }
+        posterMarkerHandle.setPosterDOs(posterDOs);
+        posterMarkerHandle.sendHandle();
     }
 
-    private void updateMarkerByPoster(Marker mk,PosterDO markerPoster) {
-        mk.setPosition(new LatLng(markerPoster.getRescue_lat(),markerPoster.getRescue_lng()));
-    }
 
 }
