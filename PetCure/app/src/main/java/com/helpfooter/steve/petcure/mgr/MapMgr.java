@@ -2,12 +2,14 @@ package com.helpfooter.steve.petcure.mgr;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.dataobjects.PosterDO;
 import com.helpfooter.steve.petcure.handles.PosterMarkerHandle;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterLoader;
+import com.helpfooter.steve.petcure.myviews.PosterInfoView;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -68,6 +70,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
                         .defaultMarker())
                 .draggable(false));
         myLocation.setVisible(false);
+        myLocation.hideInfoWindow();
 
         posterLoader=new PosterLoader(this.ctx,"http://www.myhkdoc.com/petcure/ui/setposter.php");
         //posterLoader.setIsCircle(true);
@@ -81,9 +84,29 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
                             .fromAsset("dog.png"))
                     .draggable(false));
             mark.setVisible(false);
+            mark.hideInfoWindow();
             posterMarker.add(mark);
         }
         posterMarkerHandle=new PosterMarkerHandle(posterMarker);
+
+        tencentMap.setInfoWindowAdapter(new TencentMap.InfoWindowAdapter() {
+
+            //infowindow关闭后调用，用户回收view
+            @Override
+            public void onInfoWindowDettached(Marker m, View v) {
+                // TODO Auto-generated method stub
+
+            }
+
+            //infowindow弹出前调用，返回的view将作为弹出的infowindow
+            @Override
+            public View getInfoWindow(Marker m) {
+                // TODO Auto-generated method stub
+
+                return new PosterInfoView(MapMgr.this.ctx);
+            }
+        });
+
     }
 
     @Override

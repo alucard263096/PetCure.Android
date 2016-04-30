@@ -9,18 +9,18 @@ import android.widget.TextView;
 /**
  * Created by steve on 2016/4/30.
  */
-public class FontAwesomeViews   extends TextView {
-    public FontAwesomeViews(Context context) {
+public class FontAwesomeView extends TextView {
+    public FontAwesomeView(Context context) {
         super(context);
         init(context);
     }
 
-    public FontAwesomeViews(Context context, AttributeSet attrs) {
+    public FontAwesomeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public FontAwesomeViews(Context context, AttributeSet attrs, int defSyle) {
+    public FontAwesomeView(Context context, AttributeSet attrs, int defSyle) {
         super(context, attrs, defSyle);
         init(context);
     }

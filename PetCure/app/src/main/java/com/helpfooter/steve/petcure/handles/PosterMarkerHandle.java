@@ -41,5 +41,6 @@ public class PosterMarkerHandle extends AbstractHandles {
 
     private void updateMarkerByPoster(Marker mk,PosterDO markerPoster) {
         mk.setPosition(new LatLng(markerPoster.getRescue_lat(),markerPoster.getRescue_lng()));
+        mk.setTag(markerPoster);
     }
 }
