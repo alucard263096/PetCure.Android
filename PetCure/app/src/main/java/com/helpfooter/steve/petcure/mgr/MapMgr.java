@@ -77,9 +77,8 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
         for(int i=0;i<100;i++){
             Marker mark = tencentMap.addMarker(new MarkerOptions()
                     .position(new LatLng(22.538403, 114.051647))
-                    .title("我的位置")
                     .icon(BitmapDescriptorFactory
-                            .defaultMarker())
+                            .fromAsset("dog.png"))
                     .draggable(false));
             mark.setVisible(false);
             posterMarker.add(mark);
