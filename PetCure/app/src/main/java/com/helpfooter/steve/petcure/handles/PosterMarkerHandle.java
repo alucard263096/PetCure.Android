@@ -32,6 +32,7 @@ public class PosterMarkerHandle extends AbstractHandles {
                     marker.setVisible(true);
                 }else {
                     marker.setVisible(false);
+                    marker.setTag(null);
                 }
             }catch (Exception ex){
                 ex.printStackTrace();

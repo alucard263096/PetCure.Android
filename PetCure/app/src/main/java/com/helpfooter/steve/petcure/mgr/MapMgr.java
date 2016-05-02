@@ -209,9 +209,11 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         // TODO Auto-generated method stub
         if(m.getTag() instanceof PosterDO) {
             PosterInfoView posterInfoView= new PosterInfoView(MapMgr.this.ctx);
-            posterInfoView.setData((PosterDO)m.getTag(),m);
+            PosterDO posterDO=(PosterDO)m.getTag();
+            posterInfoView.setData(posterDO,m,posterMarker);
             closeAllMarkerHandle.setNotcloseMarker(m);
             closeAllMarkerHandle.sendHandle();
+            tencentMap.setCenter(new LatLng(posterDO.getRescue_lat(),posterDO.getRescue_lng()));
             return posterInfoView;
         }else {
             return null;

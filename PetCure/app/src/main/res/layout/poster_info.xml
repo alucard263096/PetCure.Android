@@ -129,4 +129,35 @@
             android:text="暂时没有留下"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
+        <com.helpfooter.steve.petcure.myviews.FontAwesomeView
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="&#xf053;"
+            android:layout_gravity="left|center"
+            android:id="@+id/btnPrevious"/>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textSize="10dp"
+            android:textColor="@color/white"
+            android:background="@color/Success"
+            android:text="分享与救助"
+            android:id="@+id/btnDisplay"/>
+        <com.helpfooter.steve.petcure.myviews.FontAwesomeView
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="&#xf054;"
+            android:gravity="right"
+            android:layout_gravity="right|center"
+            android:id="@+id/btnNext"/>
+    </LinearLayout>
+
 </LinearLayout>
