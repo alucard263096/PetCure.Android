@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.handles.CloseAllMarkerHandle;
 import com.helpfooter.steve.petcure.handles.PosterMarkerHandle;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterLoader;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 /**
  * Created by scai on 2016/4/27.
  */
-public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
+public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,TencentMap.OnMarkerClickListener,TencentMap.InfoWindowAdapter {
     public MapView mapview = null;
     public Context ctx;
     TencentMap tencentMap = null;
@@ -44,6 +45,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
     private ArrayList<Marker> posterMarker=new ArrayList<Marker>();
 
     PosterMarkerHandle posterMarkerHandle;
+    CloseAllMarkerHandle closeAllMarkerHandle;
 
     public MapMgr(Context ctx, MapView mapview) {
         this.ctx = ctx;
@@ -73,39 +75,29 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
         myLocation.hideInfoWindow();
 
         posterLoader=new PosterLoader(this.ctx,"http://www.myhkdoc.com/petcure/ui/setposter.php");
-        //posterLoader.setIsCircle(true);
+        posterLoader.setIsCircle(true);
         posterLoader.setCallBack(this);
-        //posterLoader.setCircleSecond(30);
+        posterLoader.setCircleSecond(60*5);
 
         for(int i=0;i<100;i++){
             Marker mark = tencentMap.addMarker(new MarkerOptions()
                     .position(new LatLng(22.538403, 114.051647))
+                    .title("shabi")
                     .icon(BitmapDescriptorFactory
                             .fromAsset("dog.png"))
                     .draggable(false));
             mark.setVisible(false);
             mark.hideInfoWindow();
+
             posterMarker.add(mark);
         }
         posterMarkerHandle=new PosterMarkerHandle(posterMarker);
+         closeAllMarkerHandle=new CloseAllMarkerHandle(posterMarker);
 
-        tencentMap.setInfoWindowAdapter(new TencentMap.InfoWindowAdapter() {
+        //tencentMap.setOnMarkerClickListener(this);
 
-            //infowindow关闭后调用，用户回收view
-            @Override
-            public void onInfoWindowDettached(Marker m, View v) {
-                // TODO Auto-generated method stub
+        tencentMap.setInfoWindowAdapter(this);
 
-            }
-
-            //infowindow弹出前调用，返回的view将作为弹出的infowindow
-            @Override
-            public View getInfoWindow(Marker m) {
-                // TODO Auto-generated method stub
-
-                return new PosterInfoView(MapMgr.this.ctx);
-            }
-        });
 
     }
 
@@ -205,4 +197,29 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack {
     }
 
 
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        //marker.hideInfoWindow();
+        return false;
+    }
+
+    @Override
+    public View getInfoWindow(Marker m) {
+        // TODO Auto-generated method stub
+        if(m.getTag() instanceof PosterDO) {
+            PosterInfoView posterInfoView= new PosterInfoView(MapMgr.this.ctx);
+            posterInfoView.setData((PosterDO)m.getTag(),m);
+            closeAllMarkerHandle.setNotcloseMarker(m);
+            closeAllMarkerHandle.sendHandle();
+            return posterInfoView;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public void onInfoWindowDettached(Marker marker, View view) {
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.helpfooter.steve.petcure.dataobjects;
 
 import android.database.Cursor;
+import android.graphics.Color;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -219,5 +220,53 @@ public class PosterDO extends AbstractDO {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getRescue_levelText() {
+        if(rescue_level.equals("C")){
+            return "严重";
+        }else if(rescue_level.equals("H")) {
+            return "高";
+        }else if(rescue_level.equals("M")) {
+            return "中";
+        }else if(rescue_level.equals("L")) {
+            return "低";
+        }
+        return "中";
+    }
+
+    public int getRescue_levelColor() {
+        if(rescue_level.equals("C")){
+        return Color.RED;
+    }else if(rescue_level.equals("H")) {
+            return Color.parseColor("#FF6201");
+    }else if(rescue_level.equals("M")) {
+            return Color.BLUE;
+    }else if(rescue_level.equals("L")) {
+            return Color.GREEN;
+    }
+        return Color.BLUE;
+    }
+
+    public String getRescue_typeText() {
+        if(rescue_type.equals("W")){
+            return "受伤";
+        }else if(rescue_type.equals("H")) {
+            return "饥饿";
+        }else if(rescue_type.equals("L")) {
+            return "走失";
+        }else if(rescue_type.equals("A")) {
+            return "待领养";
+        }
+        return "有麻烦";
+    }
+
+    public String getPet_typeText() {
+        if(rescue_type.equals("D")){
+            return "狗狗";
+        }else if(rescue_type.equals("C")) {
+            return "猫猫";
+        }
+        return "小可爱";
     }
 }
