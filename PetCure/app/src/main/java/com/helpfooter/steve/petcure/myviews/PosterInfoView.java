@@ -45,7 +45,7 @@ public class PosterInfoView  extends LinearLayout {
         ((TextView) findViewById(R.id.txtRescueLevel)).setTextColor(posterDO.getRescue_levelColor());
 
 
-        ((TextView) findViewById(R.id.txtRescueTypePet)).setText(posterDO.getRescue_typeText() + "的" + posterDO.getPet_typeText());
+        ((TextView) findViewById(R.id.txtRescueTypePet)).setText(posterDO.getRescue_typeText() + "的" + posterDO.getPet_typeText()+" "+posterDO.getRescue_need());
         ((TextView) findViewById(R.id.txtPetDetail)).setText(posterDO.getPet_detail());
         ((TextView) findViewById(R.id.txtRescueAddress)).setText(posterDO.getRescue_address() + " " + posterDO.getRescue_detail());
         if (!posterDO.getContact_name().trim().isEmpty()) {

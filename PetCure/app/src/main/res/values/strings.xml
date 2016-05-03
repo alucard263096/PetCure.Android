@@ -5,4 +5,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">设置</string>
+    <string name="title_activity_login">登录</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_mobile">手机号码</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录或注册</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="error_invalid_mobile">你输入的手机号码不正确</string>
+    <string name="error_invalid_password">你输入的密码少于4位数</string>
+    <string name="error_incorrect_password">密码不正确</string>
+    <string name="error_field_required">这个字段是必填的</string>
+    <string name="permission_rationale">"获取你的手机通讯录需要设置为允许读取"
+    </string>
 </resources>

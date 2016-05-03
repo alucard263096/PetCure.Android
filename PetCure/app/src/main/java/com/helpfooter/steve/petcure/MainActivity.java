@@ -1,5 +1,7 @@
 package com.helpfooter.steve.petcure;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
 import com.tencent.tencentmap.mapsdk.map.MapView;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     MapView mapview=null;
     MapMgr mapMgr=null;
+
 
 
     @Override
@@ -36,8 +40,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent loginIntent = new Intent();
+                loginIntent.setComponent(new ComponentName(MainActivity.this,
+                        LoginActivity.class));
+                startActivityForResult(loginIntent, StaticVar.RequestCode.LoginActivity);
             }
         });
 
@@ -51,6 +57,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         onMyCreate(savedInstanceState);
+    }
+
+    @Override
+    protected  void onActivityResult(int requestCode,int resultCode,Intent data){
+        if(requestCode== StaticVar.RequestCode.LoginActivity){
+
+        }
     }
 
 
