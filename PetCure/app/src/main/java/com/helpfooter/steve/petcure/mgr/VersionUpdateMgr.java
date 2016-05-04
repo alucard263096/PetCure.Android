@@ -15,7 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.helpfooter.steve.petcure.dataobjects.AbstractDO;
+import com.helpfooter.steve.petcure.dataobjects.AbstractObj;
 import com.helpfooter.steve.petcure.dataobjects.VersionObj;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.VersionLoader;
@@ -51,7 +51,7 @@ public class VersionUpdateMgr implements IWebLoaderCallBack {
 
     @Override
     public void CallBack(Object res) {
-        ArrayList<AbstractDO> lstObjs=(ArrayList<AbstractDO>)res;
+        ArrayList<AbstractObj> lstObjs=(ArrayList<AbstractObj>)res;
         if(lstObjs.size()>0){
             VersionObj version=(VersionObj)lstObjs.get(0);
             String currentVersion=getVersionName();

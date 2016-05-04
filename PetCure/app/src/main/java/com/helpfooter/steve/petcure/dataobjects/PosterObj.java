@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * Created by steve on 2016/4/29.
  */
-public class PosterDO extends AbstractDO {
+public class PosterObj extends AbstractObj {
     String pet_type;
     String pet_size;
     String pet_photo;

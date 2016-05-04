@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by steve on 2016/4/29.
  */
-public abstract class AbstractDO {
+public abstract class AbstractObj {
     public int id=0;
     public int getId(){
         return  id;

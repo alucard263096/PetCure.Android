@@ -2,7 +2,7 @@ package com.helpfooter.steve.petcure.loader;
 
 import android.content.Context;
 
-import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +26,11 @@ public class PosterLoader extends WebJSonLoader {
     @Override
     public Object processData(Object res){
         JSONObject json=(JSONObject)super.processData(res);
-        ArrayList<PosterDO> posterDOs=new ArrayList<PosterDO>();
+        ArrayList<PosterObj> posterDOs=new ArrayList<PosterObj>();
         try {
             JSONArray jsonArray = json.getJSONArray("val");
             for (int i = 0; i < jsonArray.length(); i++) {
-                PosterDO pdo=new PosterDO();
+                PosterObj pdo=new PosterObj();
                 pdo.parseJSon(jsonArray.getJSONObject(i));
                 posterDOs.add(pdo);
             }

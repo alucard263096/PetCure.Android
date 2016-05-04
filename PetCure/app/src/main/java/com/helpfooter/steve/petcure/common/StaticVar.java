@@ -10,4 +10,9 @@ public class StaticVar {
     public static class RequestCode{
        public static int LoginActivity=1;
     }
+
+    public static class APIUrl{
+        public static String LoginReg= "http://www.myhkdoc.com/petcure/api/Member/login_reg.php";
+    }
+
 }

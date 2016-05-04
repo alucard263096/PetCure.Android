@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by steve on 2016/4/30.
  */
-public class VersionObj extends AbstractDO {
+public class VersionObj extends AbstractObj {
     public String getVersion() {
         return version;
     }

@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.helpfooter.steve.petcure.R;
-import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.utils.Util;
 import com.tencent.mapsdk.raster.model.Marker;
@@ -40,7 +40,7 @@ public class PosterInfoView  extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.poster_info,this,true);
     }
 
-    public void setData(final PosterDO posterDO, final Marker marker, final ArrayList<Marker> markers) {
+    public void setData(final PosterObj posterDO, final Marker marker, final ArrayList<Marker> markers) {
         ((TextView) findViewById(R.id.txtRescueLevel)).setText("(紧急：" + posterDO.getRescue_levelText() + ")");
         ((TextView) findViewById(R.id.txtRescueLevel)).setTextColor(posterDO.getRescue_levelColor());
 

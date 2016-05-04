@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_mobile"
                     android:inputType="textPhonetic"
+                    android:numeric="integer"
                     android:maxLines="1"
                     android:singleLine="true" />
 

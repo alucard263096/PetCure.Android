@@ -89,6 +89,12 @@ public class Util {
         return m.matches();
     }
 
+
+    public static boolean IsPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 4;
+    }
+
     public static String EarseMobileNo(String name){
         if(IsMobileNO(name)){
             return name.substring(0,4)+"****"+name.substring(8);

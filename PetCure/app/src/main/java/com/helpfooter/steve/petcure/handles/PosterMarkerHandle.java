@@ -1,6 +1,6 @@
 package com.helpfooter.steve.petcure.handles;
 
-import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
 
@@ -17,8 +17,8 @@ public class PosterMarkerHandle extends AbstractHandles {
         this.markers = markers;
     }
 
-    ArrayList<PosterDO> posterDOs=null;
-    public void setPosterDOs(ArrayList<PosterDO> posterDOs) {
+    ArrayList<PosterObj> posterDOs=null;
+    public void setPosterDOs(ArrayList<PosterObj> posterDOs) {
         this.posterDOs = posterDOs;
     }
 
@@ -40,7 +40,7 @@ public class PosterMarkerHandle extends AbstractHandles {
         }
     }
 
-    private void updateMarkerByPoster(Marker mk,PosterDO markerPoster) {
+    private void updateMarkerByPoster(Marker mk,PosterObj markerPoster) {
         mk.setPosition(new LatLng(markerPoster.getRescue_lat(),markerPoster.getRescue_lng()));
         mk.setTag(markerPoster);
     }

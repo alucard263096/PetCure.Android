@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.helpfooter.steve.petcure.dataobjects.PosterDO;
+import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.helpfooter.steve.petcure.handles.CloseAllMarkerHandle;
 import com.helpfooter.steve.petcure.handles.PosterMarkerHandle;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
@@ -190,7 +190,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     @Override
     public void CallBack(Object result) {
 
-        ArrayList<PosterDO> posterDOs=(ArrayList<PosterDO>)result;
+        ArrayList<PosterObj> posterDOs=(ArrayList<PosterObj>)result;
         Log.i("postercount",String.valueOf(posterDOs.size()));
         posterMarkerHandle.setPosterDOs(posterDOs);
         posterMarkerHandle.sendHandle();
@@ -207,9 +207,9 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     @Override
     public View getInfoWindow(Marker m) {
         // TODO Auto-generated method stub
-        if(m.getTag() instanceof PosterDO) {
+        if(m.getTag() instanceof PosterObj) {
             PosterInfoView posterInfoView= new PosterInfoView(MapMgr.this.ctx);
-            PosterDO posterDO=(PosterDO)m.getTag();
+            PosterObj posterDO=(PosterObj)m.getTag();
             posterInfoView.setData(posterDO,m,posterMarker);
             closeAllMarkerHandle.setNotcloseMarker(m);
             closeAllMarkerHandle.sendHandle();
