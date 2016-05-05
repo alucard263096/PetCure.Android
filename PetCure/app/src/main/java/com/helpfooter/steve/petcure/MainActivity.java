@@ -66,8 +66,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected  void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(requestCode== RequestCode.AddPosterLoginActivity){
-            Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
+        if(resultCode==RESULT_OK) {
+            if (requestCode == RequestCode.AddPosterLoginActivity) {
+                Toast.makeText(MainActivity.this, "弹出poster", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
