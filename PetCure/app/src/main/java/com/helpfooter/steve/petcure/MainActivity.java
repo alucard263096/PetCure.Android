@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 boolean islogin=MemberMgr.CheckIsLogin(MainActivity.this,RequestCode.AddPosterLoginActivity);
                 if(islogin){
-                    Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
-
+                    //Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
+                    ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
                 }
             }
         });
