@@ -34,6 +34,7 @@ import com.helpfooter.steve.petcure.dataobjects.MemberObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.LoginRegLoader;
+import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.utils.Util;
 
 import java.security.interfaces.ECKey;
@@ -208,6 +209,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         public void callFunction() {
             showProgress(false);
             if(objs.size()>0){
+                MemberMgr.SetMemberInfo(LoginActivity.this,(MemberObj)objs.get(0));
                 LoginActivity.this.setResult(RESULT_OK);
                 LoginActivity.this.finish();
             }else {

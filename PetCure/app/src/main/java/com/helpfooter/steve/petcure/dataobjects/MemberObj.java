@@ -15,7 +15,6 @@ public class MemberObj extends AbstractObj {
     String openid;
     String mobile;
     String name;
-    String status;
     String photo;
 
     public String getOpenid() {
@@ -42,14 +41,6 @@ public class MemberObj extends AbstractObj {
         this.name = name;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getPhoto() {
         return photo;
     }
@@ -65,14 +56,12 @@ public class MemberObj extends AbstractObj {
         setOpenid(cursor.getString(cursor.getColumnIndex("openid")));
         setPhoto(cursor.getString(cursor.getColumnIndex("photo")));
         setName(cursor.getString(cursor.getColumnIndex("name")));
-        setStatus(cursor.getString(cursor.getColumnIndex("status")));
     }
 
     @Override
     public void parseXmlDataTable(HashMap<String, String> lstRowValue) {
         this.id=Integer.parseInt(lstRowValue.get("id"));
         this.mobile=lstRowValue.get("mobile");
-        this.status=lstRowValue.get("status");
         this.name=lstRowValue.get("name");
         this.photo=lstRowValue.get("photo");
         this.openid=lstRowValue.get("openid");

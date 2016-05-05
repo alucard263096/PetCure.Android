@@ -14,9 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
+import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity
     MapView mapview=null;
     MapMgr mapMgr=null;
 
+    public static class RequestCode{
+        public static int AddPosterLoginActivity=1;
+    }
 
 
     @Override
@@ -40,10 +45,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loginIntent = new Intent();
-                loginIntent.setComponent(new ComponentName(MainActivity.this,
-                        LoginActivity.class));
-                startActivityForResult(loginIntent, StaticVar.RequestCode.LoginActivity);
+                boolean islogin=MemberMgr.CheckIsLogin(MainActivity.this,RequestCode.AddPosterLoginActivity);
+                if(islogin){
+                    Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -61,8 +66,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected  void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(requestCode== StaticVar.RequestCode.LoginActivity){
-
+        if(requestCode== RequestCode.AddPosterLoginActivity){
+            Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
         }
     }
 

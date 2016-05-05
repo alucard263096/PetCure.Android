@@ -7,9 +7,6 @@ import java.sql.Struct;
  */
 public class StaticVar {
     public static String UpdateVersionUrl="http://www.myhkdoc.com/PetCureApp/update.xml";
-    public static class RequestCode{
-       public static int LoginActivity=1;
-    }
 
     public static class APIUrl{
         public static String LoginReg= "http://www.myhkdoc.com/petcure/api/Member/login_reg.php";
