@@ -22,8 +22,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.+'
-    compile 'com.android.support:design:24.+'
     compile files('src/main/libs/TencentLocationSDK_v4.4.6_r206631_151119_1441.jar')
     compile files('src/main/libs/TencentMapSDK_Raster_v1.1.2.16281.jar')
+    compile 'com.android.support:appcompat-v7:24.+'
+    compile 'com.android.support:design:24.+'
+    compile 'com.android.support:support-v4:23.3.0'
 }

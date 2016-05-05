@@ -1,5 +1,6 @@
 package com.helpfooter.steve.petcure;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
+import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity
                 boolean islogin=MemberMgr.CheckIsLogin(MainActivity.this,RequestCode.AddPosterLoginActivity);
                 if(islogin){
                     Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -100,6 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            ActivityMgr.startActivity(this,SettingsActivity.class);
             return true;
         }
 
@@ -112,13 +116,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_map) {
+        if (id == R.id.nav_member_info) {
             // Handle the camera action
+            ActivityMgr.startActivity(this,MemberInfoActivity.class);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 

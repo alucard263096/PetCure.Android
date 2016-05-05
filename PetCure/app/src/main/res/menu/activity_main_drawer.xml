@@ -3,21 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_map"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="地图" />
-        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="日记" />
+            android:title="附近" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="关注" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="我要发布" />
+            android:title="我的关注" />
     </group>
 
     <item android:title="用户">
@@ -27,9 +19,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="登录" />
             <item
-                android:id="@+id/nav_register"
+                android:id="@+id/nav_member_info"
                 android:icon="@drawable/ic_menu_send"
-                android:title="注册" />
+                android:title="个人资料" />
         </menu>
     </item>
     <item android:title="社交">
