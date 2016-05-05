@@ -133,7 +133,6 @@ public class MemberInfoActivity extends AppCompatPreferenceActivity {
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -143,7 +142,6 @@ public class MemberInfoActivity extends AppCompatPreferenceActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     /**
      * {@inheritDoc}
      */
@@ -179,7 +177,7 @@ public class MemberInfoActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
+            addPreferencesFromResource(R.xml.memberinfo_general);
             setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -194,7 +192,7 @@ public class MemberInfoActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), MemberInfoActivity.class));
+                getActivity().onBackPressed();
                 return true;
             }
             return super.onOptionsItemSelected(item);

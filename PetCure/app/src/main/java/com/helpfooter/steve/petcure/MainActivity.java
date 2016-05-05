@@ -3,7 +3,9 @@ package com.helpfooter.steve.petcure;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -49,7 +51,9 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 boolean islogin=MemberMgr.CheckIsLogin(MainActivity.this,RequestCode.AddPosterLoginActivity);
                 if(islogin){
-                    //Toast.makeText(MainActivity.this,"弹出poster",Toast.LENGTH_LONG).show();
+                    //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                   //String test =preferences.getString("example_text2","aa");
+                    //Toast.makeText(MainActivity.this,test,Toast.LENGTH_LONG).show();
                     ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
                 }
             }
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     protected  void onActivityResult(int requestCode,int resultCode,Intent data){
         if(resultCode==RESULT_OK) {
             if (requestCode == RequestCode.AddPosterLoginActivity) {
-                Toast.makeText(MainActivity.this, "弹出poster", Toast.LENGTH_LONG).show();
+                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
             }
         }
     }
