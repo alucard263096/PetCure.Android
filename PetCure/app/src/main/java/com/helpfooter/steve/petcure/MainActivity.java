@@ -84,11 +84,8 @@ public class MainActivity extends AppCompatActivity
             HashMap<String,String> dictLocation=new HashMap<String,String>();
             dictLocation.put("lat",mapMgr.getLat());
             dictLocation.put("lng",mapMgr.getLng());
-            if(i==0){
-                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class,dictLocation);
-            }else if(i==1) {
-                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class,dictLocation);
-            }
+            dictLocation.put("type",String.valueOf(i));
+            ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class,dictLocation);
         }
     };
 

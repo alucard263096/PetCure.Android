@@ -36,11 +36,42 @@
         android:layout_below="@+id/btnAddImages"
         android:background="@color/Gray"
         ></LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="所在位置"
-        android:layout_below="@+id/hr1"/>
-
+        android:id="@+id/llLocation"
+        android:layout_below="@+id/hr1" android:orientation="horizontal">
+        <com.helpfooter.steve.petcure.myviews.FontAwesomeView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/txtAddressLogo"
+            android:text="&#xf041;"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:id="@+id/txtAddress"
+            android:layout_toRightOf="@+id/txtAddressLogo"
+            android:layout_alignBottom="@+id/txtAddressLogo"
+            android:layout_marginLeft="10dp"
+            android:text="位置加载中..."/>
+        <com.helpfooter.steve.petcure.myviews.FontAwesomeView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="&#xf105;"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:id="@+id/hr2"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/llLocation"
+        android:background="@color/Gray"
+        ></LinearLayout>
 </RelativeLayout>
