@@ -24,7 +24,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('src/main/libs/TencentLocationSDK_v4.4.6_r206631_151119_1441.jar')
     compile files('src/main/libs/TencentMapSDK_Raster_v1.1.2.16281.jar')
+    compile files('src/main/libs/TencentSearch1.1.2.16095.jar')
     compile 'com.android.support:appcompat-v7:24.+'
     compile 'com.android.support:design:24.+'
     compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.facebook.fresco:fresco:0.10.0'
+    compile 'com.facebook.fresco:animated-gif:0.10.0'
+    compile 'com.facebook.fresco:animated-webp:0.10.0'
+    compile 'com.facebook.fresco:webpsupport:0.10.0'
+    compile project(path: ':multiple-images-selector')
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }

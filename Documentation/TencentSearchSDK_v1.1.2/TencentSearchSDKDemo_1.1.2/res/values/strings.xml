@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TencentSearchSDKDemo_1.1.2</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="demo_label_search_basic">检索基本功能:SearchBasicActivity</string>
+    <string name="demo_desc_search_basic">展示检索包提供的各项基础功能</string>
+    <string name="demo_label_district"> 行政区划:DistrictActivity</string>
+    <string name="demo_desc_district">获取行政区划</string>
+    <string name="demo_label_road_plan">路线规划功能:RoadplanActivity</string>
+    <string name="demo_desc_road_plan">结合地图sdk展示检索包的路线规划功能</string>
+    
+    <string name="poi_search">poi搜索</string>
+    <string name="hint_type_in_key_word">输入关键字</string>
+    <string name="search">搜索</string>
+
+    <string name="keyword_suggestion">关键字输入提示</string>
+    
+    <string name="geocoder">地址解析</string>
+    <string name="hint_type_in_address">输入地址</string>
+    <string name="regeocoder">逆地址解析</string>
+    <string name="hint_type_in_coordinate">输入坐标,经纬度用英文逗号分割</string>
+    <string name="get_coordinate">获取坐标</string>
+    <string name="get_address">获取地址</string>
+    
+    <string name="coordinate_translate">坐标转换</string>
+    <string name="translate">转换</string>
+    
+    <string name="panorama_data">街景信息</string>
+    
+    <string name="district">行政区划</string>
+    
+    <string name="start_point">起点</string>
+    <string name="destination">终点</string>
+    
+</resources>

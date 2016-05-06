@@ -79,4 +79,14 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_settings">设置</string>
     <string name="title_activity_poster_create">发起救助</string>
+
+
+    <array name="send_poster_type">
+        <item>发起救助</item>
+        <item>我要求助</item>
+     </array>
+
+
+
+    <string name="poster_create_detail">流浪的小可爱需要什么...</string>
 </resources>

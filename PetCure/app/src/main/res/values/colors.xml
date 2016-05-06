@@ -10,4 +10,6 @@
     <color name="Info">#41B6E5</color>
     <color name="Warning">#F3A02C</color>
     <color name="Danger">#E7302B</color>
+    <color name="Gray">#909090</color>
+
 </resources>
