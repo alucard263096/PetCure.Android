@@ -1,13 +1,16 @@
 package com.helpfooter.steve.petcure;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
@@ -54,7 +58,8 @@ public class MainActivity extends AppCompatActivity
                     //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                    //String test =preferences.getString("example_text2","aa");
                     //Toast.makeText(MainActivity.this,test,Toast.LENGTH_LONG).show();
-                    ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+                    //ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+                    ActivityMgr.ShowBottomOptionDialog(MainActivity.this,R.array.send_poster_type,dialogListener);
                 }
             }
         });
@@ -71,11 +76,22 @@ public class MainActivity extends AppCompatActivity
         onMyCreate(savedInstanceState);
     }
 
+    DialogInterface.OnClickListener dialogListener=new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            if(i==0){
+                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+            }else if(i==1) {
+                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+            }
+        }
+    };
+
     @Override
     protected  void onActivityResult(int requestCode,int resultCode,Intent data){
         if(resultCode==RESULT_OK) {
             if (requestCode == RequestCode.AddPosterLoginActivity) {
-                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+                ActivityMgr.ShowBottomOptionDialog(this,R.array.send_poster_type,dialogListener);
             }
         }
     }
