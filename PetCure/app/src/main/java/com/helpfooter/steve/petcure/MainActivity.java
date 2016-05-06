@@ -30,6 +30,8 @@ import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -79,10 +81,13 @@ public class MainActivity extends AppCompatActivity
     DialogInterface.OnClickListener dialogListener=new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
+            HashMap<String,String> dictLocation=new HashMap<String,String>();
+            dictLocation.put("lat",mapMgr.getLat());
+            dictLocation.put("lng",mapMgr.getLng());
             if(i==0){
-                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class,dictLocation);
             }else if(i==1) {
-                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class);
+                ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class,dictLocation);
             }
         }
     };
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            ActivityMgr.startActivity(this,SettingsActivity.class);
+            ActivityMgr.startActivity(this,SettingsActivity.class,null);
             return true;
         }
 
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_member_info) {
             // Handle the camera action
-            ActivityMgr.startActivity(this,MemberInfoActivity.class);
+            ActivityMgr.startActivity(this,MemberInfoActivity.class,null);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

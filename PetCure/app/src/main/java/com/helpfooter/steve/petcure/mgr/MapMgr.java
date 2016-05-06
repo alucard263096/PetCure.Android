@@ -47,6 +47,19 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     PosterMarkerHandle posterMarkerHandle;
     CloseAllMarkerHandle closeAllMarkerHandle;
 
+    public String getLat(){
+        if(myLocation!=null){
+            return String.valueOf(myLocation.getPosition().getLatitude());
+        }
+        return "";
+    }
+    public String getLng(){
+        if(myLocation!=null){
+            return String.valueOf(myLocation.getPosition().getLongitude());
+        }
+        return "";
+    }
+
     public MapMgr(Context ctx, MapView mapview) {
         this.ctx = ctx;
         this.mapview = mapview;

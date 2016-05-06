@@ -27,7 +27,7 @@ public class PosterCreateActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button bt = (Button) findViewById(R.id.button);
+        Button bt = (Button) findViewById(R.id.btnAddImages);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
