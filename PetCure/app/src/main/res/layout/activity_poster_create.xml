@@ -24,7 +24,6 @@
     <Button
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:background="@drawable/icon_addpic_focused"
         android:id="@+id/btnAddImages"
         android:layout_below="@+id/txtNeeds"/>
     <LinearLayout
@@ -48,6 +47,7 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/txtAddressLogo"
             android:text="&#xf041;"
+            android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +55,6 @@
             android:lines="1"
             android:id="@+id/txtAddress"
             android:layout_toRightOf="@+id/txtAddressLogo"
-            android:layout_alignBottom="@+id/txtAddressLogo"
             android:layout_marginLeft="10dp"
             android:text="位置加载中..."/>
         <com.helpfooter.steve.petcure.myviews.FontAwesomeView
@@ -63,6 +62,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="&#xf105;"
+            android:textSize="20dp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
     <LinearLayout

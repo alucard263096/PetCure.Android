@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.tencent.lbssearch.TencentSearch;
 import com.tencent.lbssearch.httpresponse.BaseObject;
 import com.tencent.lbssearch.httpresponse.HttpResponseListener;
@@ -36,6 +37,8 @@ public class PosterCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(getApplicationContext());
+
         setContentView(R.layout.activity_poster_create);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,7 +52,7 @@ public class PosterCreateActivity extends AppCompatActivity {
                 // max number of images to be selected
                 intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
                 // min size of image which will be shown; to filter tiny images (mainly icons)
-                intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100);
+                intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
                 // show camera or not
                 intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
                 // pass current selected images as the initial value
