@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.tencent.lbssearch.TencentSearch;
 import com.tencent.lbssearch.httpresponse.BaseObject;
 import com.tencent.lbssearch.httpresponse.HttpResponseListener;
@@ -29,9 +31,13 @@ public class PosterCreateActivity extends AppCompatActivity {
     String lat,lng,type;
     TencentSearch tencentSearch;
     TextView txtAddress;
+    EditText txtContact;
+    EditText txtNeeds;
+
 
     public static class RequestCode{
         public static int AddPhoto=1;
+        public static int AddPosterLoginActivity=2;
     }
     private ArrayList<String> mResults = new ArrayList<>();
     @Override
@@ -66,6 +72,16 @@ public class PosterCreateActivity extends AppCompatActivity {
         lng=intent.getStringExtra("lng");
         type=intent.getStringExtra("type");
         txtAddress=(TextView)findViewById(R.id.txtAddress);
+        txtContact=(EditText) findViewById(R.id.txtContact);
+        txtNeeds=(EditText) findViewById(R.id.txtNeeds);
+
+        if(MemberMgr.CheckIsLogin(this,RequestCode.AddPosterLoginActivity)){
+            txtContact.setText(MemberMgr.GetMemberInfoFromDb(this).getMobile());
+        }
+
+        if(type.equals("1")){
+            txtNeeds.setText("我现在最需要的帮助是...");
+        }
 
 
         tencentSearch = new TencentSearch(this);
@@ -95,7 +111,7 @@ public class PosterCreateActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
                 // TODO Auto-generated method stub
-                txtAddress.setText("找不到位置");
+                txtAddress.setText("定位不到您当前的位置");
             }
         });
     }
@@ -113,9 +129,15 @@ public class PosterCreateActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 sb.append(String.format("Totally %d images selected:", mResults.size())).append("\n");
                 for(String result : mResults) {
-                    sb.append(result).append("\n");
+                    //sb.append(result).append("\n");
                 }
                 Toast.makeText(PosterCreateActivity.this,sb.toString(),Toast.LENGTH_LONG).show();
+            }
+        }else if(requestCode==RequestCode.AddPosterLoginActivity){
+            if(resultCode == RESULT_OK){
+                txtContact.setText(MemberMgr.GetMemberInfoFromDb(this).getMobile());
+            }else {
+                this.finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
