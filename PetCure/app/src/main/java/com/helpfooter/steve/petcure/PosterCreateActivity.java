@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.tencent.lbssearch.TencentSearch;
 import com.tencent.lbssearch.httpresponse.BaseObject;
@@ -63,7 +65,7 @@ public class PosterCreateActivity extends AppCompatActivity {
                 // start multiple photos selector
                 Intent intent = new Intent(PosterCreateActivity.this, ImagesSelectorActivity.class);
                 // max number of images to be selected
-                intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
+                intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 8);
                 // min size of image which will be shown; to filter tiny images (mainly icons)
                 intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
                 // show camera or not
@@ -125,6 +127,12 @@ public class PosterCreateActivity extends AppCompatActivity {
         gridImages.setVisibility(View.GONE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.poster_create, menu);
+        return true;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -184,6 +192,9 @@ public class PosterCreateActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home)
         {
             finish();
+            return true;
+        }else if (item.getItemId() == R.id.action_send) {
+            
             return true;
         }
         return super.onOptionsItemSelected(item);
