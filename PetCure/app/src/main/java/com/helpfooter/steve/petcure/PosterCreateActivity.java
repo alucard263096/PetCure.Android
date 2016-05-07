@@ -1,6 +1,8 @@
 package com.helpfooter.steve.petcure;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +30,7 @@ import com.zfdang.multiple_images_selector.SelectorSettings;
 import org.apache.http.Header;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PosterCreateActivity extends AppCompatActivity {
 
@@ -33,7 +39,8 @@ public class PosterCreateActivity extends AppCompatActivity {
     TextView txtAddress;
     EditText txtContact;
     EditText txtNeeds;
-
+    GridView gridImages;
+    Button btnAddImages;
 
     public static class RequestCode{
         public static int AddPhoto=1;
@@ -49,8 +56,8 @@ public class PosterCreateActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button bt = (Button) findViewById(R.id.btnAddImages);
-        bt.setOnClickListener(new View.OnClickListener() {
+        btnAddImages = (Button) findViewById(R.id.btnAddImages);
+        btnAddImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // start multiple photos selector
@@ -114,6 +121,8 @@ public class PosterCreateActivity extends AppCompatActivity {
                 txtAddress.setText("定位不到您当前的位置");
             }
         });
+        gridImages=(GridView)findViewById(R.id.gridImages);
+        gridImages.setVisibility(View.GONE);
     }
 
 
@@ -124,14 +133,39 @@ public class PosterCreateActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK) {
                 mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
                 assert mResults != null;
+                if(mResults.size()>0){
+                    ArrayList<HashMap<String,Object>> list=new ArrayList<HashMap<String,Object>>();
+                    HashMap<String,Object> map = null;
 
-                // show results in textview
-                StringBuilder sb = new StringBuilder();
-                sb.append(String.format("Totally %d images selected:", mResults.size())).append("\n");
-                for(String result : mResults) {
-                    //sb.append(result).append("\n");
+                    btnAddImages.setVisibility(View.GONE);
+                    gridImages.setVisibility(View.VISIBLE);
+                    // show results in textview
+                    for(String result : mResults) {
+                        map = new HashMap<String, Object>();
+                        map.put("ItemImage", BitmapFactory.decodeFile(result));
+                        list.add(map);
+                    }
+                    SimpleAdapter adapter = new SimpleAdapter(this,list,R.layout.images_shower,new String[]{"ItemImage"},new int[]{R.id.ItemImage});
+                    adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+
+                        public boolean setViewValue(View view, Object data,
+                                                    String textRepresentation) {
+                            //判断是否为我们要处理的对象
+                            if(view instanceof ImageView && data instanceof Bitmap){
+                                ImageView iv = (ImageView) view;
+                                iv.setImageBitmap((Bitmap) data);
+                                return true;
+                            }else
+                                return false;
+                        }
+
+
+                    });
+
+                    gridImages.setAdapter(adapter);
                 }
-                Toast.makeText(PosterCreateActivity.this,sb.toString(),Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(PosterCreateActivity.this,sb.toString(),Toast.LENGTH_LONG).show();
             }
         }else if(requestCode==RequestCode.AddPosterLoginActivity){
             if(resultCode == RESULT_OK){
