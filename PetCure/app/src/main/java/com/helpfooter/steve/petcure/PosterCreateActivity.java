@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imageutils.BitmapUtil;
+import com.helpfooter.steve.petcure.dataobjects.ResultObj;
+import com.helpfooter.steve.petcure.handles.AbstractHandles;
+import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
+import com.helpfooter.steve.petcure.loader.CreatePosterLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
+import com.helpfooter.steve.petcure.utils.ImageUtil;
 import com.tencent.lbssearch.TencentSearch;
 import com.tencent.lbssearch.httpresponse.BaseObject;
 import com.tencent.lbssearch.httpresponse.HttpResponseListener;
@@ -34,7 +42,7 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PosterCreateActivity extends AppCompatActivity {
+public class PosterCreateActivity extends AppCompatActivity implements IWebLoaderCallBack {
 
     String lat,lng,type;
     TencentSearch tencentSearch;
@@ -43,6 +51,46 @@ public class PosterCreateActivity extends AppCompatActivity {
     EditText txtNeeds;
     GridView gridImages;
     Button btnAddImages;
+    MenuItem btnPost;
+    PostCallBack postCallBack;
+    View poster_progress,realLayout;
+
+    @Override
+    public void CallBack(Object result) {
+        //ActivityMgr.ShowProgress(false,this,realLayout,poster_progress);
+        postCallBack.setObjs((ArrayList<ResultObj>)result);
+        postCallBack.sendHandle();
+    }
+
+    class PostCallBack extends AbstractHandles {
+        ArrayList<ResultObj> objs=null;
+
+        public void setObjs(ArrayList<ResultObj> objs) {
+            this.objs = objs;
+        }
+
+        public PostCallBack() {
+        }
+
+        @Override
+        public void callFunction() {
+
+            ActivityMgr.ShowProgress(false,PosterCreateActivity.this,realLayout,poster_progress);
+            if(objs.size()>0){
+
+                ResultObj result=objs.get(0);
+                if(result.getId()==0){
+                    PosterCreateActivity.this.setResult(RESULT_OK);
+                    PosterCreateActivity.this.finish();
+                }else {
+                    Toast.makeText(PosterCreateActivity.this,result.getResult(),Toast.LENGTH_LONG);
+                }
+
+            }else {
+                Toast.makeText(PosterCreateActivity.this,"请求发送失败，请检查网络重新再发送",Toast.LENGTH_LONG);
+            }
+        }
+    }
 
     public static class RequestCode{
         public static int AddPhoto=1;
@@ -83,13 +131,32 @@ public class PosterCreateActivity extends AppCompatActivity {
         txtAddress=(TextView)findViewById(R.id.txtAddress);
         txtContact=(EditText) findViewById(R.id.txtContact);
         txtNeeds=(EditText) findViewById(R.id.txtNeeds);
+        txtNeeds.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkCanPoster();
+            }
+        });
+
+        poster_progress=findViewById(R.id.poster_progress);
+        realLayout=findViewById(R.id.realLayout);
 
         if(MemberMgr.CheckIsLogin(this,RequestCode.AddPosterLoginActivity)){
             txtContact.setText(MemberMgr.GetMemberInfoFromDb(this).getMobile());
         }
 
         if(type.equals("1")){
-            txtNeeds.setText("我现在最需要的帮助是...");
+            txtNeeds.setHint("我现在最需要的帮助是...");
         }
 
 
@@ -125,6 +192,29 @@ public class PosterCreateActivity extends AppCompatActivity {
         });
         gridImages=(GridView)findViewById(R.id.gridImages);
         gridImages.setVisibility(View.GONE);
+
+
+        postCallBack=new PostCallBack();
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        btnPost=menu.findItem(R.id.action_send);
+        btnPost.setEnabled(false);
+        return true;
+    }
+
+    private void checkCanPoster() {
+        String poster=txtNeeds.getText().toString();
+        boolean canPost=true;
+        if(poster.length()<=0){
+            canPost=false;
+        }
+        if(mResults.size()<=0){
+            canPost=false;
+        }
+        //Toast.makeText(this,canPost?"canPost":"cannotPost",Toast.LENGTH_LONG).show();
+        btnPost.setEnabled(canPost);
     }
 
     @Override
@@ -150,7 +240,8 @@ public class PosterCreateActivity extends AppCompatActivity {
                     // show results in textview
                     for(String result : mResults) {
                         map = new HashMap<String, Object>();
-                        map.put("ItemImage", BitmapFactory.decodeFile(result));
+                        Bitmap b=ImageUtil.getSmallBitmap(result);
+                        map.put("ItemImage", b);
                         list.add(map);
                     }
                     SimpleAdapter adapter = new SimpleAdapter(this,list,R.layout.images_shower,new String[]{"ItemImage"},new int[]{R.id.ItemImage});
@@ -169,9 +260,9 @@ public class PosterCreateActivity extends AppCompatActivity {
 
 
                     });
-
                     gridImages.setAdapter(adapter);
                 }
+                checkCanPoster();
 
                 //Toast.makeText(PosterCreateActivity.this,sb.toString(),Toast.LENGTH_LONG).show();
             }
@@ -194,7 +285,11 @@ public class PosterCreateActivity extends AppCompatActivity {
             finish();
             return true;
         }else if (item.getItemId() == R.id.action_send) {
-            
+            ActivityMgr.ShowProgress(true,this,realLayout,poster_progress);
+            CreatePosterLoader posterLoader=new CreatePosterLoader(this,String.valueOf(type),txtNeeds.getText().toString(),mResults,
+                    lat,lng,txtAddress.getText().toString(),txtContact.getText().toString(),String.valueOf(MemberMgr.GetMemberInfoFromDb(this).getId()));
+            posterLoader.setCallBack(this);
+            posterLoader.start();
             return true;
         }
         return super.onOptionsItemSelected(item);

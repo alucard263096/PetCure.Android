@@ -2,6 +2,7 @@ package com.helpfooter.steve.petcure.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -25,7 +26,17 @@ import java.util.regex.Pattern;
  */
 public class Util {
 
+    public static String GetSDPath(){
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState()
+                .equals(android.os.Environment.MEDIA_MOUNTED);  //判断sd卡是否存在
+        if  (sdCardExist)
+        {
+            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+        }
+        return sdDir.toString();
 
+    }
 
     public static String Encryption(String plainText) {
         String re_md5 = new String();
