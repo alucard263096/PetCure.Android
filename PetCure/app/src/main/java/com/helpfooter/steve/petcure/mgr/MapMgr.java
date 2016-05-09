@@ -87,7 +87,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         myLocation.setVisible(false);
         myLocation.hideInfoWindow();
 
-        posterLoader=new PosterLoader(this.ctx,"http://www.myhkdoc.com/petcure/ui/setposter.php");
+        posterLoader=new PosterLoader(this.ctx);
         posterLoader.setIsCircle(true);
         posterLoader.setCallBack(this);
         posterLoader.setCircleSecond(60*5);
@@ -104,7 +104,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
             posterMarker.add(mark);
         }
-        posterMarkerHandle=new PosterMarkerHandle(posterMarker);
+        posterMarkerHandle=new PosterMarkerHandle(this.ctx, posterMarker);
          closeAllMarkerHandle=new CloseAllMarkerHandle(posterMarker);
 
         //tencentMap.setOnMarkerClickListener(this);
@@ -226,7 +226,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
             posterInfoView.setData(posterDO,m,posterMarker);
             closeAllMarkerHandle.setNotcloseMarker(m);
             closeAllMarkerHandle.sendHandle();
-            tencentMap.setCenter(new LatLng(posterDO.getRescue_lat(),posterDO.getRescue_lng()));
+            tencentMap.setCenter(new LatLng(posterDO.getLat(),posterDO.getLng()));
             return posterInfoView;
         }else {
             return null;

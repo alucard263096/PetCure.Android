@@ -2,7 +2,9 @@ package com.helpfooter.steve.petcure.loader;
 
 import android.content.Context;
 
+import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
+import com.helpfooter.steve.petcure.dataobjects.VersionObj;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,30 +16,26 @@ import java.util.HashMap;
 /**
  * Created by steve on 2016/4/29.
  */
-public class PosterLoader extends WebJSonLoader {
-    public PosterLoader(Context ctx, String url, HashMap<String, String> urlStaticParam) {
-        super(ctx, url, urlStaticParam);
+public class PosterLoader extends WebXmlLoader {
+    public PosterLoader(Context ctx, HashMap<String, String> urlStaticParam) {
+        super(ctx, StaticVar.APIUrl.PosterList, urlStaticParam);
     }
 
-    public PosterLoader(Context ctx, String url) {
-        super(ctx, url);
+    public PosterLoader(Context ctx) {
+        super(ctx, StaticVar.APIUrl.PosterList);
     }
 
     @Override
     public Object processData(Object res){
-        JSONObject json=(JSONObject)super.processData(res);
-        ArrayList<PosterObj> posterDOs=new ArrayList<PosterObj>();
-        try {
-            JSONArray jsonArray = json.getJSONArray("val");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                PosterObj pdo=new PosterObj();
-                pdo.parseJSon(jsonArray.getJSONObject(i));
-                posterDOs.add(pdo);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        ArrayList<HashMap<String,String>> xmlArray=(ArrayList<HashMap<String,String>>)super.processData(res);
+        ArrayList<PosterObj> objs=new ArrayList<PosterObj>();
+        for(HashMap<String,String> rs:xmlArray){
+            PosterObj obj=new PosterObj();
+            obj.parseXmlDataTable(rs);
+            objs.add(obj);
         }
-        return posterDOs;
+
+        return objs;
     }
 
 }

@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by steve on 2016/5/8.
@@ -116,6 +119,31 @@ public class ImageUtil {
             return bitmap;
         }
         return bitmap;
+    }
+
+    /**
+     * 获取网落图片资源
+     * @param url
+     * @return
+     */
+    public static Bitmap GetHttpBitmap(String url){
+        Bitmap bitmap=null;
+        try{
+            URL uri = new URL(url);
+            HttpURLConnection conn =  (HttpURLConnection) uri.openConnection();
+            conn.setConnectTimeout(5000);
+            //获取到文件的大小
+            InputStream is = conn.getInputStream();
+            //解析得到图片
+            bitmap = BitmapFactory.decodeStream(is);
+            //关闭数据流
+            is.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return bitmap;
+
     }
 
 }

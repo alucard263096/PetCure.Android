@@ -41,35 +41,35 @@ public class PosterInfoView  extends LinearLayout {
     }
 
     public void setData(final PosterObj posterDO, final Marker marker, final ArrayList<Marker> markers) {
-        ((TextView) findViewById(R.id.txtRescueLevel)).setText("(紧急：" + posterDO.getRescue_levelText() + ")");
-        ((TextView) findViewById(R.id.txtRescueLevel)).setTextColor(posterDO.getRescue_levelColor());
-
-
-        ((TextView) findViewById(R.id.txtRescueTypePet)).setText(posterDO.getRescue_typeText() + "的" + posterDO.getPet_typeText()+" "+posterDO.getRescue_need());
-        ((TextView) findViewById(R.id.txtPetDetail)).setText(posterDO.getPet_detail());
-        ((TextView) findViewById(R.id.txtRescueAddress)).setText(posterDO.getRescue_address() + " " + posterDO.getRescue_detail());
-        if (!posterDO.getContact_name().trim().isEmpty()) {
-            ((TextView) findViewById(R.id.txtContextPeople)).setText(posterDO.getContact_name());
-        }
-        if (!posterDO.getContact_mobile().trim().isEmpty()) {
-            ((TextView) findViewById(R.id.txtContextMobile)).setText(posterDO.getContact_mobile());
-            if(Util.IsMobileNO( posterDO.getContact_mobile())){
-                ((TextView) findViewById(R.id.txtContextMobile)).setTextColor(Color.BLUE);
-                ((TextView) findViewById(R.id.txtContextMobile)).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent myIntentDial=new Intent("android.intent.action.CALL", Uri.parse("tel:"+posterDO.getContact_mobile()));
-                        PosterInfoView.this.getContext().startActivity(myIntentDial);
-                    }
-                });
-            }
-        }
-        if (!posterDO.getContact_qq().trim().isEmpty()) {
-            ((TextView) findViewById(R.id.txtContextQQ)).setText(posterDO.getContact_qq());
-        }
-        if (!posterDO.getContact_wechat().trim().isEmpty()) {
-            ((TextView) findViewById(R.id.txtContextWechat)).setText(posterDO.getContact_wechat());
-        }
+//        ((TextView) findViewById(R.id.txtRescueLevel)).setText("(紧急：" + posterDO.getRescue_levelText() + ")");
+//        ((TextView) findViewById(R.id.txtRescueLevel)).setTextColor(posterDO.getRescue_levelColor());
+//
+//
+//        ((TextView) findViewById(R.id.txtRescueTypePet)).setText(posterDO.getRescue_typeText() + "的" + posterDO.getPet_typeText()+" "+posterDO.getRescue_need());
+//        ((TextView) findViewById(R.id.txtPetDetail)).setText(posterDO.getPet_detail());
+//        ((TextView) findViewById(R.id.txtRescueAddress)).setText(posterDO.getRescue_address() + " " + posterDO.getRescue_detail());
+//        if (!posterDO.getContact_name().trim().isEmpty()) {
+//            ((TextView) findViewById(R.id.txtContextPeople)).setText(posterDO.getContact_name());
+//        }
+//        if (!posterDO.getContact_mobile().trim().isEmpty()) {
+//            ((TextView) findViewById(R.id.txtContextMobile)).setText(posterDO.getContact_mobile());
+//            if(Util.IsMobileNO( posterDO.getContact_mobile())){
+//                ((TextView) findViewById(R.id.txtContextMobile)).setTextColor(Color.BLUE);
+//                ((TextView) findViewById(R.id.txtContextMobile)).setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent myIntentDial=new Intent("android.intent.action.CALL", Uri.parse("tel:"+posterDO.getContact_mobile()));
+//                        PosterInfoView.this.getContext().startActivity(myIntentDial);
+//                    }
+//                });
+//            }
+//        }
+//        if (!posterDO.getContact_qq().trim().isEmpty()) {
+//            ((TextView) findViewById(R.id.txtContextQQ)).setText(posterDO.getContact_qq());
+//        }
+//        if (!posterDO.getContact_wechat().trim().isEmpty()) {
+//            ((TextView) findViewById(R.id.txtContextWechat)).setText(posterDO.getContact_wechat());
+//        }
 
         ((TextView) findViewById(R.id.btnClose)).setOnClickListener(new OnClickListener() {
             @Override

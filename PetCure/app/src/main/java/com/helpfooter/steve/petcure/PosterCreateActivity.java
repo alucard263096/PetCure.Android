@@ -3,6 +3,7 @@ package com.helpfooter.steve.petcure;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,7 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imageutils.BitmapUtil;
+import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.ResultObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
@@ -208,6 +212,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
                 ActivityMgr.startActivityForResult(PosterCreateActivity.this,AddressSearchActivity.class,RequestCode.AddressSearch,dictLocation);
             }
         });
+
     }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

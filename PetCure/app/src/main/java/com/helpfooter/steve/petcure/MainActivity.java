@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Fresco.initialize(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

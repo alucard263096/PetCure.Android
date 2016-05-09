@@ -2,6 +2,7 @@ package com.helpfooter.steve.petcure.dataobjects;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.location.Address;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,161 +13,71 @@ import java.util.HashMap;
  * Created by steve on 2016/4/29.
  */
 public class PosterObj extends AbstractObj {
-    String pet_type;
-    String pet_size;
-    String pet_photo;
-    String pet_detail;
-    String rescue_type;
-    String rescue_level;
-    String rescue_address;
-    String rescue_detail;
-    String rescue_need;
-    String contact_name;
-    String contact_mobile;
-    String contact_qq;
-    String contact_wechat;
-    Double rescue_lat;
-    Double rescue_lng;
-    String verify;
-    String status;
+    String type;
+    String needs;
+    String photo;
+    String address;
+    double lat,lng;
+    String contact;
     String created_date;
+    int created_id;
     String updated_date;
+    int updated_id;
 
-
-    public String getPet_type() {
-        return pet_type;
+    public String getType() {
+        return type;
     }
 
-    public void setPet_type(String pet_type) {
-        this.pet_type = pet_type;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getPet_size() {
-        return pet_size;
+    public String getNeeds() {
+        return needs;
     }
 
-    public void setPet_size(String pet_size) {
-        this.pet_size = pet_size;
+    public void setNeeds(String needs) {
+        this.needs = needs;
     }
 
-    public String getPet_photo() {
-        return pet_photo;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPet_photo(String pet_photo) {
-        this.pet_photo = pet_photo;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getPet_detail() {
-        return pet_detail;
+    public String getAddress() {
+        return address;
     }
 
-    public void setPet_detail(String pet_detail) {
-        this.pet_detail = pet_detail;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getRescue_type() {
-        return rescue_type;
+    public double getLat() {
+        return lat;
     }
 
-    public void setRescue_type(String rescue_type) {
-        this.rescue_type = rescue_type;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public String getRescue_level() {
-        return rescue_level;
+    public double getLng() {
+        return lng;
     }
 
-    public void setRescue_level(String rescue_level) {
-        this.rescue_level = rescue_level;
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
-    public String getRescue_address() {
-        return rescue_address;
+    public String getContact() {
+        return contact;
     }
 
-    public void setRescue_address(String rescue_address) {
-        this.rescue_address = rescue_address;
-    }
-
-    public String getRescue_detail() {
-        return rescue_detail;
-    }
-
-    public void setRescue_detail(String rescue_detail) {
-        this.rescue_detail = rescue_detail;
-    }
-
-    public String getRescue_need() {
-        return rescue_need;
-    }
-
-    public void setRescue_need(String rescue_need) {
-        this.rescue_need = rescue_need;
-    }
-
-    public String getContact_name() {
-        return contact_name;
-    }
-
-    public void setContact_name(String contact_name) {
-        this.contact_name = contact_name;
-    }
-
-    public String getContact_mobile() {
-        return contact_mobile;
-    }
-
-    public void setContact_mobile(String contact_mobile) {
-        this.contact_mobile = contact_mobile;
-    }
-
-    public String getContact_qq() {
-        return contact_qq;
-    }
-
-    public void setContact_qq(String contact_qq) {
-        this.contact_qq = contact_qq;
-    }
-
-    public String getContact_wechat() {
-        return contact_wechat;
-    }
-
-    public void setContact_wechat(String contact_wechat) {
-        this.contact_wechat = contact_wechat;
-    }
-
-    public Double getRescue_lat() {
-        return rescue_lat;
-    }
-
-    public void setRescue_lat(Double rescue_lat) {
-        this.rescue_lat = rescue_lat;
-    }
-
-    public Double getRescue_lng() {
-        return rescue_lng;
-    }
-
-    public void setRescue_lng(Double rescue_lng) {
-        this.rescue_lng = rescue_lng;
-    }
-
-    public String getVerify() {
-        return verify;
-    }
-
-    public void setVerify(String verify) {
-        this.verify = verify;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getCreated_date() {
@@ -177,12 +88,28 @@ public class PosterObj extends AbstractObj {
         this.created_date = created_date;
     }
 
+    public int getCreated_id() {
+        return created_id;
+    }
+
+    public void setCreated_id(int created_id) {
+        this.created_id = created_id;
+    }
+
     public String getUpdated_date() {
         return updated_date;
     }
 
     public void setUpdated_date(String updated_date) {
         this.updated_date = updated_date;
+    }
+
+    public int getUpdated_id() {
+        return updated_id;
+    }
+
+    public void setUpdated_id(int updated_id) {
+        this.updated_id = updated_id;
     }
 
     @Override
@@ -192,81 +119,21 @@ public class PosterObj extends AbstractObj {
 
     @Override
     public void parseXmlDataTable(HashMap<String, String> lstRowValue) {
-
+        type = lstRowValue.get("type");
+        needs = lstRowValue.get("needs");
+        photo = lstRowValue.get("photo");
+        address = lstRowValue.get("address");
+        lat = Double.valueOf(lstRowValue.get("lat"));
+        lng = Double.valueOf(lstRowValue.get("lng"));
+        contact = lstRowValue.get("contact");
+        created_date = lstRowValue.get("created_date");
+        created_id = Integer.valueOf(lstRowValue.get("created_id"));
+        updated_date = lstRowValue.get("updated_date");
+        updated_id = Integer.valueOf(lstRowValue.get("updated_id"));
     }
 
+    @Override
     public void parseJSon(JSONObject json) {
-        try {
-            id = json.getInt("id");
-            pet_type = json.getString("pet_type");
-            pet_size = json.getString("pet_size");
-            pet_photo = json.getString("pet_photo");
-            pet_detail = json.getString("pet_detail");
-            rescue_type = json.getString("rescue_type");
-            rescue_level = json.getString("rescue_level");
-            rescue_address = json.getString("rescue_address");
-            rescue_detail = json.getString("rescue_detail");
-            rescue_need = json.getString("rescue_need");
-            contact_name = json.getString("contact_name");
-            contact_mobile = json.getString("contact_mobile");
-            contact_qq = json.getString("contact_qq");
-            contact_wechat = json.getString("contact_wechat");
-            rescue_lat = json.getDouble("rescue_lat");
-            rescue_lng = json.getDouble("rescue_lng");
-            verify = json.getString("verify");
-            status = json.getString("status");
-            created_date = json.getString("created_date");
-            updated_date = json.getString("updated_date");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public String getRescue_levelText() {
-        if(rescue_level.equals("C")){
-            return "严重";
-        }else if(rescue_level.equals("H")) {
-            return "高";
-        }else if(rescue_level.equals("M")) {
-            return "中";
-        }else if(rescue_level.equals("L")) {
-            return "低";
-        }
-        return "中";
-    }
-
-    public int getRescue_levelColor() {
-        if(rescue_level.equals("C")){
-        return Color.RED;
-    }else if(rescue_level.equals("H")) {
-            return Color.parseColor("#FF6201");
-    }else if(rescue_level.equals("M")) {
-            return Color.BLUE;
-    }else if(rescue_level.equals("L")) {
-            return Color.GREEN;
-    }
-        return Color.BLUE;
-    }
-
-    public String getRescue_typeText() {
-        if(rescue_type.equals("W")){
-            return "受伤";
-        }else if(rescue_type.equals("H")) {
-            return "饥饿";
-        }else if(rescue_type.equals("L")) {
-            return "走失";
-        }else if(rescue_type.equals("A")) {
-            return "待领养";
-        }
-        return "有麻烦";
-    }
-
-    public String getPet_typeText() {
-        if(rescue_type.equals("D")){
-            return "狗狗";
-        }else if(rescue_type.equals("C")) {
-            return "猫猫";
-        }
-        return "小可爱";
     }
 }
