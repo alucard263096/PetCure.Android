@@ -16,7 +16,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.4"
+        versionName "1.5"
     }
     buildTypes {
         release {
@@ -41,4 +41,6 @@ dependencies {
     compile 'com.facebook.fresco:webpsupport:0.10.0'
     compile project(path: ':multiple-images-selector')
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile files('src/main/libs/android-async-http-1.4.9.jar')
+    compile files('src/main/libs/httpclient-4.3.6.jar')
 }

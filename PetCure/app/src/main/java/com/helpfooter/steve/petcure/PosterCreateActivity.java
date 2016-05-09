@@ -1,15 +1,33 @@
 package com.helpfooter.steve.petcure;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imageutils.BitmapUtil;
+import com.helpfooter.steve.petcure.dataobjects.ResultObj;
+import com.helpfooter.steve.petcure.handles.AbstractHandles;
+import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
+import com.helpfooter.steve.petcure.loader.CreatePosterLoader;
+import com.helpfooter.steve.petcure.mgr.ActivityMgr;
+import com.helpfooter.steve.petcure.mgr.MemberMgr;
+import com.helpfooter.steve.petcure.utils.ImageUtil;
 import com.tencent.lbssearch.TencentSearch;
 import com.tencent.lbssearch.httpresponse.BaseObject;
 import com.tencent.lbssearch.httpresponse.HttpResponseListener;
@@ -22,34 +40,82 @@ import com.zfdang.multiple_images_selector.SelectorSettings;
 import org.apache.http.Header;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class PosterCreateActivity extends AppCompatActivity {
+public class PosterCreateActivity extends AppCompatActivity implements IWebLoaderCallBack {
 
     String lat,lng,type;
     TencentSearch tencentSearch;
     TextView txtAddress;
+    EditText txtContact;
+    EditText txtNeeds;
+    GridView gridImages;
+    Button btnAddImages;
+    MenuItem btnPost;
+    PostCallBack postCallBack;
+    View poster_progress,realLayout;
+
+    @Override
+    public void CallBack(Object result) {
+        //ActivityMgr.ShowProgress(false,this,realLayout,poster_progress);
+        postCallBack.setObjs((ArrayList<ResultObj>)result);
+        postCallBack.sendHandle();
+    }
+
+    class PostCallBack extends AbstractHandles {
+        ArrayList<ResultObj> objs=null;
+
+        public void setObjs(ArrayList<ResultObj> objs) {
+            this.objs = objs;
+        }
+
+        public PostCallBack() {
+        }
+
+        @Override
+        public void callFunction() {
+
+            ActivityMgr.ShowProgress(false,PosterCreateActivity.this,realLayout,poster_progress);
+            if(objs.size()>0){
+
+                ResultObj result=objs.get(0);
+                if(result.getId()==0){
+                    PosterCreateActivity.this.setResult(RESULT_OK);
+                    PosterCreateActivity.this.finish();
+                }else {
+                    Toast.makeText(PosterCreateActivity.this,result.getResult(),Toast.LENGTH_LONG);
+                }
+
+            }else {
+                Toast.makeText(PosterCreateActivity.this,"请求发送失败，请检查网络重新再发送",Toast.LENGTH_LONG);
+            }
+        }
+    }
 
     public static class RequestCode{
         public static int AddPhoto=1;
+        public static int AddPosterLoginActivity=2;
     }
     private ArrayList<String> mResults = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(getApplicationContext());
+
         setContentView(R.layout.activity_poster_create);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button bt = (Button) findViewById(R.id.btnAddImages);
-        bt.setOnClickListener(new View.OnClickListener() {
+        btnAddImages = (Button) findViewById(R.id.btnAddImages);
+        btnAddImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // start multiple photos selector
                 Intent intent = new Intent(PosterCreateActivity.this, ImagesSelectorActivity.class);
                 // max number of images to be selected
-                intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
+                intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 8);
                 // min size of image which will be shown; to filter tiny images (mainly icons)
-                intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100);
+                intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
                 // show camera or not
                 intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
                 // pass current selected images as the initial value
@@ -63,6 +129,35 @@ public class PosterCreateActivity extends AppCompatActivity {
         lng=intent.getStringExtra("lng");
         type=intent.getStringExtra("type");
         txtAddress=(TextView)findViewById(R.id.txtAddress);
+        txtContact=(EditText) findViewById(R.id.txtContact);
+        txtNeeds=(EditText) findViewById(R.id.txtNeeds);
+        txtNeeds.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkCanPoster();
+            }
+        });
+
+        poster_progress=findViewById(R.id.poster_progress);
+        realLayout=findViewById(R.id.realLayout);
+
+        if(MemberMgr.CheckIsLogin(this,RequestCode.AddPosterLoginActivity)){
+            txtContact.setText(MemberMgr.GetMemberInfoFromDb(this).getMobile());
+        }
+
+        if(type.equals("1")){
+            txtNeeds.setHint("我现在最需要的帮助是...");
+        }
 
 
         tencentSearch = new TencentSearch(this);
@@ -92,11 +187,42 @@ public class PosterCreateActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers,
                                   String responseString, Throwable throwable) {
                 // TODO Auto-generated method stub
-                txtAddress.setText("找不到位置");
+                txtAddress.setText("定位不到您当前的位置");
             }
         });
+        gridImages=(GridView)findViewById(R.id.gridImages);
+        gridImages.setVisibility(View.GONE);
+
+
+        postCallBack=new PostCallBack();
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        btnPost=menu.findItem(R.id.action_send);
+        btnPost.setEnabled(false);
+        return true;
     }
 
+    private void checkCanPoster() {
+        String poster=txtNeeds.getText().toString();
+        boolean canPost=true;
+        if(poster.length()<=0){
+            canPost=false;
+        }
+        if(mResults.size()<=0){
+            canPost=false;
+        }
+        //Toast.makeText(this,canPost?"canPost":"cannotPost",Toast.LENGTH_LONG).show();
+        btnPost.setEnabled(canPost);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.poster_create, menu);
+        return true;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,14 +231,46 @@ public class PosterCreateActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK) {
                 mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
                 assert mResults != null;
+                if(mResults.size()>0){
+                    ArrayList<HashMap<String,Object>> list=new ArrayList<HashMap<String,Object>>();
+                    HashMap<String,Object> map = null;
 
-                // show results in textview
-                StringBuilder sb = new StringBuilder();
-                sb.append(String.format("Totally %d images selected:", mResults.size())).append("\n");
-                for(String result : mResults) {
-                    sb.append(result).append("\n");
+                    btnAddImages.setVisibility(View.GONE);
+                    gridImages.setVisibility(View.VISIBLE);
+                    // show results in textview
+                    for(String result : mResults) {
+                        map = new HashMap<String, Object>();
+                        Bitmap b=ImageUtil.getSmallBitmap(result);
+                        map.put("ItemImage", b);
+                        list.add(map);
+                    }
+                    SimpleAdapter adapter = new SimpleAdapter(this,list,R.layout.images_shower,new String[]{"ItemImage"},new int[]{R.id.ItemImage});
+                    adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+
+                        public boolean setViewValue(View view, Object data,
+                                                    String textRepresentation) {
+                            //判断是否为我们要处理的对象
+                            if(view instanceof ImageView && data instanceof Bitmap){
+                                ImageView iv = (ImageView) view;
+                                iv.setImageBitmap((Bitmap) data);
+                                return true;
+                            }else
+                                return false;
+                        }
+
+
+                    });
+                    gridImages.setAdapter(adapter);
                 }
-                Toast.makeText(PosterCreateActivity.this,sb.toString(),Toast.LENGTH_LONG).show();
+                checkCanPoster();
+
+                //Toast.makeText(PosterCreateActivity.this,sb.toString(),Toast.LENGTH_LONG).show();
+            }
+        }else if(requestCode==RequestCode.AddPosterLoginActivity){
+            if(resultCode == RESULT_OK){
+                txtContact.setText(MemberMgr.GetMemberInfoFromDb(this).getMobile());
+            }else {
+                this.finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,6 +283,13 @@ public class PosterCreateActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home)
         {
             finish();
+            return true;
+        }else if (item.getItemId() == R.id.action_send) {
+            ActivityMgr.ShowProgress(true,this,realLayout,poster_progress);
+            CreatePosterLoader posterLoader=new CreatePosterLoader(this,String.valueOf(type),txtNeeds.getText().toString(),mResults,
+                    lat,lng,txtAddress.getText().toString(),txtContact.getText().toString(),String.valueOf(MemberMgr.GetMemberInfoFromDb(this).getId()));
+            posterLoader.setCallBack(this);
+            posterLoader.start();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.helpfooter.steve.petcure.PosterCreateActivity">
+    <ProgressBar
+        android:id="@+id/poster_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/realLayout"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.helpfooter.steve.petcure.PosterCreateActivity">
-
+    android:paddingTop="@dimen/activity_vertical_margin">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,22 +33,32 @@
         android:hint="@string/poster_create_detail"
         android:id="@+id/txtNeeds"
         android:layout_alignParentTop="true" />
-
     <Button
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:background="@drawable/icon_addpic_focused"
         android:id="@+id/btnAddImages"
+        android:background="@drawable/icon_addpic_focused"
         android:layout_below="@+id/txtNeeds"/>
+    <GridView
+        android:id="@+id/gridImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:columnWidth="70dp"
+        android:stretchMode="columnWidth"
+        android:layout_below="@+id/btnAddImages" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:id="@+id/hr1"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/btnAddImages"
+        android:layout_below="@+id/gridImages"
         android:background="@color/Gray"
         ></LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +71,7 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/txtAddressLogo"
             android:text="&#xf041;"
+            android:textSize="20dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +79,6 @@
             android:lines="1"
             android:id="@+id/txtAddress"
             android:layout_toRightOf="@+id/txtAddressLogo"
-            android:layout_alignBottom="@+id/txtAddressLogo"
             android:layout_marginLeft="10dp"
             android:text="位置加载中..."/>
         <com.helpfooter.steve.petcure.myviews.FontAwesomeView
@@ -63,6 +86,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="&#xf105;"
+            android:textSize="20dp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -74,4 +98,35 @@
         android:layout_below="@+id/llLocation"
         android:background="@color/Gray"
         ></LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/llContact"
+        android:layout_below="@+id/hr2"
+        android:orientation="horizontal">
+        <com.helpfooter.steve.petcure.myviews.FontAwesomeView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/txtContactLogo"
+            android:text="&#xf095;"
+            android:textSize="20dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="10"
+            android:lines="1"
+            android:background="@null"
+            android:textSize="15dp"
+            android:layout_toRightOf="@+id/txtContactLogo"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/poster_create_contact"
+            android:id="@+id/txtContact" />
+    </RelativeLayout>
+
 </RelativeLayout>
+</LinearLayout>

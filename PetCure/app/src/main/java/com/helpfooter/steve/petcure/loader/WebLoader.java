@@ -35,6 +35,10 @@ public class WebLoader extends Thread {
 
     HashMap<String,String> urlStaticParam=null;
 
+    public HashMap<String, String> getUrlDynamicParam() {
+        return urlDynamicParam;
+    }
+
     HashMap<String,String> urlDynamicParam=null;
     public void setUrlDynamicParam(HashMap<String,String> urlDynamicParam){
         this.urlDynamicParam=urlDynamicParam;
@@ -141,6 +145,10 @@ public class WebLoader extends Thread {
         callBack=val;
     }
 
+    public void beforeRun(){
+
+    }
+
 
     public void RealRun(){
         if(onlyWifi){
@@ -151,6 +159,7 @@ public class WebLoader extends Thread {
                 }
             }
         }
+        beforeRun();
         String fullurl=getFullUrl();
         String res=getSoap(fullurl);
         Log.i("WebLoader:"+fullurl,res);
