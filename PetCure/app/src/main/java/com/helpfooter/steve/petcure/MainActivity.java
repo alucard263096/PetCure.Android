@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     public static class RequestCode{
         public static int AddPosterLoginActivity=1;
+        public static int AddPosterActivity=2;
     }
 
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity
             dictLocation.put("lat",mapMgr.getLat());
             dictLocation.put("lng",mapMgr.getLng());
             dictLocation.put("type",String.valueOf(i));
-            ActivityMgr.startActivity(MainActivity.this,PosterCreateActivity.class,dictLocation);
+            ActivityMgr.startActivityForResult(MainActivity.this,PosterCreateActivity.class,RequestCode.AddPosterActivity,dictLocation);
         }
     };
 
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity
         if(resultCode==RESULT_OK) {
             if (requestCode == RequestCode.AddPosterLoginActivity) {
                 ActivityMgr.ShowBottomOptionDialog(this,R.array.send_poster_type,dialogListener);
+            }else  if (requestCode == RequestCode.AddPosterActivity) {
+                Toast.makeText(this,"添加成功",Toast.LENGTH_LONG);
             }
         }
     }

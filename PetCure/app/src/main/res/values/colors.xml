@@ -11,5 +11,6 @@
     <color name="Warning">#F3A02C</color>
     <color name="Danger">#E7302B</color>
     <color name="Gray">#909090</color>
+    <color name="LightGray">#EEEEEE</color>
 
 </resources>

@@ -54,6 +54,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
     MenuItem btnPost;
     PostCallBack postCallBack;
     View poster_progress,realLayout;
+    View btnAddressSearch;
 
     @Override
     public void CallBack(Object result) {
@@ -95,6 +96,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
     public static class RequestCode{
         public static int AddPhoto=1;
         public static int AddPosterLoginActivity=2;
+        public static int AddressSearch=3;
     }
     private ArrayList<String> mResults = new ArrayList<>();
     @Override
@@ -195,6 +197,17 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
 
 
         postCallBack=new PostCallBack();
+        btnAddressSearch=findViewById(R.id.btnAddressSearch);
+        btnAddressSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                HashMap<String,String> dictLocation=new HashMap<String,String>();
+                dictLocation.put("lat",lat);
+                dictLocation.put("lng",lat);
+                ActivityMgr.startActivityForResult(PosterCreateActivity.this,AddressSearchActivity.class,RequestCode.AddressSearch,dictLocation);
+            }
+        });
     }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
