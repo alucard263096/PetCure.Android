@@ -17,9 +17,7 @@ import java.util.HashMap;
  * Created by steve on 2016/4/29.
  */
 public class PosterLoader extends WebXmlLoader {
-    public PosterLoader(Context ctx, HashMap<String, String> urlStaticParam) {
-        super(ctx, StaticVar.APIUrl.PosterList, urlStaticParam);
-    }
+
 
     public PosterLoader(Context ctx) {
         super(ctx, StaticVar.APIUrl.PosterList);

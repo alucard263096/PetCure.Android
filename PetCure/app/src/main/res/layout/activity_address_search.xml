@@ -21,13 +21,14 @@
             android:textSize="14dp"
             android:gravity="center"
             android:padding="5dp"
+            android:lines="1"
+            android:maxLength="10"
             android:id="@+id/txtKeyword"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <ScrollView
+    <ListView
         android:id="@+id/listResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    </ScrollView>
+    </ListView>
 </LinearLayout>

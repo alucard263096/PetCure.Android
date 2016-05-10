@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="名称"
-        android:id="@+id/txtBuild"
+        android:id="@+id/txtTitle"
         android:textColor="@color/black"
         android:textSize="17dp"/>
     <TextView
@@ -18,5 +18,19 @@
         android:layout_height="wrap_content"
         android:text="具体地址"
         android:id="@+id/txtAddress"
+        android:textSize="12dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="lat"
+        android:visibility="gone"
+        android:id="@+id/txtLat"
+        android:textSize="12dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="txtLng"
+        android:id="@+id/txtLng"
+        android:visibility="gone"
         android:textSize="12dp"/>
 </LinearLayout>

@@ -30,6 +30,7 @@ import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.CreatePosterLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
+import com.helpfooter.steve.petcure.mgr.MapSearchMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.utils.ImageUtil;
 import com.tencent.lbssearch.TencentSearch;
@@ -48,8 +49,7 @@ import java.util.HashMap;
 
 public class PosterCreateActivity extends AppCompatActivity implements IWebLoaderCallBack {
 
-    String lat,lng,type;
-    TencentSearch tencentSearch;
+    String lat,lng,type,city;
     TextView txtAddress;
     EditText txtContact;
     EditText txtNeeds;
@@ -58,7 +58,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
     MenuItem btnPost;
     PostCallBack postCallBack;
     View poster_progress,realLayout;
-    View btnAddressSearch;
+    View llLocation;
 
     @Override
     public void CallBack(Object result) {
@@ -166,10 +166,9 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
         }
 
 
-        tencentSearch = new TencentSearch(this);
         Geo2AddressParam param = new Geo2AddressParam().location(new Location()
                 .lat(Float.valueOf(lat)).lng(Float.valueOf(lng)));
-        tencentSearch.geo2address(param, new HttpResponseListener() {
+        MapSearchMgr.getSearch().geo2address(param, new HttpResponseListener() {
 
             //如果成功会调用这个方法，用户需要在这里获取检索结果，调用自己的业务逻辑
             @Override
@@ -178,12 +177,9 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
                 // TODO Auto-generated method stub
                 if(object != null){
                     Geo2AddressResultObject oj = (Geo2AddressResultObject)object;
-                    String result = "坐标转地址：lat:"+String.valueOf(lat)+"  lng:"+
-                            String.valueOf(lng) + "\n\n";
                     if(oj.result != null){
-                        Log.v("demo","address:"+oj.result.address);
-                        result += oj.result.address;
                         txtAddress.setText(oj.result.address);
+                        city=oj.result.ad_info.city;
                     }
                 }
             }
@@ -201,14 +197,15 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
 
 
         postCallBack=new PostCallBack();
-        btnAddressSearch=findViewById(R.id.btnAddressSearch);
-        btnAddressSearch.setOnClickListener(new View.OnClickListener() {
+        llLocation=findViewById(R.id.llLocation);
+        llLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 HashMap<String,String> dictLocation=new HashMap<String,String>();
                 dictLocation.put("lat",lat);
-                dictLocation.put("lng",lat);
+                dictLocation.put("lng",lng);
+                dictLocation.put("city",city);
                 ActivityMgr.startActivityForResult(PosterCreateActivity.this,AddressSearchActivity.class,RequestCode.AddressSearch,dictLocation);
             }
         });
@@ -287,6 +284,15 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
         }else if(requestCode==RequestCode.AddPosterLoginActivity){
             if(resultCode == RESULT_OK){
                 txtContact.setText(MemberMgr.GetMemberInfoFromDb(this).getMobile());
+            }else {
+                this.finish();
+            }
+        }else if(requestCode==RequestCode.AddressSearch){
+            if(resultCode == RESULT_OK){
+                lat= data.getExtras().getString("lat");
+                lng= data.getExtras().getString("lat");
+                String address= data.getExtras().getString("address");
+                txtAddress.setText(address);
             }else {
                 this.finish();
             }

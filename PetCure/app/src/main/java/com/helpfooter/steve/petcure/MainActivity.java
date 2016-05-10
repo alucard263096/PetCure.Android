@@ -27,6 +27,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
+import com.helpfooter.steve.petcure.mgr.MapSearchMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
 import com.tencent.tencentmap.mapsdk.map.MapView;
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        MapSearchMgr.InitSearch(this);
 
         onMyCreate(savedInstanceState);
     }

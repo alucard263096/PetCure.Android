@@ -74,10 +74,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         tencentMap.setCenter(new LatLng(22.538403, 114.051647));
         //设置缩放级别
         tencentMap.setZoom(17);
-
-
         mLocationManager = TencentLocationManager.getInstance(this.ctx);
-
         myLocation = tencentMap.addMarker(new MarkerOptions()
                 .position(new LatLng(22.538403, 114.051647))
                 .title("我的位置")

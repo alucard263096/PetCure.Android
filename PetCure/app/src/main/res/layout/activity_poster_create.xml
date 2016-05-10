@@ -86,7 +86,6 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="&#xf105;"
-            android:id="@+id/btnAddressSearch"
             android:textSize="20dp"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>

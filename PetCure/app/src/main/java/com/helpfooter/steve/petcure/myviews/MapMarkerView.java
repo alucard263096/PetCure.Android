@@ -49,41 +49,41 @@ public class MapMarkerView  extends LinearLayout {
     }
 
     public void setData(PosterObj obj) {
-//        Uri uri = Uri.parse(StaticVar.PetImageUrl+obj.getPhoto());
-//        Log.i("MapMarker",StaticVar.PetImageUrl+obj.getPhoto());
-//        SimpleDraweeView imageView= ((SimpleDraweeView) findViewById(R.id.image_view));
-//        DraweeController dr= Fresco.newDraweeControllerBuilder().setUri(uri).setAutoPlayAnimations(true).build();
-//        imageView.setController(dr);
-        ImageView imageView = ((ImageView) findViewById(R.id.image_view));
+        Uri uri = Uri.parse(StaticVar.PetImageUrl+obj.getPhoto());
+        Log.i("MapMarker",StaticVar.PetImageUrl+obj.getPhoto());
+        SimpleDraweeView imageView= ((SimpleDraweeView) findViewById(R.id.image_view));
+        DraweeController dr= Fresco.newDraweeControllerBuilder().setUri(uri).setAutoPlayAnimations(true).build();
+        imageView.setController(dr);
+        //ImageView imageView = ((ImageView) findViewById(R.id.image_view));
 //        Bitmap bitmap = ImageUtil.GetHttpBitmap(StaticVar.PetImageUrl + obj.getPhoto());
 //        imageView.setImageBitmap(bitmap);
 
-        class DisplayImage extends AsyncTask<String,Void,Bitmap> {
-            private ImageView imageView;
-
-            public DisplayImage(ImageView imageView) {
-                this.imageView = imageView;
-            }
-
-            @Override
-            protected Bitmap doInBackground(String... params) {
-                String url = params[0];
-                Bitmap bitmap = null;
-                try {
-                    InputStream is = new URL(url).openStream();
-                    bitmap = BitmapFactory.decodeStream(is);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return bitmap;
-            }
-            @Override
-            protected void onPostExecute(Bitmap result) {
-                super.onPostExecute(result);
-                imageView.setImageBitmap(result);
-            }
-        }
-        new DisplayImage(imageView).execute(StaticVar.PetImageUrl + obj.getPhoto());
+//        class DisplayImage extends AsyncTask<String,Void,Bitmap> {
+//            private ImageView imageView;
+//
+//            public DisplayImage(ImageView imageView) {
+//                this.imageView = imageView;
+//            }
+//
+//            @Override
+//            protected Bitmap doInBackground(String... params) {
+//                String url = params[0];
+//                Bitmap bitmap = null;
+//                try {
+//                    InputStream is = new URL(url).openStream();
+//                    bitmap = BitmapFactory.decodeStream(is);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                return bitmap;
+//            }
+//            @Override
+//            protected void onPostExecute(Bitmap result) {
+//                super.onPostExecute(result);
+//                imageView.setImageBitmap(result);
+//            }
+//        }
+//        new DisplayImage(imageView).execute(StaticVar.PetImageUrl + obj.getPhoto());
 
     }
 
