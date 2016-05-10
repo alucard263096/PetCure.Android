@@ -89,20 +89,9 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         posterLoader.setCallBack(this);
         posterLoader.setCircleSecond(60*5);
 
-        for(int i=0;i<100;i++){
-            Marker mark = tencentMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(22.538403, 114.051647))
-                    .title("shabi")
-                    .icon(BitmapDescriptorFactory
-                            .fromAsset("dog.png"))
-                    .draggable(false));
-            mark.setVisible(false);
-            mark.hideInfoWindow();
 
-            posterMarker.add(mark);
-        }
-        posterMarkerHandle=new PosterMarkerHandle(this.ctx, posterMarker);
-         closeAllMarkerHandle=new CloseAllMarkerHandle(posterMarker);
+        posterMarkerHandle=new PosterMarkerHandle(this.ctx,this.tencentMap, posterMarker);
+        closeAllMarkerHandle=new CloseAllMarkerHandle(posterMarker);
 
         //tencentMap.setOnMarkerClickListener(this);
 
@@ -115,14 +104,6 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     public void onLocationChanged(TencentLocation location, int error, String reason) {
         String msg = null;
         if (error == TencentLocation.ERROR_OK) {
-            // 定位成功
-//            StringBuilder sb = new StringBuilder();
-//            sb.append("(纬度=").append(location.getLatitude()).append(",经度=")
-//                    .append(location.getLongitude()).append(",精度=")
-//                    .append(location.getAccuracy()).append("), 来源=")
-//                    .append(location.getProvider()).append(", 地址=")
-//                    .append(location.getAddress());
-//            msg = sb.toString();
 
             HashMap<String,String> hmLocation=new HashMap<String, String>();
             hmLocation.put("lat",String.valueOf(location.getLatitude()));

@@ -3,11 +3,14 @@ package com.helpfooter.steve.petcure.handles;
 import android.content.Context;
 
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
+import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.myviews.MapMarkerView;
 import com.tencent.mapsdk.raster.model.BitmapDescriptor;
 import com.tencent.mapsdk.raster.model.BitmapDescriptorFactory;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
+import com.tencent.mapsdk.raster.model.MarkerOptions;
+import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
 import java.util.ArrayList;
 
@@ -18,10 +21,12 @@ public class PosterMarkerHandle extends AbstractHandles {
 
     ArrayList<Marker> markers=null;
     Context ctx=null;
+    TencentMap map;
 
-    public PosterMarkerHandle(Context ctx,ArrayList<Marker> markers) {
+    public PosterMarkerHandle(Context ctx,TencentMap map,ArrayList<Marker> markers) {
         this.ctx=ctx;
         this.markers = markers;
+        this.map=map;
     }
 
     ArrayList<PosterObj> posterDOs=null;
@@ -31,19 +36,15 @@ public class PosterMarkerHandle extends AbstractHandles {
 
     @Override
     public void callFunction() {
-        for(int i=0;i<100;i++){
-            Marker marker=markers.get(i);
-            try {
-                if(posterDOs!=null&&i<posterDOs.size()){
-                    updateMarkerByPoster(marker,posterDOs.get(i));
-                    marker.setVisible(true);
-                }else {
-                    marker.setVisible(false);
-                    marker.setTag(null);
-                }
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
+        for(Marker mk:markers){
+            mk.remove();
+        }
+        markers.clear();
+        for (PosterObj obj:posterDOs){
+            Marker mark = map.addMarker(new MarkerOptions().draggable(false));
+            mark.setVisible(true);
+            updateMarkerByPoster(mark,obj);
+            markers.add(mark);
         }
     }
 
