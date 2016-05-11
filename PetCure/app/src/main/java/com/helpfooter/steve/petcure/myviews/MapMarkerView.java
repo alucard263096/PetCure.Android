@@ -21,6 +21,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.helpfooter.steve.petcure.R;
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
+import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
 import com.helpfooter.steve.petcure.utils.ImageUtil;
 import com.helpfooter.steve.petcure.utils.Util;
 import com.tencent.mapsdk.raster.model.Marker;
@@ -49,8 +50,13 @@ public class MapMarkerView  extends LinearLayout {
     }
 
     public void setData(PosterObj obj) {
+        //String strUrl=StaticVar.PetImageUrl+obj.getPhoto();
         Uri uri = Uri.parse(StaticVar.PetImageUrl+obj.getPhoto());
-        Log.i("MapMarker",StaticVar.PetImageUrl+obj.getPhoto());
+        //ImageView imageView= ((ImageView) findViewById(R.id.image_view));
+        //ImageLoaderMgr.GetImageLoader().displayImage(strUrl,imageView,ImageLoaderMgr.GetDefaultDisplayImageOptions());
+
+
+//        Log.i("MapMarker",StaticVar.PetImageUrl+obj.getPhoto());
         SimpleDraweeView imageView= ((SimpleDraweeView) findViewById(R.id.image_view));
         DraweeController dr= Fresco.newDraweeControllerBuilder().setUri(uri).setAutoPlayAnimations(true).build();
         imageView.setController(dr);
@@ -84,6 +90,10 @@ public class MapMarkerView  extends LinearLayout {
 //            }
 //        }
 //        new DisplayImage(imageView).execute(StaticVar.PetImageUrl + obj.getPhoto());
+
+
+
+
 
     }
 

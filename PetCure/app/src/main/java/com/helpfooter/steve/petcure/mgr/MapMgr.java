@@ -73,7 +73,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         //设置地图中心点
         tencentMap.setCenter(new LatLng(22.538403, 114.051647));
         //设置缩放级别
-        tencentMap.setZoom(17);
+        tencentMap.setZoom(12);
         mLocationManager = TencentLocationManager.getInstance(this.ctx);
         myLocation = tencentMap.addMarker(new MarkerOptions()
                 .position(new LatLng(22.538403, 114.051647))
@@ -98,6 +98,12 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         tencentMap.setInfoWindowAdapter(this);
 
 
+
+        HashMap<String,String> hmLocation=new HashMap<String, String>();
+        hmLocation.put("lat",String.valueOf(22.538403));
+        hmLocation.put("lng",String.valueOf(114.051647));
+        posterLoader.setUrlDynamicParam(hmLocation);
+        posterLoader.start();
     }
 
     @Override
@@ -112,7 +118,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
             if (setCenterFirstTime) {
                 tencentMap.setCenter(new LatLng(location.getLatitude(), location.getLongitude()));
-                posterLoader.start();
+                //posterLoader.start();
                 setCenterFirstTime = false;
             }
             myLocation.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));

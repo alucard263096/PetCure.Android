@@ -3,17 +3,19 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="50dp"
-    android:padding="10dp"
+    android:padding="5dp"
     android:layout_height="50dp" android:background="@color/primary">
-    <!--<com.facebook.drawee.view.SimpleDraweeView-->
-        <!--android:id="@+id/image_view"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"/>-->
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_view"
-        android:scaleType="centerCrop"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:src="@drawable/logo"
-        />
+        android:scaleType="centerCrop"/>
+    <!--<ImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:id="@+id/image_view"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/logo"-->
+        <!--/>-->
 </LinearLayout>

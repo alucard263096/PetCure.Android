@@ -106,7 +106,6 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(getApplicationContext());
 
         setContentView(R.layout.activity_poster_create);
 

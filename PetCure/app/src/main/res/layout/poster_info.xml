@@ -12,74 +12,12 @@
         android:text="&#xf00d;"
         android:textSize="18dp"
         android:id="@+id/btnClose"/>
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtRescueLevel"
-            android:text="(紧急：中)"
-            android:textColor="@color/red"
-            android:textSize="@dimen/title"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtRescueTypePet"
-            android:text="受伤的狗狗"
-            android:textSize="@dimen/title"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="描述        ："
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtPetDetail"
-            android:text="黄色的中华田园犬"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="位置        ："
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtRescueAddress"
-            android:text="中国广东省深圳市福田区农轩路28号 就在路边，宾馆门口"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="联系人    ："
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtContextPeople"
-            android:text="暂时没有留下"/>
-    </LinearLayout>
+        android:id="@+id/txtNeeds"
+        android:paddingTop="5dp"
+        android:text="暂时没有留下"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -94,38 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtContextMobile"
-            android:text="暂时没有留下"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="联系QQ   ："
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtContextQQ"
-            android:text="暂时没有留下"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="联系微信："
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtContextWechat"
             android:text="暂时没有留下"/>
     </LinearLayout>
 
@@ -149,7 +55,7 @@
             android:textSize="10dp"
             android:textColor="@color/white"
             android:background="@color/Success"
-            android:text="分享与救助"
+            android:text="查看详情"
             android:id="@+id/btnDisplay"/>
         <com.helpfooter.steve.petcure.myviews.FontAwesomeView
             android:layout_width="65dp"
