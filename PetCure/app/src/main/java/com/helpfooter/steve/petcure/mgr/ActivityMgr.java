@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -33,7 +34,7 @@ public class ActivityMgr {
         intent.setComponent(new ComponentName(ctx,target));
         ctx.startActivityForResult(intent,requestCode);
     }
-    public static void startActivity(Activity ctx, Class<?> target, HashMap<String,String> param){
+    public static void startActivity(Context ctx, Class<?> target, HashMap<String,String> param){
         Intent intent = new Intent();
         ParseToIntentParam(intent,param);
         intent.setComponent(new ComponentName(ctx,target));

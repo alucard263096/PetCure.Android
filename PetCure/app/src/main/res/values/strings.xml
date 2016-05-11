@@ -8,6 +8,12 @@
     <string name="action_send">发出</string>
     <string name="title_activity_login">登录</string>
 
+
+    <string name="poster_shower_follow">关注</string>
+    <string name="poster_shower_collect">收藏</string>
+    <string name="poster_shower_sharewechat">分享到微信</string>
+    <string name="poster_shower_help">我来帮助</string>
+
     <!-- Strings related to login -->
     <string name="prompt_mobile">手机号码</string>
     <string name="prompt_password">密码</string>
@@ -91,4 +97,6 @@
 
     <string name="poster_create_detail">流浪的小可爱需要什么...</string>
     <string name="poster_create_contact">我的联系方式</string>
+    <string name="title_activity_poster_shower">关注，分享，救助</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

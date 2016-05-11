@@ -12,13 +12,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.helpfooter.steve.petcure.MainActivity;
+import com.helpfooter.steve.petcure.PosterShowerActivity;
 import com.helpfooter.steve.petcure.R;
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
+import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.utils.Util;
 import com.tencent.mapsdk.raster.model.Marker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by steve on 2016/5/1.
@@ -55,7 +59,14 @@ public class PosterInfoView  extends LinearLayout {
                 });
             }
         }
-
+        ((Button)findViewById(R.id.btnDisplay)).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HashMap<String,String> param=new HashMap<String, String>();
+                param.put("poster_id",String.valueOf(posterDO.getId()));
+                ActivityMgr.startActivity(PosterInfoView.this.getContext(),PosterShowerActivity.class,param);
+            }
+        });
         ((TextView) findViewById(R.id.btnClose)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.helpfooter.steve.petcure.PosterShowerActivity">
+    <item
+        android:id="@+id/action_follow"
+        android:orderInCategory="100"
+        android:title="@string/poster_shower_follow"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_collect"
+        android:orderInCategory="100"
+        android:title="@string/poster_shower_collect"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sharewechat"
+        android:orderInCategory="100"
+        android:title="@string/poster_shower_sharewechat"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_help"
+        android:orderInCategory="100"
+        android:title="@string/poster_shower_help"
+        app:showAsAction="never" />
+</menu>

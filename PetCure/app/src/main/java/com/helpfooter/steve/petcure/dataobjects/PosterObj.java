@@ -119,6 +119,7 @@ public class PosterObj extends AbstractObj {
 
     @Override
     public void parseXmlDataTable(HashMap<String, String> lstRowValue) {
+        id=Integer.valueOf(lstRowValue.get("id"));
         type = lstRowValue.get("type");
         needs = lstRowValue.get("needs");
         photo = lstRowValue.get("photo");
