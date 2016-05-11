@@ -34,7 +34,9 @@ import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.mgr.MapSearchMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
+import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.tencentmap.mapsdk.map.MapView;
+import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
 
     MapView mapview=null;
     MapMgr mapMgr=null;
+    String longClickLat="",longClickLng="";
 
     public static class RequestCode{
         public static int AddPosterLoginActivity=1;
@@ -94,11 +97,15 @@ public class MainActivity extends AppCompatActivity
     DialogInterface.OnClickListener dialogListener=new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-            HashMap<String,String> dictLocation=new HashMap<String,String>();
-            dictLocation.put("lat",mapMgr.getLat());
-            dictLocation.put("lng",mapMgr.getLng());
-            dictLocation.put("type",String.valueOf(i));
-            ActivityMgr.startActivityForResult(MainActivity.this,PosterCreateActivity.class,RequestCode.AddPosterActivity,dictLocation);
+            HashMap<String, String> dictLocation = new HashMap<String, String>();
+            String lat = longClickLat.isEmpty() ? mapMgr.getLat() : longClickLat;
+            String lng = longClickLng.isEmpty() ? mapMgr.getLng() : longClickLng;
+            dictLocation.put("lat", lat);
+            dictLocation.put("lng", lng);
+            dictLocation.put("type", String.valueOf(i));
+            longClickLat = "";
+            longClickLng = "";
+            ActivityMgr.startActivityForResult(MainActivity.this, PosterCreateActivity.class, RequestCode.AddPosterActivity, dictLocation);
         }
     };
 
@@ -223,7 +230,14 @@ public class MainActivity extends AppCompatActivity
         mapview=(MapView)findViewById(R.id.mapview);
         mapview.onCreate(savedInstanceState);
         mapMgr=new MapMgr(this,mapview);
-
+        mapMgr.getTencentMap().setOnMapLongClickListener(new TencentMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                longClickLat = String.valueOf(latLng.getLatitude());
+                longClickLng = String.valueOf(latLng.getLongitude());
+                ActivityMgr.ShowBottomOptionDialog(MainActivity.this,R.array.send_poster_type,dialogListener);
+            }
+        });
     }
 
 }

@@ -289,7 +289,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
         }else if(requestCode==RequestCode.AddressSearch){
             if(resultCode == RESULT_OK){
                 lat= data.getExtras().getString("lat");
-                lng= data.getExtras().getString("lat");
+                lng= data.getExtras().getString("lng");
                 String address= data.getExtras().getString("address");
                 txtAddress.setText(address);
             }else {

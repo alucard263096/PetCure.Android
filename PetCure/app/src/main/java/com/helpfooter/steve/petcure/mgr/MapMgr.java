@@ -201,6 +201,10 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         return false;
     }
 
+    public TencentMap getTencentMap() {
+        return tencentMap;
+    }
+
     @Override
     public View getInfoWindow(Marker m) {
         // TODO Auto-generated method stub
