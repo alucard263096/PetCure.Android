@@ -44,15 +44,14 @@ public class PosterMarkerHandle extends AbstractHandles {
             Marker mark = map.addMarker(new MarkerOptions().draggable(false));
             mark.setVisible(true);
             updateMarkerByPoster(mark,obj);
+            //mark.setVisible(false);
             markers.add(mark);
+
         }
     }
 
     private void updateMarkerByPoster(Marker mk,PosterObj markerPoster) {
-        MapMarkerView view=new MapMarkerView(this.ctx);
-        view.setData(markerPoster);
         mk.setPosition(new LatLng(markerPoster.getLat(),markerPoster.getLng()));
-        mk.setIcon(BitmapDescriptorFactory.fromView(view));
         mk.setTag(markerPoster);
     }
 }

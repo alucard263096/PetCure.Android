@@ -1,6 +1,9 @@
 package com.helpfooter.steve.petcure;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Handler;
+import android.provider.Contacts;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,14 +20,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.MemberObj;
 import com.helpfooter.steve.petcure.dataobjects.PosterPhotoObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterPhotoLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
+import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
+import com.helpfooter.steve.petcure.utils.ImageUtil;
 
 import java.util.ArrayList;
 
@@ -47,7 +54,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
 
     String poster_id;
 
-    ArrayList<PosterPhotoObj> photos;
+    ArrayList<PosterPhotoObj> photos=new ArrayList<PosterPhotoObj>();
     View progress;
 
     @Override
@@ -60,11 +67,9 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
 
         progress = (View) findViewById(R.id.progress);
 
@@ -72,6 +77,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         PosterPhotoLoader loader=new PosterPhotoLoader(this,poster_id);
         loader.setCallBack(this);
         imageFinishedLoad=new ImageFinishedLoad();
+        loader.start();
     }
     ImageFinishedLoad imageFinishedLoad;
     class ImageFinishedLoad extends AbstractHandles{
@@ -79,6 +85,8 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         @Override
         public void callFunction() {
             ActivityMgr.ShowProgress(false,PosterShowerActivity.this,mViewPager,progress);
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            mViewPager.setAdapter(mSectionsPagerAdapter);
         }
     }
 
@@ -118,18 +126,23 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
     @Override
     public void CallBack(Object result) {
         photos=(ArrayList<PosterPhotoObj>)result;
+//        for(PosterPhotoObj photo:photos){
+//            Bitmap bitmap= ImageUtil.GetHttpBitmap(StaticVar.PetImageUrl+photo.getPhoto());
+//            photo.setTag(bitmap);
+//        }
         imageFinishedLoad.sendHandle();
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public  class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+        private  final String ARG_SECTION_NUMBER = "section_number";
+        private  final String ARG_TOTAL_NUMBER = "total_number";
 
         public PlaceholderFragment() {
         }
@@ -138,7 +151,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -150,8 +163,21 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_poster_shower, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            TextView textView = (TextView) rootView.findViewById(R.id.txtDescription);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            int index=getArguments().getInt(ARG_SECTION_NUMBER);
+            int total=photos.size();
+            PosterPhotoObj sphoto=photos.get(index);
+            StringBuilder sb=new StringBuilder();
+            sb.append("(").append(index+1).append("/").append(total).append(") ");
+            sb.append(sphoto.getNeeds()).append("\r\n").append("联系方式:").append(sphoto.getContact());
+            sb.append("").append(sphoto.getAddress());
+            textView.setText(sb.toString());
+            textView.setBackgroundColor(Color.argb(70,0,0,0));
+
+            ImageView img=(ImageView) rootView.findViewById(R.id.imgPhoto);
+            //img.setImageBitmap((Bitmap) sphoto.getTag());
+            ImageLoaderMgr.GetImageLoader().displayImage(StaticVar.PetImageUrl+sphoto.getPhoto(),img,ImageLoaderMgr.GetDefaultDisplayImageOptions());
             return rootView;
         }
     }
@@ -170,13 +196,13 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return new PlaceholderFragment().newInstance(position);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return photos.size();
         }
 
         @Override

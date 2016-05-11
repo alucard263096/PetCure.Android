@@ -30,6 +30,7 @@ import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
+import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.mgr.MapSearchMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         Fresco.initialize(this);
+        ImageLoaderMgr.InitImageLoader(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

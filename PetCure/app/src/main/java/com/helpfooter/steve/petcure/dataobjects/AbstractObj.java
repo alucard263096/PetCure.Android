@@ -18,6 +18,16 @@ public abstract class AbstractObj {
         this.id=val;
     }
 
+    public Object tag;
+
+    public Object getTag() {
+        return tag;
+    }
+
+    public void setTag(Object tag) {
+        this.tag = tag;
+    }
+
     //该方法用于解析从本地数据库读取数据时的方法
     public abstract void parseCursor(Cursor cursor);
 

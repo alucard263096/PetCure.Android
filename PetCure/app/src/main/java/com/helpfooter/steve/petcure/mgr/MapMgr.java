@@ -1,20 +1,29 @@
 package com.helpfooter.steve.petcure.mgr;
 
 import android.content.Context;
+import android.content.Loader;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
+import com.helpfooter.steve.petcure.handles.AddMarkerHandle;
 import com.helpfooter.steve.petcure.handles.CloseAllMarkerHandle;
 import com.helpfooter.steve.petcure.handles.PosterMarkerHandle;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterLoader;
+import com.helpfooter.steve.petcure.myviews.MapMarkerView;
 import com.helpfooter.steve.petcure.myviews.PosterInfoView;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
+import com.tencent.mapsdk.raster.model.BitmapDescriptor;
 import com.tencent.mapsdk.raster.model.BitmapDescriptorFactory;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.mapsdk.raster.model.Marker;
@@ -36,6 +45,11 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     Marker myLocation = null;
     public PosterLoader posterLoader=null;
 
+
+    public ArrayList<Marker> getPosterMarker() {
+        return posterMarker;
+    }
+
     // 用于记录定位参数, 以显示到 UI
     private String mRequestParams;
     private TencentLocation mLocation;
@@ -46,6 +60,10 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
     PosterMarkerHandle posterMarkerHandle;
     CloseAllMarkerHandle closeAllMarkerHandle;
+    ArrayList<AddMarkerHandle> arrayAddMarkerHandle=new ArrayList<AddMarkerHandle>();
+    int arrayAddMarkerHandleCount=100;
+    int arrayAddMarkerHandleCurrent=0;
+    //AddMarkerHandle addMarkerHandle;
 
     public String getLat(){
         if(myLocation!=null){
@@ -73,7 +91,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         //设置地图中心点
         tencentMap.setCenter(new LatLng(22.538403, 114.051647));
         //设置缩放级别
-        tencentMap.setZoom(12);
+        tencentMap.setZoom(17);
         mLocationManager = TencentLocationManager.getInstance(this.ctx);
         myLocation = tencentMap.addMarker(new MarkerOptions()
                 .position(new LatLng(22.538403, 114.051647))
@@ -96,14 +114,20 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         //tencentMap.setOnMarkerClickListener(this);
 
         tencentMap.setInfoWindowAdapter(this);
+        for(int i=0;i<arrayAddMarkerHandleCount;i++) {
+            AddMarkerHandle addMarkerHandle = new AddMarkerHandle(this, ctx);
+            arrayAddMarkerHandle.add(addMarkerHandle);
+        }
 
+//        HashMap<String,String> hmLocation=new HashMap<String, String>();
+//        hmLocation.put("lat",String.valueOf(22.538403));
+//        hmLocation.put("lng",String.valueOf(114.051647));
+//        posterLoader.setUrlDynamicParam(hmLocation);
+//        posterLoader.start();
+    }
 
+    public void addMarker(String lat,String lng){
 
-        HashMap<String,String> hmLocation=new HashMap<String, String>();
-        hmLocation.put("lat",String.valueOf(22.538403));
-        hmLocation.put("lng",String.valueOf(114.051647));
-        posterLoader.setUrlDynamicParam(hmLocation);
-        posterLoader.start();
     }
 
     @Override
@@ -118,7 +142,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
             if (setCenterFirstTime) {
                 tencentMap.setCenter(new LatLng(location.getLatitude(), location.getLongitude()));
-                //posterLoader.start();
+                posterLoader.start();
                 setCenterFirstTime = false;
             }
             myLocation.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
@@ -186,14 +210,71 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
     @Override
     public void CallBack(Object result) {
-
+        for(Marker mk:posterMarker){
+            mk.remove();
+        }
+        arrayAddMarkerHandleCurrent=0;
         ArrayList<PosterObj> posterDOs=(ArrayList<PosterObj>)result;
-        Log.i("postercount",String.valueOf(posterDOs.size()));
-        posterMarkerHandle.setPosterDOs(posterDOs);
-        posterMarkerHandle.sendHandle();
+        for(final PosterObj obj:posterDOs) {
+            ImageLoaderMgr.GetImageLoader().loadImage(StaticVar.PetImageUrl + obj.getPhoto(), new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    Log.i("imageloadingfail",failReason.toString());
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                    for(Marker mk:posterMarker){
+//                        if((StaticVar.PetImageUrl+((PosterObj)mk.getTag()).getPhoto()).equals(imageUri)){
+//
+                            Log.i("imageloadingsucc",imageUri);
+//                            MapMarkerView mkv=new MapMarkerView(ctx);
+//                            mkv.setImage(loadedImage);
+//                            mk.setIcon(BitmapDescriptorFactory.fromView(mkv));
+//                            //mk.setIcon(BitmapDescriptorFactory.fromBitmap(loadedImage));
+//                            //mk.setVisible(true);
+//                        }
+//                    }
+//                    Marker mark = tencentMap.addMarker(new MarkerOptions().draggable(false));
+//                    mark.setVisible(true);
+//                    updateMarkerByPoster(mark,obj);
+//                    MapMarkerView mkv=new MapMarkerView(ctx);
+//                    mkv.setImage(loadedImage);
+//                    //mark.setVisible(false);
+//                    mark.setIcon(BitmapDescriptorFactory.fromView(mkv));
+//                    posterMarker.add(mark);
+                    if(arrayAddMarkerHandleCurrent>arrayAddMarkerHandleCount){
+                        arrayAddMarkerHandleCurrent=0;
+                    }
+
+                    AddMarkerHandle addMarkerHandle=arrayAddMarkerHandle.get(arrayAddMarkerHandleCurrent++);
+                    addMarkerHandle.setBitmap(loadedImage);
+                    addMarkerHandle.setObj(obj);
+                    addMarkerHandle.sendHandle();
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
+        }
+        //Log.i("postercount",String.valueOf(posterDOs.size()));
+        //posterMarkerHandle.setPosterDOs(posterDOs);
+        //posterMarkerHandle.sendHandle();
     }
 
 
+
+    private void updateMarkerByPoster(Marker mk,PosterObj markerPoster) {
+        mk.setPosition(new LatLng(markerPoster.getLat(),markerPoster.getLng()));
+        mk.setTag(markerPoster);
+    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {

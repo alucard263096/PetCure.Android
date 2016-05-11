@@ -55,6 +55,7 @@ public class VersionUpdateMgr implements IWebLoaderCallBack {
         if(lstObjs.size()>0){
             VersionObj version=(VersionObj)lstObjs.get(0);
             String currentVersion=getVersionName();
+            Log.i("currentVersion=version",currentVersion+"="+version.getVersion());
             if(currentVersion.equals("")==false
                     && version.getVersion().equals(currentVersion)==false) {
                 this.version=version;

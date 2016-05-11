@@ -49,47 +49,16 @@ public class MapMarkerView  extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.map_marker,this,true);
     }
 
-    public void setData(PosterObj obj) {
+        public void setImage(Bitmap bm) {
         //String strUrl=StaticVar.PetImageUrl+obj.getPhoto();
-        Uri uri = Uri.parse(StaticVar.PetImageUrl+obj.getPhoto());
-        //ImageView imageView= ((ImageView) findViewById(R.id.image_view));
+        //Uri uri = Uri.parse(strUrl);
+//        SimpleDraweeView imageView= ((SimpleDraweeView) findViewById(R.id.image_view));
+//        DraweeController dr= Fresco.newDraweeControllerBuilder().setUri(uri).setAutoPlayAnimations(true).build();
+//        imageView.setController(dr);
+        ImageView imageView= ((ImageView) findViewById(R.id.image_view));
+            imageView.setImageBitmap(bm);
         //ImageLoaderMgr.GetImageLoader().displayImage(strUrl,imageView,ImageLoaderMgr.GetDefaultDisplayImageOptions());
 
-
-//        Log.i("MapMarker",StaticVar.PetImageUrl+obj.getPhoto());
-        SimpleDraweeView imageView= ((SimpleDraweeView) findViewById(R.id.image_view));
-        DraweeController dr= Fresco.newDraweeControllerBuilder().setUri(uri).setAutoPlayAnimations(true).build();
-        imageView.setController(dr);
-        //ImageView imageView = ((ImageView) findViewById(R.id.image_view));
-//        Bitmap bitmap = ImageUtil.GetHttpBitmap(StaticVar.PetImageUrl + obj.getPhoto());
-//        imageView.setImageBitmap(bitmap);
-
-//        class DisplayImage extends AsyncTask<String,Void,Bitmap> {
-//            private ImageView imageView;
-//
-//            public DisplayImage(ImageView imageView) {
-//                this.imageView = imageView;
-//            }
-//
-//            @Override
-//            protected Bitmap doInBackground(String... params) {
-//                String url = params[0];
-//                Bitmap bitmap = null;
-//                try {
-//                    InputStream is = new URL(url).openStream();
-//                    bitmap = BitmapFactory.decodeStream(is);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                return bitmap;
-//            }
-//            @Override
-//            protected void onPostExecute(Bitmap result) {
-//                super.onPostExecute(result);
-//                imageView.setImageBitmap(result);
-//            }
-//        }
-//        new DisplayImage(imageView).execute(StaticVar.PetImageUrl + obj.getPhoto());
 
 
 

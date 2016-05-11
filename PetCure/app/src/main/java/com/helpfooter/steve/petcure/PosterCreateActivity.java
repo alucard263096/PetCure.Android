@@ -167,6 +167,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
 
         Geo2AddressParam param = new Geo2AddressParam().location(new Location()
                 .lat(Float.valueOf(lat)).lng(Float.valueOf(lng)));
+        param.get_poi(true);
         MapSearchMgr.getSearch().geo2address(param, new HttpResponseListener() {
 
             //如果成功会调用这个方法，用户需要在这里获取检索结果，调用自己的业务逻辑
@@ -177,7 +178,11 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
                 if(object != null){
                     Geo2AddressResultObject oj = (Geo2AddressResultObject)object;
                     if(oj.result != null){
-                        txtAddress.setText(oj.result.address);
+                        String address=oj.result.address;
+                        if(oj.result.pois.size()>0){
+                            address=oj.result.pois.get(0).title+" "+oj.result.pois.get(0).address;
+                        }
+                        txtAddress.setText(address);
                         city=oj.result.ad_info.city;
                     }
                 }
@@ -290,7 +295,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
             if(resultCode == RESULT_OK){
                 lat= data.getExtras().getString("lat");
                 lng= data.getExtras().getString("lng");
-                String address= data.getExtras().getString("address");
+                String address= data.getExtras().getString("title")+" "+data.getExtras().getString("address");
                 txtAddress.setText(address);
             }else {
                 this.finish();
