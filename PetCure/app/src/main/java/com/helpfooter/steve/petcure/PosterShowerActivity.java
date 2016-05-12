@@ -1,11 +1,6 @@
 package com.helpfooter.steve.petcure;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Handler;
-import android.provider.Contacts;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -24,14 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
-import com.helpfooter.steve.petcure.dataobjects.MemberObj;
+import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.helpfooter.steve.petcure.dataobjects.PosterPhotoObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterPhotoLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
-import com.helpfooter.steve.petcure.utils.ImageUtil;
+import com.helpfooter.steve.petcure.mgr.WechatMgr;
 
 import java.util.ArrayList;
 
@@ -114,7 +109,13 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             return true;
         }else if (id == R.id.action_collect) {
             return true;
+        }else if (id == R.id.action_sharetimeline) {
+            PosterPhotoObj photo=photos.get(0);
+            WechatMgr.SendTextToFriendGroup(photo.getNeeds());
+            return true;
         }else if (id == R.id.action_sharewechat) {
+            PosterPhotoObj photo=photos.get(0);
+            WechatMgr.SendTextToFriend(photo.getNeeds());
             return true;
         }else if (id == R.id.action_help) {
             return true;

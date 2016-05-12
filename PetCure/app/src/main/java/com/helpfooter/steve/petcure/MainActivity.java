@@ -37,6 +37,7 @@ import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.mgr.MapSearchMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.VersionUpdateMgr;
+import com.helpfooter.steve.petcure.mgr.WechatMgr;
 import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        WechatMgr.Init(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +133,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
 
     @Override
     public void onBackPressed() {

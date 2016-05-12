@@ -13,9 +13,14 @@
         android:title="@string/poster_shower_collect"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_sharetimeline"
+        android:orderInCategory="100"
+        android:title="@string/poster_shower_timeline"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_sharewechat"
         android:orderInCategory="100"
-        android:title="@string/poster_shower_sharewechat"
+        android:title="@string/poster_shower_wechatsession"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_help"

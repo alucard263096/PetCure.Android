@@ -48,4 +48,5 @@ dependencies {
     compile files('src/main/libs/android-async-http-1.4.9.jar')
     compile files('src/main/libs/httpclient-4.3.6.jar')
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile files('src/main/libs/libammsdk.jar')
 }

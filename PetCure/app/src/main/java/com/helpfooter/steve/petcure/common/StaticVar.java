@@ -11,6 +11,9 @@ public class StaticVar {
     public static String UploadModulePet="PET";
     public static String PetImageUrl="http://www.myhkdoc.com/PetCure/UI/upload/pet/";
 
+    public static String WechatAppId="wxe8d9406cf695d6da";
+    public static String WechatAppSecret="4848047098788c8e433e6548388d439a";
+
     public static class APIUrl{
         public static String LoginReg= "http://www.myhkdoc.com/petcure/api/Member/login_reg.php";
         public static String PosterCreate= "http://www.myhkdoc.com/petcure/api/Poster/create.php";
