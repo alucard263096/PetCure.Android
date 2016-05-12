@@ -126,8 +126,15 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 //        posterLoader.start();
     }
 
-    public void addMarker(String lat,String lng){
+    public void addMarker(PosterObj obj,Bitmap bitmap){
+        if(arrayAddMarkerHandleCurrent>arrayAddMarkerHandleCount){
+            arrayAddMarkerHandleCurrent=0;
+        }
 
+        AddMarkerHandle addMarkerHandle=arrayAddMarkerHandle.get(arrayAddMarkerHandleCurrent++);
+        addMarkerHandle.setBitmap(bitmap);
+        addMarkerHandle.setObj(obj);
+        addMarkerHandle.sendHandle();
     }
 
     @Override
@@ -229,33 +236,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                    for(Marker mk:posterMarker){
-//                        if((StaticVar.PetImageUrl+((PosterObj)mk.getTag()).getPhoto()).equals(imageUri)){
-//
-                            Log.i("imageloadingsucc",imageUri);
-//                            MapMarkerView mkv=new MapMarkerView(ctx);
-//                            mkv.setImage(loadedImage);
-//                            mk.setIcon(BitmapDescriptorFactory.fromView(mkv));
-//                            //mk.setIcon(BitmapDescriptorFactory.fromBitmap(loadedImage));
-//                            //mk.setVisible(true);
-//                        }
-//                    }
-//                    Marker mark = tencentMap.addMarker(new MarkerOptions().draggable(false));
-//                    mark.setVisible(true);
-//                    updateMarkerByPoster(mark,obj);
-//                    MapMarkerView mkv=new MapMarkerView(ctx);
-//                    mkv.setImage(loadedImage);
-//                    //mark.setVisible(false);
-//                    mark.setIcon(BitmapDescriptorFactory.fromView(mkv));
-//                    posterMarker.add(mark);
-                    if(arrayAddMarkerHandleCurrent>arrayAddMarkerHandleCount){
-                        arrayAddMarkerHandleCurrent=0;
-                    }
-
-                    AddMarkerHandle addMarkerHandle=arrayAddMarkerHandle.get(arrayAddMarkerHandleCurrent++);
-                    addMarkerHandle.setBitmap(loadedImage);
-                    addMarkerHandle.setObj(obj);
-                    addMarkerHandle.sendHandle();
+                    addMarker(obj,loadedImage);
                 }
 
                 @Override

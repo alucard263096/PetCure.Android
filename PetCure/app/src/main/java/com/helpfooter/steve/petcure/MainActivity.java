@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +30,7 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.helpfooter.steve.petcure.common.StaticVar;
+import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
 import com.helpfooter.steve.petcure.mgr.MapMgr;
@@ -118,6 +120,13 @@ public class MainActivity extends AppCompatActivity
                 ActivityMgr.ShowBottomOptionDialog(this,R.array.send_poster_type,dialogListener);
             }else  if (requestCode == RequestCode.AddPosterActivity) {
                 Toast.makeText(this,"添加成功",Toast.LENGTH_LONG);
+                PosterObj posterObj=new PosterObj();
+                posterObj.setId(Integer.valueOf( data.getStringExtra("poster_id")));
+                posterObj.setNeeds(data.getStringExtra("needs"));
+                posterObj.setLat(Double.valueOf( data.getStringExtra("lat")));
+                posterObj.setLng(Double.valueOf( data.getStringExtra("lng")));
+                Bitmap bitmap= BitmapFactory.decodeFile(data.getStringExtra("photo"));
+                mapMgr.addMarker(posterObj,bitmap);
             }
         }
     }

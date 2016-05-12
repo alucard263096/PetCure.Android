@@ -85,7 +85,13 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
 
                 ResultObj result=objs.get(0);
                 if(result.getId()==0){
-                    PosterCreateActivity.this.setResult(RESULT_OK);
+                    Intent intent=new Intent();
+                    intent.putExtra("poster_id",result.getRet());
+                    intent.putExtra("needs",txtNeeds.getText().toString());
+                    intent.putExtra("lat",lat);
+                    intent.putExtra("lng",lng);
+                    intent.putExtra("photo",mResults.get(0));
+                    PosterCreateActivity.this.setResult(RESULT_OK,intent);
                     PosterCreateActivity.this.finish();
                 }else {
                     Toast.makeText(PosterCreateActivity.this,result.getResult(),Toast.LENGTH_LONG);
