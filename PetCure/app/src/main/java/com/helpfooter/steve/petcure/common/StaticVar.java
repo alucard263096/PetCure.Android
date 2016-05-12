@@ -10,6 +10,7 @@ public class StaticVar {
     public static String UpdateVersionUrl="http://www.myhkdoc.com/PetCureApp/update.xml";
     public static String UploadModulePet="PET";
     public static String PetImageUrl="http://www.myhkdoc.com/PetCure/UI/upload/pet/";
+    public static String PosterShowerUrl="http://www.myhkdoc.com/PetCure/UI/shower.php?poster_id=";
 
     public static String WechatAppId="wxe8d9406cf695d6da";
     public static String WechatAppSecret="4848047098788c8e433e6548388d439a";

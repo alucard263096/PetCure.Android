@@ -1,5 +1,6 @@
 package com.helpfooter.steve.petcure;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -111,11 +112,13 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             return true;
         }else if (id == R.id.action_sharetimeline) {
             PosterPhotoObj photo=photos.get(0);
-            WechatMgr.SendTextToFriendGroup(photo.getNeeds());
+            Bitmap bm=ImageLoaderMgr.GetImageLoader().loadImageSync(StaticVar.PetImageUrl+photo.getPhoto(),ImageLoaderMgr.GetDefaultDisplayImageOptions());
+            WechatMgr.SendUrlToFriendGroup(StaticVar.PosterShowerUrl+poster_id, photo.getNeeds(),photo.getAddress(),bm);
             return true;
         }else if (id == R.id.action_sharewechat) {
             PosterPhotoObj photo=photos.get(0);
-            WechatMgr.SendTextToFriend(photo.getNeeds());
+            Bitmap bm=ImageLoaderMgr.GetImageLoader().loadImageSync(StaticVar.PetImageUrl+photo.getPhoto(),ImageLoaderMgr.GetDefaultDisplayImageOptions());
+            WechatMgr.SendUrlToFriend(StaticVar.PosterShowerUrl+poster_id, photo.getNeeds(),photo.getAddress(),bm);
             return true;
         }else if (id == R.id.action_help) {
             return true;

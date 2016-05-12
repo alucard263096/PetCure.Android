@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Shader;
 import android.speech.tts.Voice;
+import android.util.Log;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.utils.Util;
@@ -22,9 +23,9 @@ import org.w3c.dom.Text;
  */
 public class WechatMgr {
     private static IWXAPI api;
-
+    private static final int THUMB_SIZE = 150;
     public static void Init(Context ctx){
-        api= WXAPIFactory.createWXAPI(ctx, StaticVar.WechatAppId,false);
+        api= WXAPIFactory.createWXAPI(ctx, StaticVar.WechatAppId,true);
         api.registerApp(StaticVar.WechatAppId);
     }
 
@@ -65,7 +66,10 @@ public class WechatMgr {
         req.scene=scene;
         req.transaction = buildTransaction("txt");
         req.message = msg;
-        api.sendReq(req);
+
+
+        boolean ret= api.sendReq(req);
+        Log.i("wechatshare",ret?"succ":"fal");
     }
 
     private static void sendImage(String title,Bitmap bmp,int scene){
@@ -74,7 +78,7 @@ public class WechatMgr {
         msg.mediaObject=imgObj;
         msg.title=title;
 
-        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,40,40,true);
+        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,THUMB_SIZE,THUMB_SIZE,true);
         msg.thumbData=Util.bmpToByteArray(thumbBmp,true);
 
         SendMessageToWX.Req req=new SendMessageToWX.Req();
@@ -82,7 +86,8 @@ public class WechatMgr {
         req.scene=scene;
         req.message=msg;
 
-        api.sendReq(req);
+        boolean ret= api.sendReq(req);
+        Log.i("wechatshare",ret?"succ":"fal");
     }
 
 
@@ -91,10 +96,11 @@ public class WechatMgr {
         webpage.webpageUrl=url;
 
         WXMediaMessage msg=new WXMediaMessage();
+        msg.mediaObject=webpage;
         msg.title= title;
         msg.description=description;
 
-        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,40,40,true);
+        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,THUMB_SIZE,THUMB_SIZE,true);
         msg.thumbData=Util.bmpToByteArray(thumbBmp,true);
 
         SendMessageToWX.Req req=new SendMessageToWX.Req();
@@ -102,7 +108,8 @@ public class WechatMgr {
         req.scene=scene;
         req.message=msg;
 
-        api.sendReq(req);
+        boolean ret= api.sendReq(req);
+        Log.i("wechatshare",ret?"succ":"fal");
     }
 
     private static String buildTransaction(final String type) {
