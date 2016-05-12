@@ -86,14 +86,16 @@ public class WechatMgr {
     }
 
 
-    public static void sendUrl(String url,String title,String description,Bitmap thumb,int scene){
+    public static void sendUrl(String url,String title,String description,Bitmap bmp,int scene){
         WXWebpageObject webpage=new WXWebpageObject();
         webpage.webpageUrl=url;
 
         WXMediaMessage msg=new WXMediaMessage();
         msg.title= title;
         msg.description=description;
-        msg.thumbData=Util.bmpToByteArray(thumb,true);
+
+        Bitmap thumbBmp=Bitmap.createScaledBitmap(bmp,40,40,true);
+        msg.thumbData=Util.bmpToByteArray(thumbBmp,true);
 
         SendMessageToWX.Req req=new SendMessageToWX.Req();
         req.transaction=buildTransaction("webpage");
