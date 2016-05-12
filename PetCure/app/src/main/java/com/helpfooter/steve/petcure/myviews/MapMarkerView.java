@@ -36,34 +36,34 @@ import java.util.ArrayList;
 public class MapMarkerView  extends LinearLayout {
     public MapMarkerView(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.map_marker,this,true);
+        LayoutInflater.from(context).inflate(R.layout.map_marker, this, true);
     }
 
     public MapMarkerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.map_marker,this,true);
+        LayoutInflater.from(context).inflate(R.layout.map_marker, this, true);
     }
 
     public MapMarkerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.map_marker,this,true);
+        LayoutInflater.from(context).inflate(R.layout.map_marker, this, true);
     }
 
-        public void setImage(Bitmap bm) {
+    public void setImage(Bitmap bm) {
         //String strUrl=StaticVar.PetImageUrl+obj.getPhoto();
         //Uri uri = Uri.parse(strUrl);
 //        SimpleDraweeView imageView= ((SimpleDraweeView) findViewById(R.id.image_view));
 //        DraweeController dr= Fresco.newDraweeControllerBuilder().setUri(uri).setAutoPlayAnimations(true).build();
 //        imageView.setController(dr);
-        ImageView imageView= ((ImageView) findViewById(R.id.image_view));
-            imageView.setImageBitmap(bm);
+        ImageView imageView = ((ImageView) findViewById(R.id.image_view));
+        imageView.setImageBitmap(bm);
         //ImageLoaderMgr.GetImageLoader().displayImage(strUrl,imageView,ImageLoaderMgr.GetDefaultDisplayImageOptions());
+    }
 
-
-
-
-
-
+    public void setType(String type){
+//        if(type.equals("1")){
+//            this.setBackgroundColor(Color.RED);
+//        }
     }
 
 }

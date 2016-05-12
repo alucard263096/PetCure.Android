@@ -42,6 +42,7 @@ public class AddMarkerHandle extends AbstractHandles {
         updateMarkerByPoster(mark,obj);
         MapMarkerView mkv=new MapMarkerView(ctx);
         mkv.setImage(bitmap);
+        mkv.setType(obj.getType());
         //mark.setVisible(false);
         mark.setIcon(BitmapDescriptorFactory.fromView(mkv));
         mapMgr.getPosterMarker().add(mark);
