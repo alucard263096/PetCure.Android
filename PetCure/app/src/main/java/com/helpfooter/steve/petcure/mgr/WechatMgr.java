@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.utils.Util;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -28,6 +29,7 @@ public class WechatMgr {
         api= WXAPIFactory.createWXAPI(ctx, StaticVar.WechatAppId,true);
         api.registerApp(StaticVar.WechatAppId);
     }
+
 
     public static void SendTextToFriendGroup(String text){
 

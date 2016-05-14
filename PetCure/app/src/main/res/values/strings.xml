@@ -100,4 +100,13 @@
     <string name="poster_create_contact">我的联系方式</string>
     <string name="title_activity_poster_shower">关注，分享，救助</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+
+
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+
+
 </resources>

@@ -38,7 +38,11 @@ public class ActivityMgr {
         Intent intent = new Intent();
         ParseToIntentParam(intent,param);
         intent.setComponent(new ComponentName(ctx,target));
-        ctx.startActivity(intent);
+        try {
+            ctx.startActivity(intent);
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void ShowBottomOptionDialog(Activity ctx,int array,DialogInterface.OnClickListener listener){

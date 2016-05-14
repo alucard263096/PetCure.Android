@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.helpfooter.steve.petcure.LoginActivity;
+import com.helpfooter.steve.petcure.MainActivity;
 import com.helpfooter.steve.petcure.dao.MemberDao;
 import com.helpfooter.steve.petcure.dataobjects.AbstractObj;
 import com.helpfooter.steve.petcure.dataobjects.MemberObj;

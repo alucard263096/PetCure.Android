@@ -14,6 +14,7 @@ public class StaticVar {
 
     public static String WechatAppId="wxe8d9406cf695d6da";
     public static String WechatAppSecret="4848047098788c8e433e6548388d439a";
+    public static String WechatState="com.helpfooter.steve.petcure";
 
     public static class APIUrl{
         public static String LoginReg= "http://www.myhkdoc.com/petcure/api/Member/login_reg.php";
