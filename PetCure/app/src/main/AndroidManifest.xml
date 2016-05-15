@@ -59,6 +59,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -95,8 +96,10 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-            </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".PosterListActivity"
+            android:label="@string/poster_list"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

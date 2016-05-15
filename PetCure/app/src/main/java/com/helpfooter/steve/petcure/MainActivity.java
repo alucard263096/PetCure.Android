@@ -176,14 +176,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_member_info) {
+        if (id == R.id.action_settings) {
             // Handle the camera action
             ActivityMgr.startActivity(this,MemberInfoActivity.class,null);
+            
         } else if (id == R.id.nav_login) {
 
-            ActivityMgr.startActivity(this,WXEntryActivity.class,null);
+            ActivityMgr.startActivity(this,LoginActivity.class,null);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_nearby) {
+
+            ActivityMgr.startActivity(this,PosterListActivity.class,null);
 
         } else if (id == R.id.nav_share) {
 

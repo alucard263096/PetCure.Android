@@ -3,41 +3,49 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="附近" />
+            android:id="@+id/nav_nearby"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="附近所有" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@android:drawable/ic_menu_view"
             android:title="我的关注" />
+        <item
+            android:id="@+id/nav_collect"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="我的收藏" />
+        <item
+            android:id="@+id/nav_post"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="我的参与" />
     </group>
 
-    <item android:title="用户">
+    <item android:title="志愿者">
         <menu>
             <item
                 android:id="@+id/nav_login"
                 android:icon="@drawable/ic_menu_share"
-                android:title="微信登陆" />
+                android:title="志愿者登录" />
             <item
                 android:id="@+id/nav_to_be_volunteer"
                 android:icon="@drawable/ic_menu_send"
-                android:title="成为志愿者条款" />
-            <item
-                android:id="@+id/nav_member_info"
-                android:icon="@drawable/ic_menu_send"
-                android:title="完善个人资料" />
+                android:title="了解志愿者计划" />
         </menu>
     </item>
-    <item android:title="社交">
+    <item android:title="我们">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="分享" />
+                android:title="关于我们" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="发送" />
+                android:title="分享我们" />
+            <item
+                android:id="@+id/nav_partnent"
+                android:icon="@drawable/ic_menu_send"
+                android:title="寻找合作" />
         </menu>
     </item>
 
