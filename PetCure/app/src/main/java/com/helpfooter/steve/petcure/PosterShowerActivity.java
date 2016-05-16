@@ -175,7 +175,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             StringBuilder sb=new StringBuilder();
             sb.append("(").append(index+1).append("/").append(total).append(") ");
             sb.append(sphoto.getNeeds()).append("\r\n").append("联系方式:").append(sphoto.getContact());
-            sb.append("").append(sphoto.getAddress());
+            sb.append("\r\n").append(sphoto.getAddress());
             textView.setText(sb.toString());
             textView.setBackgroundColor(Color.argb(70,0,0,0));
 
