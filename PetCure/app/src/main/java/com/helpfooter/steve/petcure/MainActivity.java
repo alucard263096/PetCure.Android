@@ -188,7 +188,16 @@ public class MainActivity extends AppCompatActivity
 
             ActivityMgr.startActivity(this,PosterListActivity.class,null);
 
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_follow) {
+            ActivityMgr.startActivity(this,FollowListActivity.class,null);
+
+        }else if (id == R.id.nav_collect) {
+            ActivityMgr.startActivity(this,CollectListActivity.class,null);
+
+        } else if (id == R.id.nav_involve) {
+            ActivityMgr.startActivity(this,InvolveListActivity.class,null);
+
+        }  else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

@@ -20,13 +20,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.helpfooter.steve.petcure.dataobjects.PosterPhotoObj;
+import com.helpfooter.steve.petcure.dataobjects.ResultObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterPhotoLoader;
+import com.helpfooter.steve.petcure.loader.ResultLoader;
 import com.helpfooter.steve.petcure.loader.WebXmlLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
@@ -87,6 +90,53 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         }
     }
 
+    class FollowHandle extends AbstractHandles{
+
+        boolean ret;
+
+        public void setRet(boolean ret) {
+            this.ret = ret;
+        }
+
+        @Override
+        public void callFunction() {
+            Toast.makeText(PosterShowerActivity.this,menuFollow.getTitle()+(ret?"成功":"失败"),Toast.LENGTH_LONG).show();
+            if(ret) {
+                if (menuFollow.getTitle().toString().contains("取消")) {
+                    menuFollow.setTitle("关注");
+                } else {
+                    menuFollow.setTitle("取消关注");
+                }
+            }
+            menuFollow.setEnabled(true);
+        }
+    }
+    FollowHandle followHandle;
+
+
+    class CollectHandle extends AbstractHandles{
+
+        boolean ret;
+
+        public void setRet(boolean ret) {
+            this.ret = ret;
+        }
+
+        @Override
+        public void callFunction() {
+            Toast.makeText(PosterShowerActivity.this,menuCollect.getTitle()+(ret?"成功":"失败"),Toast.LENGTH_LONG).show();
+            if(ret) {
+                if (menuCollect.getTitle().toString().contains("取消")) {
+                    menuCollect.setTitle("关注");
+                } else {
+                    menuCollect.setTitle("取消关注");
+                }
+            }
+            menuCollect.setEnabled(true);
+        }
+    }
+    CollectHandle collectHandle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,15 +153,18 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
 
         progress = (View) findViewById(R.id.progress);
 
-        poster_id=getIntent().getStringExtra("poster_id");
-        PosterPhotoLoader loader=new PosterPhotoLoader(this,poster_id);
+        poster_id = getIntent().getStringExtra("poster_id");
+        PosterPhotoLoader loader = new PosterPhotoLoader(this, poster_id);
         loader.setCallBack(this);
-        imageFinishedLoad=new ImageFinishedLoad();
+        imageFinishedLoad = new ImageFinishedLoad();
         loader.start();
 
-        posterInfoHandle=new PosterInfoHandle();
+        posterInfoHandle = new PosterInfoHandle();
+        followHandle = new FollowHandle();
+        collectHandle = new CollectHandle();
 
-        if(MemberMgr.Member!=null){
+
+        if (MemberMgr.Member != null) {
             loadPosterInfo();
         }
     }
@@ -121,7 +174,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         HashMap<String, String> param = new HashMap<String, String>();
         param.put("poster_id", poster_id);
         param.put("member_id", String.valueOf(MemberMgr.Member.getId()));
-        final WebXmlLoader posterInfoLoader = new WebXmlLoader(PosterShowerActivity.this, StaticVar.APIUrl.PosterInfo);
+        final WebXmlLoader posterInfoLoader = new WebXmlLoader(PosterShowerActivity.this, StaticVar.APIUrl.PosterInfo,param);
 
         posterInfoLoader.setCallBack(new IWebLoaderCallBack() {
             @Override
@@ -178,11 +231,49 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         }else if (id == R.id.action_follow) {
             if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
 
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("poster_id", poster_id);
+                param.put("member_id", String.valueOf(MemberMgr.Member.getId()));
+                param.put("follow", menuFollow.getTitle().toString().contains("取消")?"N":"Y");
+                ResultLoader resultLoader=new ResultLoader(this,StaticVar.APIUrl.PosterFollow,param);
+                resultLoader.setCallBack(new IWebLoaderCallBack() {
+                    @Override
+                    public void CallBack(Object result) {
+                        ArrayList<ResultObj> objs=(ArrayList<ResultObj>)result;
+                        if(objs.size()>0&&objs.get(0).getId()==0){
+                            followHandle.setRet(true);
+                        }else {
+                            followHandle.setRet(false);
+                        }
+                        followHandle.sendHandle();
+                    }
+                });
+                menuFollow.setEnabled(false);
+                resultLoader.start();
             }
             return true;
         }else if (id == R.id.action_collect) {
             if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
 
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("poster_id", poster_id);
+                param.put("member_id", String.valueOf(MemberMgr.Member.getId()));
+                param.put("collect", menuCollect.getTitle().toString().contains("取消")?"N":"Y");
+                ResultLoader resultLoader=new ResultLoader(this,StaticVar.APIUrl.PosterCollect,param);
+                resultLoader.setCallBack(new IWebLoaderCallBack() {
+                    @Override
+                    public void CallBack(Object result) {
+                        ArrayList<ResultObj> objs=(ArrayList<ResultObj>)result;
+                        if(objs.size()>0&&objs.get(0).getId()==0){
+                            collectHandle.setRet(true);
+                        }else {
+                            collectHandle.setRet(false);
+                        }
+                        collectHandle.sendHandle();
+                    }
+                });
+                menuCollect.setEnabled(false);
+                resultLoader.start();
             }
             return true;
         }else if (id == R.id.action_sharetimeline) {

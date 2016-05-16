@@ -34,8 +34,8 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
     AfterPosterLoadingHandle posterLoadingHandle;
     SwipeRefreshLayout swipe_container;
     LinearLayout container;
-
     int page=0;
+    public boolean needLogin=false;
 
     ScrollView scroll_container;
 
@@ -119,7 +119,11 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
         container=(LinearLayout) findViewById(R.id.container);
         posterLoadingHandle=new AfterPosterLoadingHandle();
 
-        if(MemberMgr.CheckIsLogin(this,RequestCode.CheckLoginActivity)){
+        if(needLogin) {
+            if (MemberMgr.CheckIsLogin(this, RequestCode.CheckLoginActivity)) {
+                RealOnCreate();
+            }
+        }else {
             RealOnCreate();
         }
     }
@@ -128,7 +132,7 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
         RefreshData();
     }
 
-    private void RefreshData(){
+    public void RefreshData(){
 
         swipe_container.setRefreshing(true);
         String lat = "0";
