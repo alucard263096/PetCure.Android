@@ -49,12 +49,13 @@ public class PosterItemView extends LinearLayout {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String,String> param=new HashMap<String, String>();
-                param.put("poster_id",String.valueOf( poster.getId()));
-                ActivityMgr.startActivity(PosterItemView.this.getContext(), PosterShowerActivity.class,param);
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("poster_id", String.valueOf(poster.getId()));
+                ActivityMgr.startActivity(PosterItemView.this.getContext(), PosterShowerActivity.class, param);
             }
         });
-
+        ((TextView) findViewById(R.id.txtFollowCollectCount)).setText("关注("+String.valueOf( poster.getFollowcount())
+                +") 收藏("+String.valueOf(poster.getCollectcount())+")");
     }
 
 }

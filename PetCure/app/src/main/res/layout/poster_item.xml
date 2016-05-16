@@ -10,6 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:maxLines="2"
+    android:textSize="@dimen/title"
     android:layout_margin="10dp"
     android:text="这里有很多内容，不知道这些内容是否都能显示出来，如果可以救好了"/>
 <ImageView
@@ -18,4 +19,11 @@
     android:layout_height="160dp"
     android:src="@drawable/logo"
     android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/txtFollowCollectCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="关注(173) 收藏(158)"
+        android:layout_gravity="right"/>
 </LinearLayout>

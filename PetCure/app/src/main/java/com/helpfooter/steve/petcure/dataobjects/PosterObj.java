@@ -24,6 +24,24 @@ public class PosterObj extends AbstractObj {
     String updated_date;
     int updated_id;
 
+    public int getFollowcount() {
+        return followcount;
+    }
+
+    public void setFollowcount(int followcount) {
+        this.followcount = followcount;
+    }
+
+    public int getCollectcount() {
+        return collectcount;
+    }
+
+    public void setCollectcount(int collectcount) {
+        this.collectcount = collectcount;
+    }
+
+    int followcount=0,collectcount=0;
+
     public String getType() {
         return type;
     }
@@ -131,6 +149,8 @@ public class PosterObj extends AbstractObj {
         created_id = Integer.valueOf(lstRowValue.get("created_id"));
         updated_date = lstRowValue.get("updated_date");
         updated_id = Integer.valueOf(lstRowValue.get("updated_id"));
+        followcount = Integer.valueOf(lstRowValue.get("followcount"));
+        collectcount = Integer.valueOf(lstRowValue.get("collectcount"));
     }
 
     @Override
