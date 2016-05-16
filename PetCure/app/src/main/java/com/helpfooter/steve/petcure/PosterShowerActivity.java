@@ -1,5 +1,6 @@
 package com.helpfooter.steve.petcure;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.helpfooter.steve.petcure.common.StaticVar;
@@ -25,13 +27,23 @@ import com.helpfooter.steve.petcure.dataobjects.PosterPhotoObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterPhotoLoader;
+import com.helpfooter.steve.petcure.loader.WebXmlLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
+import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.WechatMgr;
+import com.helpfooter.steve.petcure.utils.ImageUtil;
+import com.zfdang.multiple_images_selector.SelectorSettings;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PosterShowerActivity extends AppCompatActivity implements IWebLoaderCallBack {
+
+
+    public static class RequestCode{
+        public static int LoginActivity=1;
+    }
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,6 +64,28 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
 
     ArrayList<PosterPhotoObj> photos=new ArrayList<PosterPhotoObj>();
     View progress;
+    PosterInfoHandle posterInfoHandle;
+    class PosterInfoHandle extends AbstractHandles{
+
+        boolean collect=false;
+        boolean follow=false;
+
+
+        public void setCollect(boolean collect) {
+            this.collect = collect;
+        }
+
+
+        public void setFollow(boolean follow) {
+            this.follow = follow;
+        }
+
+        @Override
+        public void callFunction() {
+            menuCollect.setTitle(collect?"取消收藏":"收藏");
+            menuFollow.setTitle(follow?"取消关注":"关注");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +108,40 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         loader.setCallBack(this);
         imageFinishedLoad=new ImageFinishedLoad();
         loader.start();
+
+        posterInfoHandle=new PosterInfoHandle();
+
+        if(MemberMgr.Member!=null){
+            loadPosterInfo();
+        }
     }
+
+    private void loadPosterInfo() {
+
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("poster_id", poster_id);
+        param.put("member_id", String.valueOf(MemberMgr.Member.getId()));
+        final WebXmlLoader posterInfoLoader = new WebXmlLoader(PosterShowerActivity.this, StaticVar.APIUrl.PosterInfo);
+
+        posterInfoLoader.setCallBack(new IWebLoaderCallBack() {
+            @Override
+            public void CallBack(Object result) {
+                ArrayList<HashMap<String,String>> xmlArray=(ArrayList<HashMap<String,String>>)result;
+                if(xmlArray.size()>0) {
+                    HashMap<String, String> rs = xmlArray.get(0);
+                    posterInfoHandle.setCollect(rs.get("collect").equals("Y"));
+                    posterInfoHandle.setFollow(rs.get("follow").equals("Y"));
+                    posterInfoHandle.sendHandle();
+                }
+            }
+        });
+
+        posterInfoLoader.start();
+
+    }
+
+
+
     ImageFinishedLoad imageFinishedLoad;
     class ImageFinishedLoad extends AbstractHandles{
 
@@ -86,11 +153,13 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         }
     }
 
-
+    MenuItem menuCollect,menuFollow;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_poster_shower, menu);
+        menuCollect=menu.findItem(R.id.action_collect);
+        menuFollow=menu.findItem(R.id.action_follow);
         return true;
     }
 
@@ -107,8 +176,14 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             finish();
             return true;
         }else if (id == R.id.action_follow) {
+            if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
+
+            }
             return true;
         }else if (id == R.id.action_collect) {
+            if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
+
+            }
             return true;
         }else if (id == R.id.action_sharetimeline) {
             PosterPhotoObj photo=photos.get(0);
@@ -125,6 +200,17 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // get selected images from selector
+        if(requestCode==RequestCode.LoginActivity){
+            if(resultCode == RESULT_OK){
+                loadPosterInfo();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

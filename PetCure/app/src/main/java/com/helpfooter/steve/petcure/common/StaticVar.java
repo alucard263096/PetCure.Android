@@ -24,6 +24,8 @@ public class StaticVar {
         public static String PosterList= "http://www.myhkdoc.com/petcure/api/Poster/list.php";
         public static String PosterPhoto= "http://www.myhkdoc.com/petcure/api/poster/photo.php";
 
+        public static String PosterInfo = "http://www.myhkdoc.com/petcure/api/member/posterinfo.php";
+
     }
 
     public static MapMgr MapMgr=null;

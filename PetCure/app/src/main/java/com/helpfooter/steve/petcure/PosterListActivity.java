@@ -141,7 +141,7 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
         hmLocation.put("lat", lat);
         hmLocation.put("lng", lng);
         hmLocation.put("page", String.valueOf(page));
-        hmLocation.put("count", "4");
+        hmLocation.put("count", "20");
         PosterLoader posterLoader = new PosterLoader(this);
         posterLoader.setUrlDynamicParam(hmLocation);
         posterLoader.setCallBack(this);
