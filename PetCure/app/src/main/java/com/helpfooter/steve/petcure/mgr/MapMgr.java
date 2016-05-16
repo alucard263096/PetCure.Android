@@ -45,6 +45,21 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     Marker myLocation = null;
     public PosterLoader posterLoader=null;
 
+    public String getMyLat(){
+        if(myLocation!=null){
+            return String.valueOf( myLocation.getPosition().getLatitude());
+        }else {
+            return "0";
+        }
+    }
+    public String getMyLng(){
+        if(myLocation!=null){
+            return String.valueOf( myLocation.getPosition().getLongitude());
+        }else {
+            return "0";
+        }
+    }
+
 
     public ArrayList<Marker> getPosterMarker() {
         return posterMarker;
@@ -124,6 +139,8 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 //        hmLocation.put("lng",String.valueOf(114.051647));
 //        posterLoader.setUrlDynamicParam(hmLocation);
 //        posterLoader.start();
+
+        StaticVar.MapMgr=this;
     }
 
     public void addMarker(PosterObj obj,Bitmap bitmap){
@@ -145,6 +162,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
             HashMap<String,String> hmLocation=new HashMap<String, String>();
             hmLocation.put("lat",String.valueOf(location.getLatitude()));
             hmLocation.put("lng",String.valueOf(location.getLongitude()));
+            hmLocation.put("count","100");
             posterLoader.setUrlDynamicParam(hmLocation);
 
             if (setCenterFirstTime) {

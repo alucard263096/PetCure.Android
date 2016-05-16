@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="30dp"
+    android:background="@color/white">
+<TextView
+    android:id="@+id/txtNeeds"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxLines="2"
+    android:layout_margin="10dp"
+    android:text="这里有很多内容，不知道这些内容是否都能显示出来，如果可以救好了"/>
+<ImageView
+    android:id="@+id/imgPhoto"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:src="@drawable/logo"
+    android:scaleType="centerCrop"/>
+</LinearLayout>

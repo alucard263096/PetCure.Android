@@ -1,5 +1,7 @@
 package com.helpfooter.steve.petcure.common;
 
+import com.helpfooter.steve.petcure.mgr.MapMgr;
+
 import java.sql.Struct;
 
 /**
@@ -23,5 +25,7 @@ public class StaticVar {
         public static String PosterPhoto= "http://www.myhkdoc.com/petcure/api/poster/photo.php";
 
     }
+
+    public static MapMgr MapMgr=null;
 
 }
