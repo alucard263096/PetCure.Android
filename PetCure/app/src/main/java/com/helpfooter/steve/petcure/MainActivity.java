@@ -176,17 +176,17 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_type_all) {
             mapMgr.setShowType(0);
-            mapMgr.updatePosterLoader();
+            mapMgr.GetPoster();
             return true;
         }else if (id == R.id.action_type_1) {
 
             mapMgr.setShowType(1);
-            mapMgr.updatePosterLoader();
+            mapMgr.GetPoster();
             return true;
         }else if (id == R.id.action_type_2) {
 
             mapMgr.setShowType(2);
-            mapMgr.updatePosterLoader();
+            mapMgr.GetPoster();
             return true;
         }
 

@@ -11,6 +11,7 @@ import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.PosterObj;
 import com.helpfooter.steve.petcure.handles.AddMarkerHandle;
 import com.helpfooter.steve.petcure.handles.CloseAllMarkerHandle;
+import com.helpfooter.steve.petcure.handles.MarkerRemoveHandle;
 import com.helpfooter.steve.petcure.handles.PosterMarkerHandle;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
 import com.helpfooter.steve.petcure.loader.PosterLoader;
@@ -81,6 +82,7 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
     PosterMarkerHandle posterMarkerHandle;
     CloseAllMarkerHandle closeAllMarkerHandle;
+    MarkerRemoveHandle markerRemoveHandle;
     ArrayList<AddMarkerHandle> arrayAddMarkerHandle=new ArrayList<AddMarkerHandle>();
     int arrayAddMarkerHandleCount=100;
     int arrayAddMarkerHandleCurrent=0;
@@ -123,19 +125,19 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         myLocation.setVisible(false);
         myLocation.hideInfoWindow();
 
-        posterLoader=new PosterLoader(this.ctx);
+        posterLoader = new PosterLoader(this.ctx);
         posterLoader.setIsCircle(true);
         posterLoader.setCallBack(this);
-        posterLoader.setCircleSecond(60*5);
+        posterLoader.setCircleSecond(60 * 5);
 
 
-        posterMarkerHandle=new PosterMarkerHandle(this.ctx,this.tencentMap, posterMarker);
-        closeAllMarkerHandle=new CloseAllMarkerHandle(posterMarker);
+        posterMarkerHandle = new PosterMarkerHandle(this.ctx, this.tencentMap, posterMarker);
+        closeAllMarkerHandle = new CloseAllMarkerHandle(posterMarker);
 
         //tencentMap.setOnMarkerClickListener(this);
 
         tencentMap.setInfoWindowAdapter(this);
-        for(int i=0;i<arrayAddMarkerHandleCount;i++) {
+        for (int i = 0; i < arrayAddMarkerHandleCount; i++) {
             AddMarkerHandle addMarkerHandle = new AddMarkerHandle(this, ctx);
             arrayAddMarkerHandle.add(addMarkerHandle);
         }
@@ -146,7 +148,8 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 //        posterLoader.setUrlDynamicParam(hmLocation);
 //        posterLoader.start();
 
-        StaticVar.MapMgr=this;
+        StaticVar.MapMgr = this;
+        markerRemoveHandle = new MarkerRemoveHandle();
     }
 
     public void addMarker(PosterObj obj,Bitmap bitmap){
@@ -253,8 +256,10 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     @Override
     public void CallBack(Object result) {
         for(Marker mk:posterMarker){
-            mk.remove();
+            markerRemoveHandle.addMarker(mk);
         }
+        markerRemoveHandle.sendHandle();
+        posterMarker.clear();
         arrayAddMarkerHandleCurrent=0;
         ArrayList<PosterObj> posterDOs=(ArrayList<PosterObj>)result;
         for(final PosterObj obj:posterDOs) {

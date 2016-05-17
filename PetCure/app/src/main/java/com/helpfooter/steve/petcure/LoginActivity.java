@@ -20,12 +20,15 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ import com.helpfooter.steve.petcure.common.StaticVar;
 import com.helpfooter.steve.petcure.dataobjects.MemberObj;
 import com.helpfooter.steve.petcure.handles.AbstractHandles;
 import com.helpfooter.steve.petcure.interfaces.IWebLoaderCallBack;
+import com.helpfooter.steve.petcure.loader.CreatePosterLoader;
 import com.helpfooter.steve.petcure.loader.LoginRegLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
@@ -40,6 +44,7 @@ import com.helpfooter.steve.petcure.utils.Util;
 
 import java.security.interfaces.ECKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -61,10 +66,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     LoginCallBack loginCallBack;
+    CheckBox cbAccept;
+    TextView txtPlan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Set up the login form.
         mMobileView = (AutoCompleteTextView) findViewById(R.id.mobile);
         populateAutoComplete();
@@ -81,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mSignInButton = (Button) findViewById(R.id.mobile_sign_in_button);
+        final Button mSignInButton = (Button) findViewById(R.id.mobile_sign_in_button);
         mSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +99,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        cbAccept = (CheckBox)findViewById(R.id.cbAccept);
+        cbAccept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mSignInButton.setEnabled(b);
+            }
+        });
+        txtPlan=(TextView)findViewById(R.id.txtPlan);
+        txtPlan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HashMap<String,String> param=new HashMap<String, String>();
+                param.put("title","志愿者计划");
+                param.put("code",StaticVar.GeneralTextCode.KnowPlan);
+                ActivityMgr.startActivity(LoginActivity.this,GeneralTextActivity.class,param);
+            }
+        });
 
 
          loginCallBack=new LoginCallBack();
@@ -179,6 +204,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mMobileView;
             cancel = true;
         }
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -282,6 +308,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // TODO Auto-generated method stub
+        if(item.getItemId() == android.R.id.home)
+        {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

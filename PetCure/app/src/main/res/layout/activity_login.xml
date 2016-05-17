@@ -64,7 +64,24 @@
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/cbAccept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    />
+                <TextView
+                    android:id="@+id/txtPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary"
+                    android:text="我了解并愿意参加志愿者计划"/>
+            </LinearLayout>
             <Button
                 android:id="@+id/mobile_sign_in_button"
                 style="?android:textAppearanceSmall"

@@ -179,25 +179,26 @@ public class WebLoader extends Thread {
     }
 
     //多线程调用的线程方法
-    public void run(){
+    public void run() {
 
         RealRun();
-        while (isCircle){
+        while (isCircle) {
             while (!stopCircle) {
-                try {
-                    for(int i=0;i<circleSecond;i++){
-                        Thread.sleep( 1000);
-                        if(justDo){
-                            justDo=false;
-                            break;
-                        }
+
+                for (int i = 0; i < circleSecond; i++) {
+                    if (justDo) {
+                        justDo = false;
+                        break;
                     }
-                    RealRun();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                RealRun();
             }
         }
 
