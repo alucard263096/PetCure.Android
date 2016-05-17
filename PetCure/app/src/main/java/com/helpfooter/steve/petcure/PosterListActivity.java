@@ -155,6 +155,8 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
         hmLocation.put("lng", lng);
         hmLocation.put("page", String.valueOf(page));
         hmLocation.put("count", "20");
+        hmLocation.put("type", String.valueOf(type_index));
+        hmLocation.put("order",String.valueOf(order_index));
         PosterLoader posterLoader = new PosterLoader(this);
         posterLoader.setUrlDynamicParam(hmLocation);
         posterLoader.setCallBack(this);
@@ -162,23 +164,19 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
     }
 
 
-    private int city_index;
-    private int sex_index;
-    private int age_index;
-    private List<String> data;
-    final String[] arr1=new String[]{"全部城市","北京","上海","广州","深圳"};
-    final String[] arr2=new String[]{"性别","男","女"};
-    final String[] arr3=new String[]{"全部年龄","10","20","30","40","50","60","70"};
-
-    final String[] strings=new String[]{"选择城市","选择性别","选择年龄"};
+    public int type_index;
+    public int order_index;
+    public  String[] arr1=new String[]{"全部救助","只显示待救助","只显示求助"};
+    public  String[] arr2=new String[]{"离我最近","最新发布","发布最久","最多收藏","最多关注"};
+    public  String[] strings=new String[]{"全部救助","离我最近"};
 
     public void InitDropDownMenu(){
 
-        mMenu.setMenuCount(3);//Menu的个数
+        mMenu.setMenuCount(2);//Menu的个数
         mMenu.setShowCount(6);//Menu展开list数量太多是只显示的个数
         mMenu.setShowCheck(true);//是否显示展开list的选中项
         mMenu.setMenuTitleTextSize(16);//Menu的文字大小
-        mMenu.setMenuTitleTextColor(Color.BLACK);//Menu的文字颜色
+        mMenu.setMenuTitleTextColor(Color.DKGRAY);//Menu的文字颜色
         mMenu.setMenuListTextSize(16);//Menu展开list的文字大小
         mMenu.setMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
         mMenu.setMenuBackColor(Color.WHITE);//Menu的背景颜色
@@ -193,20 +191,18 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
             public void onSelected(View listview, int RowIndex, int ColumnIndex) {
 
                 if (ColumnIndex == 0) {
-                    city_index = RowIndex;
+                    type_index = RowIndex;
                 } else if (ColumnIndex == 1) {
-                    sex_index = RowIndex;
-                } else {
-                    age_index = RowIndex;
+                    order_index = RowIndex;
                 }
-
+                page=0;
+                RefreshData();
             }
         });
 
         List<String[]> items = new ArrayList<>();
         items.add(arr1);
         items.add(arr2);
-        items.add(arr3);
         mMenu.setmMenuItems(items);
 
 //        new Handler().postDelayed(new Runnable() {
@@ -222,7 +218,6 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
 //        }, 1000);
 
         mMenu.setIsDebug(false);
-
     }
 
 

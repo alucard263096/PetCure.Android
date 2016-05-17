@@ -118,6 +118,11 @@ public class WebLoader extends Thread {
 
     int circleSecond=10;
 
+    boolean justDo=false;
+    public void JustDo(){
+        justDo=true;
+    }
+
     public WebLoader(Context ctx,String url,HashMap<String,String> urlStaticParam){
         this.ctx=ctx;
         this.url=url;
@@ -180,7 +185,13 @@ public class WebLoader extends Thread {
         while (isCircle){
             while (!stopCircle) {
                 try {
-                    Thread.sleep(circleSecond * 1000);
+                    for(int i=0;i<circleSecond;i++){
+                        Thread.sleep( 1000);
+                        if(justDo){
+                            justDo=false;
+                            break;
+                        }
+                    }
                     RealRun();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

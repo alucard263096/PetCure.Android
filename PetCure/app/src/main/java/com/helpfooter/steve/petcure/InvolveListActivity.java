@@ -11,6 +11,8 @@ import java.util.HashMap;
 public class InvolveListActivity extends PosterListActivity {
     public InvolveListActivity() {
         this.needLogin=true;
+        arr2=new String[]{"最近参与","参与最久","最新发布","发布最久"};
+        strings=new String[]{"全部救助","最近参与"};
     }
 
     @Override
@@ -24,6 +26,8 @@ public class InvolveListActivity extends PosterListActivity {
 
         hmLocation.put("page", String.valueOf(page));
         hmLocation.put("count", "20");
+        hmLocation.put("type", String.valueOf(type_index));
+        hmLocation.put("order",String.valueOf(order_index));
         InvolvePosterLoader posterLoader = new InvolvePosterLoader(this);
         posterLoader.setUrlDynamicParam(hmLocation);
         posterLoader.setCallBack(this);

@@ -11,7 +11,11 @@ import java.util.HashMap;
  */
 public class CollectListActivity extends PosterListActivity {
     public CollectListActivity() {
+
         this.needLogin=true;
+
+        arr2=new String[]{"最近收藏","收藏最久","最新发布","发布最久"};
+        strings=new String[]{"全部救助","最近收藏"};
     }
 
     @Override
@@ -25,6 +29,8 @@ public class CollectListActivity extends PosterListActivity {
 
         hmLocation.put("page", String.valueOf(page));
         hmLocation.put("count", "20");
+        hmLocation.put("type", String.valueOf(type_index));
+        hmLocation.put("order",String.valueOf(order_index));
         CollectPosterLoader posterLoader = new CollectPosterLoader(this);
         posterLoader.setUrlDynamicParam(hmLocation);
         posterLoader.setCallBack(this);

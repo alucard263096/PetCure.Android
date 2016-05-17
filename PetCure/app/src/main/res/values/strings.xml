@@ -112,4 +112,9 @@
     <string name="poster_follow">我的关注</string>
     <string name="poster_collect">我的收藏</string>
     <string name="poster_involve">我的参与</string>
+
+
+    <string name="action_type_all">显示全部</string>
+    <string name="action_type_1">只显示待救助</string>
+    <string name="action_type_2">只显示求助</string>
 </resources>

@@ -45,6 +45,12 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
     Marker myLocation = null;
     public PosterLoader posterLoader=null;
 
+    public void setShowType(int showType) {
+        this.showType = showType;
+    }
+
+    int showType=0;
+
     public String getMyLat(){
         if(myLocation!=null){
             return String.valueOf( myLocation.getPosition().getLatitude());
@@ -159,19 +165,15 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
         String msg = null;
         if (error == TencentLocation.ERROR_OK) {
 
-            HashMap<String,String> hmLocation=new HashMap<String, String>();
-            hmLocation.put("lat",String.valueOf(location.getLatitude()));
-            hmLocation.put("lng",String.valueOf(location.getLongitude()));
-            hmLocation.put("count","100");
-            posterLoader.setUrlDynamicParam(hmLocation);
+            myLocation.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+            myLocation.setVisible(true);
+            updatePosterLoader();
 
             if (setCenterFirstTime) {
                 tencentMap.setCenter(new LatLng(location.getLatitude(), location.getLongitude()));
                 posterLoader.start();
                 setCenterFirstTime = false;
             }
-            myLocation.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
-            myLocation.setVisible(true);
 
 
         } else {
@@ -181,6 +183,21 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
             Toast.makeText(this.ctx, msg, Toast.LENGTH_LONG).show();
             myLocation.setVisible(false);
         }
+    }
+
+    public void GetPoster(){
+        updatePosterLoader();
+        posterLoader.JustDo();
+    }
+
+    public void updatePosterLoader(){
+
+        HashMap<String,String> hmLocation=new HashMap<String, String>();
+        hmLocation.put("lat",getMyLat());
+        hmLocation.put("lng",getMyLng());
+        hmLocation.put("count","100");
+        hmLocation.put("type",String.valueOf( showType));
+        posterLoader.setUrlDynamicParam(hmLocation);
     }
 
     @Override

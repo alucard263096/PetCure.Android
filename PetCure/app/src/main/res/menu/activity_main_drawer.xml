@@ -27,7 +27,7 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="志愿者登录" />
             <item
-                android:id="@+id/nav_to_be_volunteer"
+                android:id="@+id/nav_knowplan"
                 android:icon="@drawable/ic_menu_send"
                 android:title="了解志愿者计划" />
         </menu>
@@ -35,16 +35,14 @@
     <item android:title="我们">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/nav_aboutus"
                 android:title="关于我们" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="分享我们" />
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="分享我们" />-->
             <item
                 android:id="@+id/nav_partnent"
-                android:icon="@drawable/ic_menu_send"
                 android:title="寻找合作" />
         </menu>
     </item>

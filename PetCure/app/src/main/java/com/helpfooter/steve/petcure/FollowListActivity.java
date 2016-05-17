@@ -13,6 +13,8 @@ import java.util.HashMap;
 public class FollowListActivity extends PosterListActivity {
     public FollowListActivity() {
         this.needLogin=true;
+        arr2=new String[]{"最近关注","关注最久","最新发布","发布最久"};
+        strings=new String[]{"全部救助","最近关注"};
     }
 
     @Override
@@ -26,6 +28,8 @@ public class FollowListActivity extends PosterListActivity {
 
         hmLocation.put("page", String.valueOf(page));
         hmLocation.put("count", "20");
+        hmLocation.put("type", String.valueOf(type_index));
+        hmLocation.put("order",String.valueOf(order_index));
         FollowPosterLoader posterLoader = new FollowPosterLoader(this);
         posterLoader.setUrlDynamicParam(hmLocation);
         posterLoader.setCallBack(this);

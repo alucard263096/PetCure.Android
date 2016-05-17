@@ -61,7 +61,9 @@ public class MapMarkerView  extends LinearLayout {
     }
 
     public void setType(String type){
+        Log.i("settypevalue",type);
         if(type.equals("1")){
+            Log.i("settypecolor","Y");
             this.setBackgroundColor(Color.RED);
         }
     }

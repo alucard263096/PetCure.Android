@@ -17,6 +17,7 @@ public class StaticVar {
     public static String WechatAppId="wxe8d9406cf695d6da";
     public static String WechatAppSecret="4848047098788c8e433e6548388d439a";
     public static String WechatState="com.helpfooter.steve.petcure";
+    public static String GeneralTextUrl="http://www.myhkdoc.com/PetCure/CMS/general.php?code=";
 
     public static class APIUrl{
         public static String LoginReg= "http://www.myhkdoc.com/petcure/api/Member/login_reg.php";
@@ -31,6 +32,12 @@ public class StaticVar {
         public static String FollowList= "http://www.myhkdoc.com/petcure/api/Poster/follow.php";
         public static String CollectList= "http://www.myhkdoc.com/petcure/api/Poster/collect.php";
         public static String InvolveList= "http://www.myhkdoc.com/petcure/api/Poster/involve.php";
+    }
+
+    public static class GeneralTextCode{
+        public static String KnowPlan="knowplan";
+        public static String AboutUs="aboutus";
+        public static String Partner="partner";
     }
 
     public static MapMgr MapMgr=null;

@@ -96,18 +96,24 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".PosterListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PosterListActivity"
             android:label="@string/poster_list"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".FollowListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FollowListActivity"
             android:label="@string/poster_follow"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".CollectListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CollectListActivity"
             android:label="@string/poster_collect"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".InvolveListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".InvolveListActivity"
             android:label="@string/poster_involve"
+            android:screenOrientation="portrait" />
+        <activity android:name=".GeneralTextActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

@@ -147,10 +147,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    MenuItem menuShowAll,menuShow1,menuShow2;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menuShowAll=menu.findItem(R.id.action_type_all);
+        menuShow1=menu.findItem(R.id.action_type_1);
+        menuShow2=menu.findItem(R.id.action_type_2);
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -162,8 +174,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            ActivityMgr.startActivity(this,SettingsActivity.class,null);
+        if (id == R.id.action_type_all) {
+            mapMgr.setShowType(0);
+            mapMgr.updatePosterLoader();
+            return true;
+        }else if (id == R.id.action_type_1) {
+
+            mapMgr.setShowType(1);
+            mapMgr.updatePosterLoader();
+            return true;
+        }else if (id == R.id.action_type_2) {
+
+            mapMgr.setShowType(2);
+            mapMgr.updatePosterLoader();
             return true;
         }
 
@@ -197,10 +220,23 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_involve) {
             ActivityMgr.startActivity(this,InvolveListActivity.class,null);
 
-        }  else if (id == R.id.nav_share) {
+        }  else if (id == R.id.nav_aboutus) {
+            HashMap<String,String> param=new HashMap<String, String>();
+            param.put("title",item.getTitle().toString());
+            param.put("code",StaticVar.GeneralTextCode.AboutUs);
+            ActivityMgr.startActivity(this,GeneralTextActivity.class,param);
+        } else if (id == R.id.nav_partnent) {
 
-        } else if (id == R.id.nav_send) {
+            HashMap<String,String> param=new HashMap<String, String>();
+            param.put("title",item.getTitle().toString());
+            param.put("code",StaticVar.GeneralTextCode.Partner);
+            ActivityMgr.startActivity(this,GeneralTextActivity.class,param);
+        } else if (id == R.id.nav_knowplan) {
 
+            HashMap<String,String> param=new HashMap<String, String>();
+            param.put("title",item.getTitle().toString());
+            param.put("code",StaticVar.GeneralTextCode.KnowPlan);
+            ActivityMgr.startActivity(this,GeneralTextActivity.class,param);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
