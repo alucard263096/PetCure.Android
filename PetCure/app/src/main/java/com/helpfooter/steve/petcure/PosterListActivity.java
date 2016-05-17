@@ -2,6 +2,7 @@ package com.helpfooter.steve.petcure;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,10 +24,13 @@ import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.myviews.PosterItemView;
 import com.helpfooter.steve.petcure.utils.ImageUtil;
+import com.jayfang.dropdownmenu.DropDownMenu;
+import com.jayfang.dropdownmenu.OnMenuSelectedListener;
 import com.zfdang.multiple_images_selector.SelectorSettings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PosterListActivity extends AppCompatActivity implements IWebLoaderCallBack {
 
@@ -38,6 +42,8 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
     public boolean needLogin=false;
 
     ScrollView scroll_container;
+
+    DropDownMenu mMenu;
 
 
     class AfterPosterLoadingHandle extends AbstractHandles{
@@ -59,6 +65,7 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
             swipe_container.setRefreshing(false);
         }
     }
+
 
 
 
@@ -118,6 +125,8 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
 
         container=(LinearLayout) findViewById(R.id.container);
         posterLoadingHandle=new AfterPosterLoadingHandle();
+        mMenu=(DropDownMenu)findViewById(R.id.menu);
+        InitDropDownMenu();
 
         if(needLogin) {
             if (MemberMgr.CheckIsLogin(this, RequestCode.CheckLoginActivity)) {
@@ -150,6 +159,70 @@ public class PosterListActivity extends AppCompatActivity implements IWebLoaderC
         posterLoader.setUrlDynamicParam(hmLocation);
         posterLoader.setCallBack(this);
         posterLoader.start();
+    }
+
+
+    private int city_index;
+    private int sex_index;
+    private int age_index;
+    private List<String> data;
+    final String[] arr1=new String[]{"全部城市","北京","上海","广州","深圳"};
+    final String[] arr2=new String[]{"性别","男","女"};
+    final String[] arr3=new String[]{"全部年龄","10","20","30","40","50","60","70"};
+
+    final String[] strings=new String[]{"选择城市","选择性别","选择年龄"};
+
+    public void InitDropDownMenu(){
+
+        mMenu.setMenuCount(3);//Menu的个数
+        mMenu.setShowCount(6);//Menu展开list数量太多是只显示的个数
+        mMenu.setShowCheck(true);//是否显示展开list的选中项
+        mMenu.setMenuTitleTextSize(16);//Menu的文字大小
+        mMenu.setMenuTitleTextColor(Color.BLACK);//Menu的文字颜色
+        mMenu.setMenuListTextSize(16);//Menu展开list的文字大小
+        mMenu.setMenuListTextColor(Color.BLACK);//Menu展开list的文字颜色
+        mMenu.setMenuBackColor(Color.WHITE);//Menu的背景颜色
+        mMenu.setMenuPressedBackColor(Color.WHITE);//Menu按下的背景颜色
+        mMenu.setCheckIcon(R.drawable.ico_make);//Menu展开list的勾选图片
+        mMenu.setUpArrow(R.drawable.arrow_up);//Menu默认状态的箭头
+        mMenu.setDownArrow(R.drawable.arrow_down);//Menu按下状态的箭头
+        mMenu.setDefaultMenuTitle(strings);//默认未选择任何过滤的Menu title
+        mMenu.setMenuSelectedListener(new OnMenuSelectedListener() {
+            @Override
+            //Menu展开的list点击事件  RowIndex：list的索引  ColumnIndex：menu的索引
+            public void onSelected(View listview, int RowIndex, int ColumnIndex) {
+
+                if (ColumnIndex == 0) {
+                    city_index = RowIndex;
+                } else if (ColumnIndex == 1) {
+                    sex_index = RowIndex;
+                } else {
+                    age_index = RowIndex;
+                }
+
+            }
+        });
+
+        List<String[]> items = new ArrayList<>();
+        items.add(arr1);
+        items.add(arr2);
+        items.add(arr3);
+        mMenu.setmMenuItems(items);
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<String[]> items = new ArrayList<>();
+//                items.add(arr1);
+//                items.add(arr2);
+//                items.add(arr3);
+//                mMenu.setmMenuItems(items);
+//
+//            }
+//        }, 1000);
+
+        mMenu.setIsDebug(false);
+
     }
 
 
