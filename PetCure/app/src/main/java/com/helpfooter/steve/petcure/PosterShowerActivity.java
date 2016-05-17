@@ -127,9 +127,9 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             Toast.makeText(PosterShowerActivity.this,menuCollect.getTitle()+(ret?"成功":"失败"),Toast.LENGTH_LONG).show();
             if(ret) {
                 if (menuCollect.getTitle().toString().contains("取消")) {
-                    menuCollect.setTitle("关注");
+                    menuCollect.setTitle("收藏");
                 } else {
-                    menuCollect.setTitle("取消关注");
+                    menuCollect.setTitle("取消收藏");
                 }
             }
             menuCollect.setEnabled(true);
