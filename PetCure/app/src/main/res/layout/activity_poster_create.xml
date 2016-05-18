@@ -128,5 +128,24 @@
             android:id="@+id/txtContact" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/llSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_below="@+id/llContact"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cbSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:text="我已经成功解救"/>
+    </LinearLayout>
 </RelativeLayout>
 </LinearLayout>

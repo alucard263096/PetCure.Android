@@ -227,6 +227,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         getMenuInflater().inflate(R.menu.menu_poster_shower, menu);
         menuCollect=menu.findItem(R.id.action_collect);
         menuFollow=menu.findItem(R.id.action_follow);
+        menuHelp=menu.findItem(R.id.action_help);
         return true;
     }
 

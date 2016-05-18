@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -58,7 +59,11 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
     MenuItem btnPost;
     PostCallBack postCallBack;
     View poster_progress,realLayout;
-    View llLocation;
+    View llLocation,llSave;
+
+    CheckBox cbSave;
+
+    String poster_id="";
 
     @Override
     public void CallBack(Object result) {
@@ -139,6 +144,9 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
         lat=intent.getStringExtra("lat");
         lng=intent.getStringExtra("lng");
         type=intent.getStringExtra("type");
+        if(intent.hasExtra("poster_id")){
+            poster_id=intent.getStringExtra("poster_id");
+        }
         txtAddress=(TextView)findViewById(R.id.txtAddress);
         txtContact=(EditText) findViewById(R.id.txtContact);
         txtNeeds=(EditText) findViewById(R.id.txtNeeds);
@@ -220,6 +228,16 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
             }
         });
 
+        llSave=findViewById(R.id.llSave);
+        cbSave=(CheckBox)findViewById(R.id.cbSave);
+        if(poster_id.equals("")){
+            llSave.setVisibility(View.GONE);
+        }else {
+            if(type.equals("1")){
+                llSave.setVisibility(View.GONE);txtNeeds.setHint("你有什么线索给急坏了的主人？");
+            }
+        }
+
     }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -235,8 +253,10 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
         if(poster.length()<=0){
             canPost=false;
         }
-        if(mResults.size()<=0){
-            canPost=false;
+        if(!(poster_id.equals("")==false&&type.equals("1"))) {
+            if (mResults.size() <= 0) {
+                canPost = false;
+            }
         }
         //Toast.makeText(this,canPost?"canPost":"cannotPost",Toast.LENGTH_LONG).show();
         btnPost.setEnabled(canPost);
@@ -322,6 +342,10 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
             ActivityMgr.ShowProgress(true,this,realLayout,poster_progress);
             CreatePosterLoader posterLoader=new CreatePosterLoader(this,String.valueOf(type),txtNeeds.getText().toString(),mResults,
                     lat,lng,txtAddress.getText().toString(),txtContact.getText().toString(),String.valueOf(MemberMgr.GetMemberInfoFromDb(this).getId()));
+            if(poster_id.isEmpty()==false&&Integer.valueOf(poster_id)>0){
+                posterLoader.getUrlDynamicParam().put("poster_id",poster_id);
+                posterLoader.getUrlDynamicParam().put("save",cbSave.isChecked()?"Y":"N");
+            }
             posterLoader.setCallBack(this);
             posterLoader.start();
             return true;

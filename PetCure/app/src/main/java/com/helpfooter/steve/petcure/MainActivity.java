@@ -47,6 +47,7 @@ import com.tencent.mapsdk.raster.model.LatLng;
 import com.tencent.tencentmap.mapsdk.map.MapView;
 import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         MapSearchMgr.InitSearch(this);
+
+        MemberMgr.GetMemberInfoFromDb(this);
 
         onMyCreate(savedInstanceState);
     }
