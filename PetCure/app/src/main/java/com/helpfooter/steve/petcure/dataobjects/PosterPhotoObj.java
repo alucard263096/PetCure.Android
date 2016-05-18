@@ -18,6 +18,15 @@ public class PosterPhotoObj extends AbstractObj {
     String contact;
     String created_date;
     String photo;
+    int created_member;
+
+    public int getCreated_member() {
+        return created_member;
+    }
+
+    public void setCreated_member(int created_member) {
+        this.created_member = created_member;
+    }
 
     @Override
     public void parseCursor(Cursor cursor) {
@@ -90,7 +99,7 @@ public class PosterPhotoObj extends AbstractObj {
         address = lstRowValue.get("address");
         contact = lstRowValue.get("contact");
         created_date = lstRowValue.get("created_date");
-
+        created_member =Integer.valueOf( lstRowValue.get("created_member"));
     }
 
     @Override

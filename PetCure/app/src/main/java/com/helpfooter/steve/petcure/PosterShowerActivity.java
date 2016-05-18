@@ -33,6 +33,7 @@ import com.helpfooter.steve.petcure.loader.ResultLoader;
 import com.helpfooter.steve.petcure.loader.WebXmlLoader;
 import com.helpfooter.steve.petcure.mgr.ActivityMgr;
 import com.helpfooter.steve.petcure.mgr.ImageLoaderMgr;
+import com.helpfooter.steve.petcure.mgr.MapMgr;
 import com.helpfooter.steve.petcure.mgr.MemberMgr;
 import com.helpfooter.steve.petcure.mgr.WechatMgr;
 import com.helpfooter.steve.petcure.utils.ImageUtil;
@@ -46,6 +47,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
 
     public static class RequestCode{
         public static int LoginActivity=1;
+        public static int HelpActivity=2;
     }
 
     /**
@@ -64,6 +66,8 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
     private ViewPager mViewPager;
 
     String poster_id;
+    String type;
+    int created_member;
 
     ArrayList<PosterPhotoObj> photos=new ArrayList<PosterPhotoObj>();
     View progress;
@@ -203,10 +207,20 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             ActivityMgr.ShowProgress(false,PosterShowerActivity.this,mViewPager,progress);
             mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
             mViewPager.setAdapter(mSectionsPagerAdapter);
+
+            if(type.equals("1")){
+                if(MemberMgr.Member!=null&&MemberMgr.Member.getId()==created_member){
+                    menuHelp.setTitle("查看线索");
+                }else {
+                    menuHelp.setTitle("提供线索");
+                }
+            }
+
+
         }
     }
 
-    MenuItem menuCollect,menuFollow;
+    MenuItem menuCollect,menuFollow,menuHelp;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -228,7 +242,7 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         {
             finish();
             return true;
-        }else if (id == R.id.action_follow) {
+        } else if (id == R.id.action_follow) {
             if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
 
                 HashMap<String, String> param = new HashMap<String, String>();
@@ -287,6 +301,18 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             WechatMgr.SendUrlToFriend(StaticVar.PosterShowerUrl+poster_id, photo.getNeeds(),photo.getAddress(),bm);
             return true;
         }else if (id == R.id.action_help) {
+            if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
+                if(MemberMgr.Member.getId()==created_member&&type.equals("1")){
+                    Toast.makeText(PosterShowerActivity.this,"调用看线索界面",Toast.LENGTH_LONG).show();
+                }else {
+                    HashMap<String, String> dictLocation = new HashMap<String, String>();
+                    dictLocation.put("lat", StaticVar.MapMgr.getMyLat());
+                    dictLocation.put("lng", StaticVar.MapMgr.getMyLng());
+                    dictLocation.put("type", type);
+                    dictLocation.put("poster_id", poster_id);
+                    ActivityMgr.startActivityForResult(PosterShowerActivity.this, PosterCreateActivity.class, RequestCode.HelpActivity, dictLocation);
+                }
+            }
             return true;
         }
 
@@ -300,13 +326,23 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
             if(resultCode == RESULT_OK){
                 loadPosterInfo();
             }
+        }else if(requestCode==RequestCode.HelpActivity){
+            if(resultCode == RESULT_OK){
+                PosterPhotoLoader loader = new PosterPhotoLoader(this, poster_id);
+                loader.setCallBack(this);
+                loader.start();
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void CallBack(Object result) {
-        photos=(ArrayList<PosterPhotoObj>)result;
+        photos = (ArrayList<PosterPhotoObj>) result;
+        if (photos.size() > 0) {
+            type = photos.get(0).getType();
+            created_member = photos.get(0).getCreated_member();
+        }
 //        for(PosterPhotoObj photo:photos){
 //            Bitmap bitmap= ImageUtil.GetHttpBitmap(StaticVar.PetImageUrl+photo.getPhoto());
 //            photo.setTag(bitmap);
