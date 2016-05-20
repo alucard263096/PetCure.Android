@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="13751082562"
-        android:textSize="12dp"
+        android:textSize="13dp"
         android:padding="2dp"
         android:textColor="@color/primary"/>
     <LinearLayout
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:textSize="12dp"
+            android:textSize="13dp"
             android:id="@+id/txtAddress"
             android:text="地址"/>
         <TextView

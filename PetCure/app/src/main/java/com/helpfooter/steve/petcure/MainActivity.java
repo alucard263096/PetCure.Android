@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent serviceIntent = new Intent(this, NotifyService.class);
+        startService(serviceIntent);
 
         WechatMgr.Init(this);
 
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity
                 posterObj.setNeeds(data.getStringExtra("needs"));
                 posterObj.setLat(Double.valueOf( data.getStringExtra("lat")));
                 posterObj.setLng(Double.valueOf( data.getStringExtra("lng")));
+                posterObj.setType(data.getStringExtra("type"));
                 Bitmap bitmap= BitmapFactory.decodeFile(data.getStringExtra("photo"));
                 mapMgr.addMarker(posterObj,bitmap);
             }

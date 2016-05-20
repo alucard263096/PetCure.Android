@@ -96,6 +96,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
                     intent.putExtra("lat",lat);
                     intent.putExtra("lng",lng);
                     intent.putExtra("photo",mResults.get(0));
+                    intent.putExtra("type",type);
                     PosterCreateActivity.this.setResult(RESULT_OK,intent);
                     PosterCreateActivity.this.finish();
                 }else {

@@ -33,6 +33,9 @@ public class StaticVar {
         public static String FollowList= "http://www.myhkdoc.com/petcure/api/Poster/follow.php";
         public static String CollectList= "http://www.myhkdoc.com/petcure/api/Poster/collect.php";
         public static String InvolveList= "http://www.myhkdoc.com/petcure/api/Poster/involve.php";
+
+
+        public static String Notice= "http://www.myhkdoc.com/petcure/api/Poster/notice.php";
     }
 
     public static class GeneralTextCode{

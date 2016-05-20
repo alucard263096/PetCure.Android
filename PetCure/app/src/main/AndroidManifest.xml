@@ -116,10 +116,22 @@
         <activity
             android:name=".GeneralTextActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".HintListActivity"
+        <activity
+            android:name=".HintListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ImageViewerActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ImageViewerActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".NotifyService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.helpfooter.steve.petcure.notifyservice" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
