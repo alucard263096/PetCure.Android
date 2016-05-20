@@ -225,6 +225,7 @@ public class PosterCreateActivity extends AppCompatActivity implements IWebLoade
                 dictLocation.put("lng",lng);
                 dictLocation.put("city",city);
                 ActivityMgr.startActivityForResult(PosterCreateActivity.this,AddressSearchActivity.class,RequestCode.AddressSearch,dictLocation);
+
             }
         });
 

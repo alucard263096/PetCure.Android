@@ -304,7 +304,9 @@ public class PosterShowerActivity extends AppCompatActivity implements IWebLoade
         }else if (id == R.id.action_help) {
             if(MemberMgr.CheckIsLogin(PosterShowerActivity.this, RequestCode.LoginActivity)){
                 if(MemberMgr.Member.getId()==created_member&&type.equals("1")){
-                    Toast.makeText(PosterShowerActivity.this,"调用看线索界面",Toast.LENGTH_LONG).show();
+                    HashMap<String, String> dictLocation = new HashMap<String, String>();
+                    dictLocation.put("poster_id", poster_id);
+                    ActivityMgr.startActivity(PosterShowerActivity.this, HintListActivity.class,  dictLocation);
                 }else {
                     HashMap<String, String> dictLocation = new HashMap<String, String>();
                     dictLocation.put("lat", StaticVar.MapMgr.getMyLat());

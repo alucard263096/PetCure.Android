@@ -23,7 +23,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -345,4 +349,49 @@ public class Util {
 
         return null;
     }
+
+    public static String GetExDateString(String str){
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance();
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date dt = df.parse(str);
+            long interval=(System.currentTimeMillis()-dt.getTime())/1000;
+            Log.i("GetExDateString",str+":"+String.valueOf(dt.getTime()));
+            Log.i("GetExDateString",str+":"+String.valueOf(System.currentTimeMillis()));
+            Log.i("GetExDateString",str+":"+String.valueOf(interval));
+            if(interval<60){
+                return "刚刚";
+            }else {
+                interval=interval/60;
+                if(interval<60){
+                    return String.valueOf(interval)+"分钟前";
+                }else {
+                    interval=interval/60;
+                    if(interval<24){
+                        return String.valueOf(interval)+"小时前";
+                    }else {
+                        interval=interval/7;
+                        if(interval<7){
+                            return String.valueOf(interval)+"天前";
+                        }else if(interval<28){
+                            return String.valueOf(interval/7)+"周前";
+                        }else if(interval<366){
+                            return String.valueOf(interval/30)+"月前";
+                        }else {
+                            return String.valueOf(interval/365)+"年前";
+                        }
+                    }
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }catch (Exception ex){
+
+        }
+
+
+        return str;
+    }
+
 }

@@ -23,6 +23,7 @@ public class StaticVar {
         public static String LoginReg= "http://www.myhkdoc.com/petcure/api/Member/login_reg.php";
         public static String PosterCreate= "http://www.myhkdoc.com/petcure/api/Poster/create.php";
         public static String PosterList= "http://www.myhkdoc.com/petcure/api/Poster/list.php";
+        public static String HintList= "http://www.myhkdoc.com/petcure/api/Poster/hintlist.php";
         public static String PosterPhoto= "http://www.myhkdoc.com/petcure/api/poster/photo.php";
 
         public static String PosterFollow = "http://www.myhkdoc.com/petcure/api/member/follow.php";
