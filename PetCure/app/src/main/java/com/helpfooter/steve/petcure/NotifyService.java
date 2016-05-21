@@ -71,7 +71,7 @@ public class NotifyService extends Service {
         Notification messageNotification = new Notification.Builder(this.getBaseContext())
                 .setContentTitle(obj.getMsg())
                 .setContentText(obj.getSubmsg())
-                .setSmallIcon(R.drawable.logo2)
+                .setSmallIcon(R.drawable.logo)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setContentIntent(messagePendingIntent)
                 .build();
