@@ -181,9 +181,13 @@ public class MapMgr implements  TencentLocationListener,IWebLoaderCallBack,Tence
 
         } else {
             // 定位失败
-
-            msg = "定位失败: " + reason;
+            msg = "定位失败，请确保你已经正确打开GPS"; //+ reason;
             Toast.makeText(this.ctx, msg, Toast.LENGTH_LONG).show();
+
+
+            posterLoader.start();
+            setCenterFirstTime = false;
+
             myLocation.setVisible(false);
         }
     }

@@ -77,7 +77,6 @@ public class HintListActivity extends AppCompatActivity implements IWebLoaderCal
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         poster_id=getIntent().getStringExtra("poster_id");
-        poster_id="6";
         swipe_container=(SwipeRefreshLayout)findViewById(R.id.swipe_container);
         swipe_container.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

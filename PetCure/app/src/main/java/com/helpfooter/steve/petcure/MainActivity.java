@@ -131,14 +131,9 @@ public class MainActivity extends AppCompatActivity
                 ActivityMgr.ShowBottomOptionDialog(this,R.array.send_poster_type,dialogListener);
             }else  if (requestCode == RequestCode.AddPosterActivity) {
                 Toast.makeText(this,"添加成功",Toast.LENGTH_LONG);
-                PosterObj posterObj=new PosterObj();
-                posterObj.setId(Integer.valueOf( data.getStringExtra("poster_id")));
-                posterObj.setNeeds(data.getStringExtra("needs"));
-                posterObj.setLat(Double.valueOf( data.getStringExtra("lat")));
-                posterObj.setLng(Double.valueOf( data.getStringExtra("lng")));
-                posterObj.setType(data.getStringExtra("type"));
-                Bitmap bitmap= BitmapFactory.decodeFile(data.getStringExtra("photo"));
-                mapMgr.addMarker(posterObj,bitmap);
+
+                mapMgr.GetPoster();
+
             }
         }
     }
